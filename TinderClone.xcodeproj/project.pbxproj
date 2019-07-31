@@ -13,6 +13,7 @@
 		3D4776E122F1BFD3004E79D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D4776E022F1BFD3004E79D3 /* Assets.xcassets */; };
 		3D4776E422F1BFD3004E79D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D4776E222F1BFD3004E79D3 /* LaunchScreen.storyboard */; };
 		3D4776ED22F1C10E004E79D3 /* Uzantilar+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776EC22F1C10E004E79D3 /* Uzantilar+UIView.swift */; };
+		3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776F222F1F562004E79D3 /* AnaGorunumAltStackView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		3D4776E322F1BFD3004E79D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D4776E522F1BFD3004E79D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3D4776EC22F1C10E004E79D3 /* Uzantilar+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzantilar+UIView.swift"; sourceTree = "<group>"; };
+		3D4776F222F1F562004E79D3 /* AnaGorunumAltStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaGorunumAltStackView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		3D4776D822F1BFD2004E79D3 /* TinderClone */ = {
 			isa = PBXGroup;
 			children = (
+				3D4776F122F1F545004E79D3 /* Views */,
 				3D4776EB22F1C0F4004E79D3 /* Uzantilar */,
 				3D4776D922F1BFD2004E79D3 /* AppDelegate.swift */,
 				3D4776DB22F1BFD2004E79D3 /* ViewController.swift */,
@@ -73,6 +76,14 @@
 				3D4776EC22F1C10E004E79D3 /* Uzantilar+UIView.swift */,
 			);
 			path = Uzantilar;
+			sourceTree = "<group>";
+		};
+		3D4776F122F1F545004E79D3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3D4776F222F1F562004E79D3 /* AnaGorunumAltStackView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,6 +159,7 @@
 			files = (
 				3D4776DC22F1BFD2004E79D3 /* ViewController.swift in Sources */,
 				3D4776ED22F1C10E004E79D3 /* Uzantilar+UIView.swift in Sources */,
+				3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */,
 				3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

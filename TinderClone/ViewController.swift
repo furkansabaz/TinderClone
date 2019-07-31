@@ -30,18 +30,22 @@ class ViewController: UIViewController {
         let yesilView = UIView()
         yesilView.backgroundColor = .green
         
-        let griView = UIView()
-        griView.backgroundColor = .darkGray
-        griView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         
-        let stackView = UIStackView(arrangedSubviews: [ustStackView, yesilView,griView])
-        
-        stackView.axis = .vertical
-        
-        view.addSubview(stackView)
+       
         
         
-        stackView.doldurSuperView()
+        let butonlarStackView = AnaGorunumAltStackView()
+        
+        
+        
+        let genelStackView = UIStackView(arrangedSubviews: [ustStackView, yesilView,butonlarStackView])
+        
+        genelStackView.axis = .vertical
+        
+        view.addSubview(genelStackView)
+        
+        
+        genelStackView.doldurSuperView()
     }
 
 
