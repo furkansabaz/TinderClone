@@ -11,8 +11,10 @@ import UIKit
 class ProfilView: UIView {
 
     
-    fileprivate let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
+     let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
     let sinirDegeri : CGFloat = 120
+    
+    let lblKullaniciBilgileri = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,10 +22,25 @@ class ProfilView: UIView {
         layer.cornerRadius = 10
         clipsToBounds = true
         
-        
+        imgProfil.contentMode = .scaleAspectFill
         
         addSubview(imgProfil)
         imgProfil.doldurSuperView()
+        
+        
+        addSubview(lblKullaniciBilgileri)
+        
+        lblKullaniciBilgileri.anchor(top: nil,
+                                     bottom: bottomAnchor,
+                                     leading: leadingAnchor,
+                                     trailing: trailingAnchor,
+                                     padding: .init(top: 0, left: 15, bottom: 15, right: 15))
+        
+        
+        lblKullaniciBilgileri.text = "Ahmet 25 İnşaat Mühendisi"
+        lblKullaniciBilgileri.textColor = .white
+        lblKullaniciBilgileri.font = UIFont.systemFont(ofSize: 27, weight: .heavy)
+        lblKullaniciBilgileri.numberOfLines = 0
         
         
         let panG = UIPanGestureRecognizer(target: self, action: #selector(profilPanYakala))
@@ -53,15 +70,16 @@ class ProfilView: UIView {
     
     fileprivate func bitisPanAnimasyon(_ panGesture : UIPanGestureRecognizer) {
         
+        let translationYonu : CGFloat = panGesture.translation(in: nil).x > 0 ? 1 : -1
         
-        let profilKaybet : Bool =  panGesture.translation(in: nil).x > sinirDegeri
+        let profilKaybet : Bool =  abs(panGesture.translation(in: nil).x) > sinirDegeri
         
-        UIView.animate(withDuration: 0.8, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
             
             if profilKaybet {
 
                 
-                self.frame = CGRect(x: 1000, y: 0, width: self.frame.width, height: self.frame.height)
+                self.frame = CGRect(x: 600*translationYonu, y: 0, width: self.frame.width, height: self.frame.height)
                 
                 
 //                let ekranDisiTransform = self.transform.translatedBy(x: 900, y: 0)
@@ -77,7 +95,11 @@ class ProfilView: UIView {
         }) { (_) in
             print("Animasyon Bitti. Kart Geri Gelsin")
             self.transform = .identity
-            self.frame = CGRect(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
+            
+            if profilKaybet {
+                self.removeFromSuperview()
+            }
+            //self.frame = CGRect(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
         }
         
         

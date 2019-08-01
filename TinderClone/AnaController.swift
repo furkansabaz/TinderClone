@@ -8,12 +8,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class AnaController: UIViewController {
 
     let ustStackView = AnaGorunumUstStackView()
     let profilDiziniView = UIView()
     //MARK:- ÜST MENÜDEKİ bUTONLARI TUTAR
     let butonlarStackView = AnaGorunumAltStackView()
+    
+    
+    var kullanicilar = [
+    Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdi: "kisi1"),
+    Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdi: "kisi2"),
+    Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdi: "kisi3")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,12 +50,29 @@ class ViewController: UIViewController {
     }
     
     func profilGorunumuAyarla() {
-        print("Profil Görünümü Ayarlanıyor")
         
-        let pView = ProfilView(frame: .zero)
-        profilDiziniView.addSubview(pView)
         
-        pView.doldurSuperView()
+        kullanicilar.forEach { (k) in
+            let pView = ProfilView(frame: .zero)
+            
+            pView.imgProfil.image = UIImage(named: k.goruntuAdi)
+            
+            let attrText = NSMutableAttributedString(string: k.kullaniciAdi, attributes: [.font : UIFont.systemFont(ofSize: 30, weight: .heavy)])
+            
+            attrText.append(NSAttributedString(string: " \(k.yasi)", attributes: [.font : UIFont.systemFont(ofSize: 23, weight: .regular)]))
+            
+            attrText.append(NSAttributedString(string: "\n\(k.meslek)", attributes: [.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
+            
+            pView.lblKullaniciBilgileri.attributedText = attrText
+            
+            
+            
+            profilDiziniView.addSubview(pView)
+            pView.doldurSuperView()
+        }
+        
+        
+        
     }
 
 
