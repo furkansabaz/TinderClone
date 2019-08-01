@@ -15,6 +15,7 @@
 		3D4776ED22F1C10E004E79D3 /* Uzantilar+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776EC22F1C10E004E79D3 /* Uzantilar+UIView.swift */; };
 		3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776F222F1F562004E79D3 /* AnaGorunumAltStackView.swift */; };
 		3D4776F722F2BF32004E79D3 /* AnaGorunumUstStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */; };
+		3D4776FB22F2E7A6004E79D3 /* ProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		3D4776EC22F1C10E004E79D3 /* Uzantilar+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzantilar+UIView.swift"; sourceTree = "<group>"; };
 		3D4776F222F1F562004E79D3 /* AnaGorunumAltStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaGorunumAltStackView.swift; sourceTree = "<group>"; };
 		3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaGorunumUstStackView.swift; sourceTree = "<group>"; };
+		3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 			children = (
 				3D4776F222F1F562004E79D3 /* AnaGorunumAltStackView.swift */,
 				3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */,
+				3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -162,6 +165,7 @@
 			files = (
 				3D4776DC22F1BFD2004E79D3 /* ViewController.swift in Sources */,
 				3D4776ED22F1C10E004E79D3 /* Uzantilar+UIView.swift in Sources */,
+				3D4776FB22F2E7A6004E79D3 /* ProfilView.swift in Sources */,
 				3D4776F722F2BF32004E79D3 /* AnaGorunumUstStackView.swift in Sources */,
 				3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */,
 				3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */,

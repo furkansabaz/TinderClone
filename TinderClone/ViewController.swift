@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
 
     let ustStackView = AnaGorunumUstStackView()
-    let yesilView = UIView()
+    let profilDiziniView = UIView()
     //MARK:- ÜST MENÜDEKİ bUTONLARI TUTAR
     let butonlarStackView = AnaGorunumAltStackView()
     override func viewDidLoad() {
@@ -19,21 +19,35 @@ class ViewController: UIViewController {
         
         
         
-        yesilView.backgroundColor = .green
+        
         
         layoutDuzenle()
-        
+        profilGorunumuAyarla()
     }
     
     
     //MARK:- LAYOUT DÜZENLEYEN FONKSİYON
     func layoutDuzenle() {
-        let genelStackView = UIStackView(arrangedSubviews: [ustStackView, yesilView,butonlarStackView])
+        let genelStackView = UIStackView(arrangedSubviews: [ustStackView, profilDiziniView,butonlarStackView])
         genelStackView.axis = .vertical
         view.addSubview(genelStackView)
         
         
         genelStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        
+        genelStackView.isLayoutMarginsRelativeArrangement = true
+        genelStackView.layoutMargins = .init(top: 0, left: 10, bottom: 0, right: 10)
+        
+        genelStackView.bringSubviewToFront(profilDiziniView)
+    }
+    
+    func profilGorunumuAyarla() {
+        print("Profil Görünümü Ayarlanıyor")
+        
+        let pView = ProfilView(frame: .zero)
+        profilDiziniView.addSubview(pView)
+        
+        pView.doldurSuperView()
     }
 
 
