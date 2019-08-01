@@ -10,42 +10,30 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let ustStackView = AnaGorunumUstStackView()
+    let yesilView = UIView()
+    //MARK:- ÜST MENÜDEKİ bUTONLARI TUTAR
+    let butonlarStackView = AnaGorunumAltStackView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        let subViews = [UIColor.red, UIColor.blue, UIColor.purple].map { (renk) -> UIView in
-            
-            let v = UIView()
-            v.backgroundColor = renk
-            return v
-        }
         
-        
-        let ustStackView = UIStackView(arrangedSubviews: subViews)
-        ustStackView.distribution = .fillEqually
-        
-        ustStackView.heightAnchor.constraint(equalToConstant: 110).isActive = true
-        
-        let yesilView = UIView()
         yesilView.backgroundColor = .green
         
+        layoutDuzenle()
         
-       
-        
-        
-        let butonlarStackView = AnaGorunumAltStackView()
-        
-        
-        
+    }
+    
+    
+    //MARK:- LAYOUT DÜZENLEYEN FONKSİYON
+    func layoutDuzenle() {
         let genelStackView = UIStackView(arrangedSubviews: [ustStackView, yesilView,butonlarStackView])
-        
         genelStackView.axis = .vertical
-        
         view.addSubview(genelStackView)
         
         
-        genelStackView.doldurSuperView()
+        genelStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
     }
 
 
