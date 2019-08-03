@@ -10,9 +10,21 @@ import UIKit
 
 class ProfilView: UIView {
 
+    var kullaniciViewModel : KullaniciProfilViewModel! {
+        
+        didSet {
+            imgProfil.image = UIImage(named: kullaniciViewModel.goruntuAdi)
+            
+            lblKullaniciBilgileri.attributedText = kullaniciViewModel.attrString
+            
+            lblKullaniciBilgileri.textAlignment = kullaniciViewModel.bilgiKonumu
+        }
+    }
     
-     let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
-    let sinirDegeri : CGFloat = 120
+    
+    
+   fileprivate let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
+   fileprivate let sinirDegeri : CGFloat = 120
     
     let lblKullaniciBilgileri = UILabel()
     

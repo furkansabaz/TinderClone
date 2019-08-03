@@ -7,7 +7,7 @@
 //
 
 import UIKit
-struct Kullanici {
+struct Kullanici : ProfilViewModelOlustur {
     let kullaniciAdi : String
     let meslek : String
     let yasi : Int

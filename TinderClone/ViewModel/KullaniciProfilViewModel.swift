@@ -15,3 +15,9 @@ struct KullaniciProfilViewModel {
     let goruntuAdi : String
     let bilgiKonumu : NSTextAlignment
 }
+
+
+
+protocol ProfilViewModelOlustur {
+    func kullaniciProfilViewModelOlustur() -> KullaniciProfilViewModel
+}

@@ -16,15 +16,19 @@ class AnaController: UIViewController {
     let butonlarStackView = AnaGorunumAltStackView()
     
     
-    var kullanicilarPorfilViewModel : [KullaniciProfilViewModel] = [
-    Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdi: "kisi1").kullaniciProfilViewModelOlustur(),
-    Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdi: "kisi2").kullaniciProfilViewModelOlustur(),
-    Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdi: "kisi3").kullaniciProfilViewModelOlustur()
-    ]
+    var kullanicilarPorfilViewModel : [KullaniciProfilViewModel] = {
+        let profiller = [
+            Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdi: "kisi1"),
+            Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdi: "kisi2"),
+            Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdi: "kisi3"),
+            Reklam(baslik: "Steve Jobs", markaAdi: "Apple", afisGoruntuAdi: "apple")
+        ] as [ProfilViewModelOlustur]
+       let viewModeller =  profiller.map({ $0.kullaniciProfilViewModelOlustur()  })
+        return viewModeller
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         
         
@@ -54,13 +58,7 @@ class AnaController: UIViewController {
         kullanicilarPorfilViewModel.forEach { (kullaniciVM) in
             
             let profilView  = ProfilView(frame: .zero)
-            
-            profilView.imgProfil.image = UIImage(named: kullaniciVM.goruntuAdi)
-            
-            profilView.lblKullaniciBilgileri.attributedText = kullaniciVM.attrString
-            
-            profilView.lblKullaniciBilgileri.textAlignment = kullaniciVM.bilgiKonumu
-            
+            profilView.kullaniciViewModel = kullaniciVM
             profilDiziniView.addSubview(profilView)
             profilView.doldurSuperView()
             

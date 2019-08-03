@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D376E9722F5F47F00D8E709 /* KullaniciProfilViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */; };
+		3D376E9B22F6403000D8E709 /* Reklam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D376E9A22F6403000D8E709 /* Reklam.swift */; };
 		3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776D922F1BFD2004E79D3 /* AppDelegate.swift */; };
 		3D4776DC22F1BFD2004E79D3 /* AnaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776DB22F1BFD2004E79D3 /* AnaController.swift */; };
 		3D4776DF22F1BFD2004E79D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D4776DD22F1BFD2004E79D3 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KullaniciProfilViewModel.swift; sourceTree = "<group>"; };
+		3D376E9A22F6403000D8E709 /* Reklam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reklam.swift; sourceTree = "<group>"; };
 		3D4776D622F1BFD2004E79D3 /* TinderClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinderClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D4776D922F1BFD2004E79D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D4776DB22F1BFD2004E79D3 /* AnaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaController.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				3D47770022F340D6004E79D3 /* Kullanici.swift */,
+				3D376E9A22F6403000D8E709 /* Reklam.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				3D376E9722F5F47F00D8E709 /* KullaniciProfilViewModel.swift in Sources */,
 				3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */,
 				3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */,
+				3D376E9B22F6403000D8E709 /* Reklam.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
