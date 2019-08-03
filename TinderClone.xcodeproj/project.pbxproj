@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D376E9722F5F47F00D8E709 /* KullaniciProfilViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */; };
 		3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776D922F1BFD2004E79D3 /* AppDelegate.swift */; };
 		3D4776DC22F1BFD2004E79D3 /* AnaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776DB22F1BFD2004E79D3 /* AnaController.swift */; };
 		3D4776DF22F1BFD2004E79D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D4776DD22F1BFD2004E79D3 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KullaniciProfilViewModel.swift; sourceTree = "<group>"; };
 		3D4776D622F1BFD2004E79D3 /* TinderClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinderClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D4776D922F1BFD2004E79D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D4776DB22F1BFD2004E79D3 /* AnaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaController.swift; sourceTree = "<group>"; };
@@ -45,6 +47,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D376E9222F5F3C800D8E709 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3D4776DB22F1BFD2004E79D3 /* AnaController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3D376E9322F5F3D300D8E709 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		3D4776CD22F1BFD2004E79D3 = {
 			isa = PBXGroup;
 			children = (
@@ -64,11 +82,12 @@
 		3D4776D822F1BFD2004E79D3 /* TinderClone */ = {
 			isa = PBXGroup;
 			children = (
+				3D376E9322F5F3D300D8E709 /* ViewModel */,
+				3D376E9222F5F3C800D8E709 /* Controller */,
 				3D4776FF22F340CA004E79D3 /* Model */,
 				3D4776F122F1F545004E79D3 /* Views */,
 				3D4776EB22F1C0F4004E79D3 /* Uzantilar */,
 				3D4776D922F1BFD2004E79D3 /* AppDelegate.swift */,
-				3D4776DB22F1BFD2004E79D3 /* AnaController.swift */,
 				3D4776DD22F1BFD2004E79D3 /* Main.storyboard */,
 				3D4776E022F1BFD3004E79D3 /* Assets.xcassets */,
 				3D4776E222F1BFD3004E79D3 /* LaunchScreen.storyboard */,
@@ -179,6 +198,7 @@
 				3D4776FB22F2E7A6004E79D3 /* ProfilView.swift in Sources */,
 				3D47770122F340D6004E79D3 /* Kullanici.swift in Sources */,
 				3D4776F722F2BF32004E79D3 /* AnaGorunumUstStackView.swift in Sources */,
+				3D376E9722F5F47F00D8E709 /* KullaniciProfilViewModel.swift in Sources */,
 				3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */,
 				3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */,
 			);

@@ -16,10 +16,10 @@ class AnaController: UIViewController {
     let butonlarStackView = AnaGorunumAltStackView()
     
     
-    var kullanicilar = [
-    Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdi: "kisi1"),
-    Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdi: "kisi2"),
-    Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdi: "kisi3")
+    var kullanicilarPorfilViewModel : [KullaniciProfilViewModel] = [
+    Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdi: "kisi1").kullaniciProfilViewModelOlustur(),
+    Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdi: "kisi2").kullaniciProfilViewModelOlustur(),
+    Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdi: "kisi3").kullaniciProfilViewModelOlustur()
     ]
     
     override func viewDidLoad() {
@@ -51,27 +51,20 @@ class AnaController: UIViewController {
     
     func profilGorunumuAyarla() {
         
-        
-        kullanicilar.forEach { (k) in
-            let pView = ProfilView(frame: .zero)
+        kullanicilarPorfilViewModel.forEach { (kullaniciVM) in
             
-            pView.imgProfil.image = UIImage(named: k.goruntuAdi)
+            let profilView  = ProfilView(frame: .zero)
             
-            let attrText = NSMutableAttributedString(string: k.kullaniciAdi, attributes: [.font : UIFont.systemFont(ofSize: 30, weight: .heavy)])
+            profilView.imgProfil.image = UIImage(named: kullaniciVM.goruntuAdi)
             
-            attrText.append(NSAttributedString(string: " \(k.yasi)", attributes: [.font : UIFont.systemFont(ofSize: 23, weight: .regular)]))
+            profilView.lblKullaniciBilgileri.attributedText = kullaniciVM.attrString
             
-            attrText.append(NSAttributedString(string: "\n\(k.meslek)", attributes: [.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
+            profilView.lblKullaniciBilgileri.textAlignment = kullaniciVM.bilgiKonumu
             
-            pView.lblKullaniciBilgileri.attributedText = attrText
+            profilDiziniView.addSubview(profilView)
+            profilView.doldurSuperView()
             
-            
-            
-            profilDiziniView.addSubview(pView)
-            pView.doldurSuperView()
         }
-        
-        
         
     }
 

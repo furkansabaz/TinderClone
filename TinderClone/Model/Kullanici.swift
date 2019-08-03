@@ -6,10 +6,22 @@
 //  Copyright © 2019 Furkan Sabaz. All rights reserved.
 //
 
-import Foundation
+import UIKit
 struct Kullanici {
     let kullaniciAdi : String
     let meslek : String
     let yasi : Int
     let goruntuAdi : String
+    
+    
+    func kullaniciProfilViewModelOlustur() -> KullaniciProfilViewModel {
+        
+        let attrText = NSMutableAttributedString(string: kullaniciAdi, attributes: [.font : UIFont.systemFont(ofSize: 30, weight: .heavy)])
+        
+        attrText.append(NSAttributedString(string: " \(yasi)", attributes: [.font : UIFont.systemFont(ofSize: 23, weight: .regular)]))
+        
+        attrText.append(NSAttributedString(string: "\n\(meslek)", attributes: [.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
+        
+        return KullaniciProfilViewModel(attrString: attrText, goruntuAdi: goruntuAdi, bilgiKonumu: .left)
+    }
 }
