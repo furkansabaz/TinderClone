@@ -11,7 +11,7 @@ struct Kullanici : ProfilViewModelOlustur {
     let kullaniciAdi : String
     let meslek : String
     let yasi : Int
-    let goruntuAdi : String
+    let goruntuAdlari : [String]
     
     
     func kullaniciProfilViewModelOlustur() -> KullaniciProfilViewModel {
@@ -22,6 +22,6 @@ struct Kullanici : ProfilViewModelOlustur {
         
         attrText.append(NSAttributedString(string: "\n\(meslek)", attributes: [.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
         
-        return KullaniciProfilViewModel(attrString: attrText, goruntuAdi: goruntuAdi, bilgiKonumu: .left)
+        return KullaniciProfilViewModel(attrString: attrText, goruntuAdlari: goruntuAdlari, bilgiKonumu: .left)
     }
 }

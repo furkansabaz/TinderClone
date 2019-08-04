@@ -22,7 +22,7 @@ struct Reklam  : ProfilViewModelOlustur {
         
         attrText.append(NSAttributedString(string: "\n\(markaAdi)", attributes: [.font : UIFont.systemFont(ofSize: 25, weight: .bold)]))
         
-        return KullaniciProfilViewModel(attrString: attrText, goruntuAdi: afisGoruntuAdi, bilgiKonumu: .center)
+        return KullaniciProfilViewModel(attrString: attrText, goruntuAdlari: [afisGoruntuAdi], bilgiKonumu: .center)
     }
     
     

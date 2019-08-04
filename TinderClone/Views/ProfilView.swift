@@ -13,11 +13,23 @@ class ProfilView: UIView {
     var kullaniciViewModel : KullaniciProfilViewModel! {
         
         didSet {
-            imgProfil.image = UIImage(named: kullaniciViewModel.goruntuAdi)
+            
+            let goruntuAdi = kullaniciViewModel.goruntuAdlari.first ?? ""
+            imgProfil.image = UIImage(named: goruntuAdi)
             
             lblKullaniciBilgileri.attributedText = kullaniciViewModel.attrString
             
             lblKullaniciBilgileri.textAlignment = kullaniciViewModel.bilgiKonumu
+            
+            
+            (0..<kullaniciViewModel.goruntuAdlari.count).forEach { (_) in
+                let bView = UIView()
+                
+                bView.backgroundColor = seciliOlmayanRenk
+                goruntuBarStackView.addArrangedSubview(bView)
+            }
+            
+            goruntuBarStackView.arrangedSubviews.first?.backgroundColor = .white
         }
     }
     
@@ -28,6 +40,8 @@ class ProfilView: UIView {
     let lblKullaniciBilgileri = UILabel()
     fileprivate let sinirDegeri : CGFloat = 120
     
+    fileprivate let seciliOlmayanRenk = UIColor(white: 0, alpha: 0.2)
+    
     
     
     override init(frame: CGRect) {
@@ -36,12 +50,13 @@ class ProfilView: UIView {
         layer.cornerRadius = 10
         clipsToBounds = true
         
+        
         imgProfil.contentMode = .scaleAspectFill
         
         addSubview(imgProfil)
         imgProfil.doldurSuperView()
         
-        
+        olusturBarStackView()
         olusturGradientLayer()
         
         addSubview(lblKullaniciBilgileri)
@@ -60,7 +75,51 @@ class ProfilView: UIView {
         
         let panG = UIPanGestureRecognizer(target: self, action: #selector(profilPanYakala))
         addGestureRecognizer(panG)
+        
+        let tapG = UITapGestureRecognizer(target: self, action: #selector(yakalaTapGesture))
+        addGestureRecognizer(tapG)
     }
+    
+    var goruntuIndex = 0
+    @objc fileprivate func yakalaTapGesture(tapG : UITapGestureRecognizer) {
+    
+        let konum = tapG.location(in: nil)
+        
+        let sonrakiGoruntuGecis = konum.x > frame.width / 2 ? true : false
+        
+        if sonrakiGoruntuGecis {
+            goruntuIndex = goruntuIndex + 1 >= kullaniciViewModel.goruntuAdlari.count ? 0 : goruntuIndex + 1
+        } else {
+            goruntuIndex = goruntuIndex - 1 < 0 ? kullaniciViewModel.goruntuAdlari.count - 1 : goruntuIndex - 1
+        }
+        let goruntuAdi = kullaniciViewModel.goruntuAdlari[goruntuIndex]
+        
+        imgProfil.image = UIImage(named: goruntuAdi)
+        
+        
+        goruntuBarStackView.arrangedSubviews.forEach({ (sView) in
+            sView.backgroundColor = seciliOlmayanRenk
+        })
+        
+        goruntuBarStackView.arrangedSubviews[goruntuIndex].backgroundColor = .white
+        
+        
+    }
+    
+    fileprivate let goruntuBarStackView = UIStackView()
+    
+    fileprivate func olusturBarStackView() {
+        addSubview(goruntuBarStackView)
+        
+        goruntuBarStackView.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 8, left: 8, bottom: 0, right: 8), boyut: .init(width: 0, height: 4))
+        
+        goruntuBarStackView.spacing = 4
+        
+        goruntuBarStackView.distribution = .fillEqually
+        
+        
+    }
+    
     
     
     fileprivate func olusturGradientLayer() {

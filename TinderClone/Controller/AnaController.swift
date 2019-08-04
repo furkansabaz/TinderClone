@@ -18,10 +18,11 @@ class AnaController: UIViewController {
     
     var kullanicilarPorfilViewModel : [KullaniciProfilViewModel] = {
         let profiller = [
-            Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdi: "kisi1"),
-            Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdi: "kisi2"),
-            Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdi: "kisi3"),
-            Reklam(baslik: "Steve Jobs", markaAdi: "Apple", afisGoruntuAdi: "apple")
+            Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdlari: ["kisi1"]),
+            Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdlari: ["kisi2"]),
+            Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdlari: ["kisi3"]),
+            Reklam(baslik: "Steve Jobs", markaAdi: "Apple", afisGoruntuAdi: "apple"),
+            Kullanici(kullaniciAdi: "Shakira", meslek: "Şarkıcı", yasi: 40, goruntuAdlari: ["shakira1","shakira2","shakira3","shakira4"])
         ] as [ProfilViewModelOlustur]
        let viewModeller =  profiller.map({ $0.kullaniciProfilViewModelOlustur()  })
         return viewModeller

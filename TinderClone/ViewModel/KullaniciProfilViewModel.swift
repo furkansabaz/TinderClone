@@ -12,7 +12,7 @@ import UIKit
 struct KullaniciProfilViewModel {
     
     let attrString : NSAttributedString
-    let goruntuAdi : String
+    let goruntuAdlari : [String]
     let bilgiKonumu : NSTextAlignment
 }
 
