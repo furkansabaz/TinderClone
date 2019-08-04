@@ -22,11 +22,13 @@ class ProfilView: UIView {
     }
     
     
-    
-   fileprivate let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
-   fileprivate let sinirDegeri : CGFloat = 120
-    
+   
+    fileprivate let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
+    fileprivate let gradientLayer = CAGradientLayer()
     let lblKullaniciBilgileri = UILabel()
+    fileprivate let sinirDegeri : CGFloat = 120
+    
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,6 +42,8 @@ class ProfilView: UIView {
         imgProfil.doldurSuperView()
         
         
+        olusturGradientLayer()
+        
         addSubview(lblKullaniciBilgileri)
         
         lblKullaniciBilgileri.anchor(top: nil,
@@ -49,14 +53,35 @@ class ProfilView: UIView {
                                      padding: .init(top: 0, left: 15, bottom: 15, right: 15))
         
         
-        lblKullaniciBilgileri.text = "Ahmet 25 İnşaat Mühendisi"
+        
         lblKullaniciBilgileri.textColor = .white
-        lblKullaniciBilgileri.font = UIFont.systemFont(ofSize: 27, weight: .heavy)
         lblKullaniciBilgileri.numberOfLines = 0
         
         
         let panG = UIPanGestureRecognizer(target: self, action: #selector(profilPanYakala))
         addGestureRecognizer(panG)
+    }
+    
+    
+    fileprivate func olusturGradientLayer() {
+        
+        
+        
+        gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
+        
+        gradientLayer.locations = [0.4,1.2]
+        
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: 350, height: 350)
+        
+        layer.addSublayer(gradientLayer)
+        
+    }
+    
+    
+    
+    override func layoutSubviews() {
+        gradientLayer.frame = self.frame
+        
     }
     
     
@@ -66,6 +91,11 @@ class ProfilView: UIView {
         
         
         switch panGesture.state {
+        
+        case .began :
+            superview?.subviews.forEach({ (subView) in
+                subView.layer.removeAllAnimations()
+            })
             
         case .changed :
             degisiklikPanYakala(panGesture)
