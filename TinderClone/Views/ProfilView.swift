@@ -30,9 +30,22 @@ class ProfilView: UIView {
             }
             
             goruntuBarStackView.arrangedSubviews.first?.backgroundColor = .white
+            ayarlaGoruntuIndexGozlemci()
         }
     }
-    
+    fileprivate func ayarlaGoruntuIndexGozlemci() {
+        
+        kullaniciViewModel.goruntuIndexGozlemci = { (index, goruntu) in
+            
+            self.goruntuBarStackView.arrangedSubviews.forEach({ sView in
+                sView.backgroundColor = self.seciliOlmayanRenk
+            })
+            
+            self.goruntuBarStackView.arrangedSubviews[index].backgroundColor = .white
+            self.imgProfil.image = goruntu
+        }
+        
+    }
     
    
     fileprivate let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
@@ -88,20 +101,10 @@ class ProfilView: UIView {
         let sonrakiGoruntuGecis = konum.x > frame.width / 2 ? true : false
         
         if sonrakiGoruntuGecis {
-            goruntuIndex = goruntuIndex + 1 >= kullaniciViewModel.goruntuAdlari.count ? 0 : goruntuIndex + 1
+            kullaniciViewModel.sonrakiGoruntuyeGit()
         } else {
-            goruntuIndex = goruntuIndex - 1 < 0 ? kullaniciViewModel.goruntuAdlari.count - 1 : goruntuIndex - 1
+            kullaniciViewModel.oncekiGoruntuyeGit()
         }
-        let goruntuAdi = kullaniciViewModel.goruntuAdlari[goruntuIndex]
-        
-        imgProfil.image = UIImage(named: goruntuAdi)
-        
-        
-        goruntuBarStackView.arrangedSubviews.forEach({ (sView) in
-            sView.backgroundColor = seciliOlmayanRenk
-        })
-        
-        goruntuBarStackView.arrangedSubviews[goruntuIndex].backgroundColor = .white
         
         
     }
