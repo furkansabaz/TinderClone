@@ -60,6 +60,23 @@ class KayitController: UIViewController {
         return txt
     }()
     
+    let btnKayitOl : UIButton = {
+       
+        let btn = UIButton(type: .system)
+        
+        btn.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        
+        btn.layer.cornerRadius = 22
+        
+        btn.setTitle("Kayıt Ol", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        btn.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+        
+        return btn
+    }()
+    
     
     
     
@@ -69,14 +86,79 @@ class KayitController: UIViewController {
         
         arkaPlanGradientAyarla()
         //view.backgroundColor = .gray
+        layoutDuzenle()
+        
+        olusturNotificationObserver()
+        
+        ekleTapGesture()
         
         
-        let kayitSV = UIStackView(arrangedSubviews: [
-        btnFotografSec,
-        txtEmailAdresi,
-        txtAdiSoyadi,
-        txtParola
-        ])
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    fileprivate func ekleTapGesture() {
+        
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(klavyeKapat)))
+        
+    }
+    @objc fileprivate func klavyeKapat() {
+        
+        self.view.endEditing(true)
+        
+        
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.transform = .identity
+        }, completion: nil)
+        
+    }
+    
+    fileprivate func olusturNotificationObserver() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(klavyeGosteriminiYakala), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(klavyeGizlenmesiniYakala), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    @objc fileprivate func klavyeGizlenmesiniYakala(notification : Notification) {
+        UIView.animate(withDuration: 0.6, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.transform = .identity
+        }, completion: nil)
+    }
+    @objc fileprivate func klavyeGosteriminiYakala(notification : Notification) {
+        
+        guard let klavyeBitisDegerleri = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return}
+        
+        let klavyeBitisFrame = klavyeBitisDegerleri.cgRectValue
+        
+        
+        
+        let altBoslukMiktari = view.frame.height - (kayitSV.frame.origin.y + kayitSV.frame.height)
+        
+        
+        
+        let hataPayi = klavyeBitisFrame.height - altBoslukMiktari
+        
+        self.view.transform = CGAffineTransform(translationX: 0, y: -hataPayi-10)
+        
+        
+    }
+    
+    lazy var kayitSV = UIStackView(arrangedSubviews: [
+    btnFotografSec,
+    txtEmailAdresi,
+    txtAdiSoyadi,
+    txtParola,
+    btnKayitOl
+    ])
+    
+    fileprivate func layoutDuzenle() {
+        
         
         view.addSubview(kayitSV)
         
