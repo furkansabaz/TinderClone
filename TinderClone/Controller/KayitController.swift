@@ -9,9 +9,9 @@
 import UIKit
 
 class KayitController: UIViewController {
-
+    
     let btnFotografSec : UIButton = {
-       
+        
         let btn = UIButton(type: .system)
         
         btn.setTitle("Fotoğraf Seç", for: .normal)
@@ -19,7 +19,7 @@ class KayitController: UIViewController {
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 32, weight: .heavy)
         
         btn.setTitleColor(.black, for: .normal)
-
+        
         btn.backgroundColor = .white
         btn.layer.cornerRadius = 15
         
@@ -34,7 +34,7 @@ class KayitController: UIViewController {
         txt.backgroundColor = .white
         txt.placeholder = "Email Adresiniz"
         txt.keyboardType = .emailAddress
-        
+        txt.addTarget(self, action: #selector(yakalaTextFieldDegisim), for: .editingChanged)
         return txt
     }()
     
@@ -44,6 +44,7 @@ class KayitController: UIViewController {
         
         txt.backgroundColor = .white
         txt.placeholder = "Ad ve Soyad"
+        txt.addTarget(self, action: #selector(yakalaTextFieldDegisim), for: .editingChanged)
         
         return txt
         
@@ -57,11 +58,12 @@ class KayitController: UIViewController {
         txt.backgroundColor = .white
         txt.placeholder = "Parolanız"
         txt.isSecureTextEntry = true
+        txt.addTarget(self, action: #selector(yakalaTextFieldDegisim), for: .editingChanged)
         return txt
     }()
     
     let btnKayitOl : UIButton = {
-       
+        
         let btn = UIButton(type: .system)
         
         btn.heightAnchor.constraint(equalToConstant: 45).isActive = true
@@ -69,10 +71,14 @@ class KayitController: UIViewController {
         btn.layer.cornerRadius = 22
         
         btn.setTitle("Kayıt Ol", for: .normal)
-        btn.setTitleColor(.white, for: .normal)
+        //btn.setTitleColor(.white, for: .normal)
         
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
-        btn.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+        //btn.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+        
+        btn.backgroundColor = .lightGray
+        btn.setTitleColor(.darkGray, for: .disabled)
+        btn.isEnabled = false
         
         return btn
     }()
@@ -82,7 +88,7 @@ class KayitController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         
         arkaPlanGradientAyarla()
         //view.backgroundColor = .gray
@@ -93,6 +99,51 @@ class KayitController: UIViewController {
         ekleTapGesture()
         
         
+        olusturKayitViewModelObserver()
+    }
+    
+    let kayitViewModel = KayitViewModel()
+    
+    fileprivate func olusturKayitViewModelObserver() {
+        kayitViewModel.kayitVerileriGecerliObserver = { (gecerli) in
+            
+            print("Kayıt Formu Dolduruluyor. ", gecerli ? "Form Geçerli" : "Form Geçersiz")
+            
+            self.btnKayitOl.isEnabled = gecerli
+            
+            if gecerli {
+                self.btnKayitOl.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+                self.btnKayitOl.setTitleColor(.white, for: .normal)
+            } else {
+                self.btnKayitOl.backgroundColor = .lightGray
+                self.btnKayitOl.setTitleColor(.darkGray, for: .disabled)
+            }
+        }
+    }
+    
+    @objc fileprivate func yakalaTextFieldDegisim(textField : UITextField) {
+        
+        if textField == txtEmailAdresi {
+            kayitViewModel.emailAdresi = textField.text
+        } else if textField == txtAdiSoyadi {
+            kayitViewModel.adiSoyadi = textField.text
+        } else if textField == txtParola {
+            kayitViewModel.parola = textField.text
+        }
+        
+        //        let verilerGecerli = txtAdiSoyadi.text?.isEmpty == false && txtEmailAdresi.text?.isEmpty == false && txtParola.text?.isEmpty == false
+        //
+        //        btnKayitOl.isEnabled = verilerGecerli
+        //
+        //        if verilerGecerli {
+        //            btnKayitOl.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
+        //            btnKayitOl.setTitleColor(.white, for: .normal)
+        //        } else {
+        //            btnKayitOl.backgroundColor = .lightGray
+        //            btnKayitOl.setTitleColor(.darkGray, for: .disabled)
+        //        }
+        //
+        //        print("Düzenleniyor : ", textField.text ?? "")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -150,12 +201,12 @@ class KayitController: UIViewController {
     }
     
     lazy var dikeySV : UIStackView = {
-       let sv = UIStackView(arrangedSubviews: [
-       txtEmailAdresi,
-       txtAdiSoyadi,
-       txtParola,
-       btnKayitOl
-       ])
+        let sv = UIStackView(arrangedSubviews: [
+            txtEmailAdresi,
+            txtAdiSoyadi,
+            txtParola,
+            btnKayitOl
+        ])
         
         sv.axis = .vertical
         
@@ -166,8 +217,8 @@ class KayitController: UIViewController {
     }()
     
     lazy var kayitSV = UIStackView(arrangedSubviews: [
-    btnFotografSec,
-    dikeySV
+        btnFotografSec,
+        dikeySV
     ])
     
     
@@ -218,6 +269,6 @@ class KayitController: UIViewController {
         print("Gradient Çalıştı : \(view.bounds)")
         
     }
-
-
+    
+    
 }
