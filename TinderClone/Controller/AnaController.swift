@@ -32,12 +32,17 @@ class AnaController: UIViewController {
         super.viewDidLoad()
         
         
+        ustStackView.btnAyarlar.addTarget(self, action: #selector(btnAyarlarPressed), for: .touchUpInside)
         
         
         layoutDuzenle()
         profilGorunumuAyarla()
     }
     
+    @objc func btnAyarlarPressed() {
+        let kayitController = KayitController()
+        present(kayitController, animated: true, completion: nil)
+    }
     
     //MARK:- LAYOUT DÜZENLEYEN FONKSİYON
     func layoutDuzenle() {
@@ -46,7 +51,7 @@ class AnaController: UIViewController {
         view.addSubview(genelStackView)
         
         
-        genelStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+        _ = genelStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
         genelStackView.isLayoutMarginsRelativeArrangement = true
         genelStackView.layoutMargins = .init(top: 0, left: 10, bottom: 0, right: 10)

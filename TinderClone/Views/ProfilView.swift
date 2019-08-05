@@ -74,7 +74,7 @@ class ProfilView: UIView {
         
         addSubview(lblKullaniciBilgileri)
         
-        lblKullaniciBilgileri.anchor(top: nil,
+        _ = lblKullaniciBilgileri.anchor(top: nil,
                                      bottom: bottomAnchor,
                                      leading: leadingAnchor,
                                      trailing: trailingAnchor,
@@ -114,7 +114,7 @@ class ProfilView: UIView {
     fileprivate func olusturBarStackView() {
         addSubview(goruntuBarStackView)
         
-        goruntuBarStackView.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 8, left: 8, bottom: 0, right: 8), boyut: .init(width: 0, height: 4))
+        _ = goruntuBarStackView.anchor(top: topAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 8, left: 8, bottom: 0, right: 8), boyut: .init(width: 0, height: 4))
         
         goruntuBarStackView.spacing = 4
         

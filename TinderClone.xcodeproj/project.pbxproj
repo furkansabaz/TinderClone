@@ -19,6 +19,8 @@
 		3D4776F722F2BF32004E79D3 /* AnaGorunumUstStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */; };
 		3D4776FB22F2E7A6004E79D3 /* ProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */; };
 		3D47770122F340D6004E79D3 /* Kullanici.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D47770022F340D6004E79D3 /* Kullanici.swift */; };
+		3DCD5C6D22F7E1D5004204BA /* KayitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD5C6C22F7E1D5004204BA /* KayitController.swift */; };
+		3DCD5C6F22F7E644004204BA /* OzelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD5C6E22F7E644004204BA /* OzelTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaGorunumUstStackView.swift; sourceTree = "<group>"; };
 		3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilView.swift; sourceTree = "<group>"; };
 		3D47770022F340D6004E79D3 /* Kullanici.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kullanici.swift; sourceTree = "<group>"; };
+		3DCD5C6C22F7E1D5004204BA /* KayitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KayitController.swift; sourceTree = "<group>"; };
+		3DCD5C6E22F7E644004204BA /* OzelTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OzelTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				3D4776DB22F1BFD2004E79D3 /* AnaController.swift */,
+				3DCD5C6C22F7E1D5004204BA /* KayitController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -112,6 +117,7 @@
 				3D4776F222F1F562004E79D3 /* AnaGorunumAltStackView.swift */,
 				3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */,
 				3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */,
+				3DCD5C6E22F7E644004204BA /* OzelTextField.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -196,12 +202,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DCD5C6F22F7E644004204BA /* OzelTextField.swift in Sources */,
 				3D4776DC22F1BFD2004E79D3 /* AnaController.swift in Sources */,
 				3D4776ED22F1C10E004E79D3 /* Uzantilar+UIView.swift in Sources */,
 				3D4776FB22F2E7A6004E79D3 /* ProfilView.swift in Sources */,
 				3D47770122F340D6004E79D3 /* Kullanici.swift in Sources */,
 				3D4776F722F2BF32004E79D3 /* AnaGorunumUstStackView.swift in Sources */,
 				3D376E9722F5F47F00D8E709 /* KullaniciProfilViewModel.swift in Sources */,
+				3DCD5C6D22F7E1D5004204BA /* KayitController.swift in Sources */,
 				3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */,
 				3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */,
 				3D376E9B22F6403000D8E709 /* Reklam.swift in Sources */,
