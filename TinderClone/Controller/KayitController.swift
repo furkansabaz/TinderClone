@@ -149,20 +149,44 @@ class KayitController: UIViewController {
         
     }
     
+    lazy var dikeySV : UIStackView = {
+       let sv = UIStackView(arrangedSubviews: [
+       txtEmailAdresi,
+       txtAdiSoyadi,
+       txtParola,
+       btnKayitOl
+       ])
+        
+        sv.axis = .vertical
+        
+        sv.distribution = .fillEqually
+        sv.spacing = 10
+        return sv
+        
+    }()
+    
     lazy var kayitSV = UIStackView(arrangedSubviews: [
     btnFotografSec,
-    txtEmailAdresi,
-    txtAdiSoyadi,
-    txtParola,
-    btnKayitOl
+    dikeySV
     ])
     
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        
+        if self.traitCollection.verticalSizeClass == .compact {
+            kayitSV.axis = .horizontal
+        } else {
+            kayitSV.axis = .vertical
+        }
+        
+    }
     fileprivate func layoutDuzenle() {
         
         
         view.addSubview(kayitSV)
         
         kayitSV.axis = .vertical
+        btnFotografSec.widthAnchor.constraint(equalToConstant: 260).isActive = true
         
         kayitSV.spacing = 10
         _ = kayitSV.anchor(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 45, bottom: 0, right: 45))
@@ -170,10 +194,18 @@ class KayitController: UIViewController {
         kayitSV.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        gradient.frame = view.bounds
+        
+    }
+    let gradient = CAGradientLayer()
     fileprivate func arkaPlanGradientAyarla() {
         
         
-        let gradient = CAGradientLayer()
+        
         let ustRenk = #colorLiteral(red: 0.6392156863, green: 0.8, blue: 0.9568627451, alpha: 1)
         let altRenk = #colorLiteral(red: 0.1215686275, green: 0.1490196078, blue: 0.737254902, alpha: 1)
         
@@ -183,7 +215,7 @@ class KayitController: UIViewController {
         
         view.layer.addSublayer(gradient)
         gradient.frame = view.bounds
-        
+        print("Gradient Çalıştı : \(view.bounds)")
         
     }
 
