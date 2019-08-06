@@ -25,6 +25,11 @@ class KayitController: UIViewController {
         btn.layer.cornerRadius = 15
         
         btn.heightAnchor.constraint(equalToConstant: 280).isActive = true
+        
+        btn.addTarget(self, action: #selector(btnFotografSecPressed), for: .touchUpInside)
+        
+        btn.imageView?.contentMode = .scaleAspectFill
+        btn.clipsToBounds = true
         return btn
     }()
     
@@ -108,10 +113,10 @@ class KayitController: UIViewController {
     let kayitViewModel = KayitViewModel()
     
     fileprivate func olusturKayitViewModelObserver() {
-        kayitViewModel.kayitVerileriGecerliObserver = { (gecerli) in
+        
+        kayitViewModel.bindableKayitVerileriGecerli.degerAta { (gecerli) in
             
-            print("Kayıt Formu Dolduruluyor. ", gecerli ? "Form Geçerli" : "Form Geçersiz")
-            
+            guard let gecerli = gecerli else { return }
             self.btnKayitOl.isEnabled = gecerli
             
             if gecerli {
@@ -121,6 +126,11 @@ class KayitController: UIViewController {
                 self.btnKayitOl.backgroundColor = .lightGray
                 self.btnKayitOl.setTitleColor(.darkGray, for: .disabled)
             }
+        }
+        
+        
+        kayitViewModel.bindableImg.degerAta { (imgProfil) in
+            self.btnFotografSec.setImage((imgProfil)?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
     }
     
@@ -302,6 +312,32 @@ class KayitController: UIViewController {
         hud.show(in: self.view)
         
         hud.dismiss(afterDelay: 2, animated: true)
+    }
+    
+    @objc fileprivate func btnFotografSecPressed() {
+        let imgPickerController = UIImagePickerController()
+        imgPickerController.delegate = self
+        
+        present(imgPickerController, animated: true, completion: nil)
+    }
+    
+    
+}
+
+extension KayitController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+            
+        
+        let imgSecilen = info[.originalImage] as? UIImage
+        
+        kayitViewModel.bindableImg.deger = imgSecilen
+        
+        dismiss(animated: true, completion: nil)
     }
     
     

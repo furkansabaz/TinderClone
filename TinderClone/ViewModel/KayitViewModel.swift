@@ -10,6 +10,9 @@ import UIKit
 
 class KayitViewModel {
     
+    
+    var bindableImg = Bindable<UIImage>()
+    
     var emailAdresi : String? {
         didSet {
             veriGecerliKontrol()
@@ -29,11 +32,12 @@ class KayitViewModel {
     fileprivate func veriGecerliKontrol() {
         
         let gecerli = emailAdresi?.isEmpty == false && adiSoyadi?.isEmpty == false && parola?.isEmpty == false
-        kayitVerileriGecerliObserver?(gecerli)
+        bindableKayitVerileriGecerli.deger = gecerli
+        
     }
     
-    var kayitVerileriGecerliObserver : ((Bool) -> ())?
     
+    var bindableKayitVerileriGecerli = Bindable<Bool>()
     
     
 }
