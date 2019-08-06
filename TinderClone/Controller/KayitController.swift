@@ -132,6 +132,16 @@ class KayitController: UIViewController {
         kayitViewModel.bindableImg.degerAta { (imgProfil) in
             self.btnFotografSec.setImage((imgProfil)?.withRenderingMode(.alwaysOriginal), for: .normal)
         }
+        
+        kayitViewModel.bindableKayitOluyor.degerAta { (kayitOluyor) in
+            
+            if kayitOluyor == true {
+                self.kayitHUD.textLabel.text = "Hesap Oluşturuluyor"
+                self.kayitHUD.show(in: self.view)
+            } else {
+                self.kayitHUD.dismiss()
+            }
+        }
     }
     
     @objc fileprivate func yakalaTextFieldDegisim(textField : UITextField) {
@@ -144,19 +154,7 @@ class KayitController: UIViewController {
             kayitViewModel.parola = textField.text
         }
         
-        //        let verilerGecerli = txtAdiSoyadi.text?.isEmpty == false && txtEmailAdresi.text?.isEmpty == false && txtParola.text?.isEmpty == false
-        //
-        //        btnKayitOl.isEnabled = verilerGecerli
-        //
-        //        if verilerGecerli {
-        //            btnKayitOl.backgroundColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1)
-        //            btnKayitOl.setTitleColor(.white, for: .normal)
-        //        } else {
-        //            btnKayitOl.backgroundColor = .lightGray
-        //            btnKayitOl.setTitleColor(.darkGray, for: .disabled)
-        //        }
-        //
-        //        print("Düzenleniyor : ", textField.text ?? "")
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -207,6 +205,10 @@ class KayitController: UIViewController {
         
         
         let hataPayi = klavyeBitisFrame.height - altBoslukMiktari
+        
+        if hataPayi < 0 {
+            return
+        }
         
         self.view.transform = CGAffineTransform(translationX: 0, y: -hataPayi-10)
         
@@ -283,25 +285,32 @@ class KayitController: UIViewController {
         
     }
     
+    
+    let kayitHUD = JGProgressHUD(style: .dark)
     @objc fileprivate func btnKayitOlPressed() {
         
         self.klavyeKapat()
-        guard let emailAdresi = txtEmailAdresi.text else { return }
-        guard let parola = txtParola.text else { return }
         
-        Auth.auth().createUser(withEmail: emailAdresi, password: parola) { (sonuc, hata) in
+        
+        kayitViewModel.kullaniciKayitGerceklestir { (hata) in
             
             if let hata = hata {
-                print("Kullanıcı Kayıt Olurken Hata Meydana Geldi : \(hata.localizedDescription)")
                 self.hataBilgilendirHUD(hata: hata)
                 return
             }
-            
-            print("Kullanıcı Kaydı Başarılı. Kullanıcı ID : \(sonuc?.user.uid ?? "Bulunamadı")")
+            print("Kayıt Başarıyla Tamamlandı")
         }
+        
+        
+            
+            
+            
+           
     }
     
     fileprivate func hataBilgilendirHUD(hata : Error) {
+        
+        
         
         let hud = JGProgressHUD(style: .dark)
         

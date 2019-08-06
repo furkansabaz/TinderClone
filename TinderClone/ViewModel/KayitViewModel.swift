@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Firebase
 
 class KayitViewModel {
     
-    
+    var bindableKayitOluyor = Bindable<Bool>()
+    var bindableKayitVerileriGecerli = Bindable<Bool>()
     var bindableImg = Bindable<UIImage>()
     
     var emailAdresi : String? {
@@ -36,8 +38,51 @@ class KayitViewModel {
         
     }
     
+    func kullaniciKayitGerceklestir(completion : @escaping (Error?) -> ()){
+        
+        guard let emailAdresi = emailAdresi , let parola = parola else {return}
+        bindableKayitOluyor.deger = true
+        
+        Auth.auth().createUser(withEmail: emailAdresi, password: parola) { (sonuc, hata) in
+            
+            if let hata = hata {
+                print("Kullanıcı Kayıt Olurken Hata Meydana Geldi : \(hata.localizedDescription)")
+                completion(hata)
+                return
+            }
+            
+            print("Kullanıcı Kaydı Başarılı. Kullanıcı ID : \(sonuc?.user.uid ?? "Bulunamadı")")
+            
+            let goruntuAdi = UUID().uuidString
+            
+            let ref = Storage.storage().reference(withPath: "/Goruntuler/\(goruntuAdi)")
+            
+            let goruntuData = self.bindableImg.deger?.jpegData(compressionQuality: 0.8) ?? Data()
+            
+            ref.putData(goruntuData, metadata: nil) { (_, hata) in
+                
+                if let hata = hata {
+                    completion(hata)
+                    return
+                }
+                print("Görüntü Başarıyla Upload edildi")
+                
+                ref.downloadURL { (url, hata) in
+                    if let hata = hata {
+                        completion(hata)
+                        return
+                    }
+                    
+                    
+                    self.bindableKayitOluyor.deger = false
+                    print("Görüntü URL : \(url)")
+                }
+            }
+        }
+    }
     
-    var bindableKayitVerileriGecerli = Bindable<Bool>()
+    
+    
     
     
 }
