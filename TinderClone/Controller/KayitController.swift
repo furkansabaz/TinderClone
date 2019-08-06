@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import Firebase
+import JGProgressHUD
 class KayitController: UIViewController {
     
     let btnFotografSec : UIButton = {
@@ -79,6 +80,8 @@ class KayitController: UIViewController {
         btn.backgroundColor = .lightGray
         btn.setTitleColor(.darkGray, for: .disabled)
         btn.isEnabled = false
+        
+        btn.addTarget(self, action: #selector(btnKayitOlPressed), for: .touchUpInside)
         
         return btn
     }()
@@ -268,6 +271,37 @@ class KayitController: UIViewController {
         gradient.frame = view.bounds
         print("Gradient Çalıştı : \(view.bounds)")
         
+    }
+    
+    @objc fileprivate func btnKayitOlPressed() {
+        
+        self.klavyeKapat()
+        guard let emailAdresi = txtEmailAdresi.text else { return }
+        guard let parola = txtParola.text else { return }
+        
+        Auth.auth().createUser(withEmail: emailAdresi, password: parola) { (sonuc, hata) in
+            
+            if let hata = hata {
+                print("Kullanıcı Kayıt Olurken Hata Meydana Geldi : \(hata.localizedDescription)")
+                self.hataBilgilendirHUD(hata: hata)
+                return
+            }
+            
+            print("Kullanıcı Kaydı Başarılı. Kullanıcı ID : \(sonuc?.user.uid ?? "Bulunamadı")")
+        }
+    }
+    
+    fileprivate func hataBilgilendirHUD(hata : Error) {
+        
+        let hud = JGProgressHUD(style: .dark)
+        
+        hud.textLabel.text = "Kayıt İşlemi Başarısız"
+        
+        hud.detailTextLabel.text = hata.localizedDescription
+        
+        hud.show(in: self.view)
+        
+        hud.dismiss(afterDelay: 2, animated: true)
     }
     
     
