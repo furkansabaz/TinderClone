@@ -300,18 +300,10 @@ class KayitController: UIViewController {
             }
             print("Kayıt Başarıyla Tamamlandı")
         }
-        
-        
-            
-            
-            
-           
+         
     }
     
     fileprivate func hataBilgilendirHUD(hata : Error) {
-        
-        
-        
         let hud = JGProgressHUD(style: .dark)
         
         hud.textLabel.text = "Kayıt İşlemi Başarısız"
