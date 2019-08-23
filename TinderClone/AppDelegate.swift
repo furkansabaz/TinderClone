@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = KayitController()
+        window?.rootViewController = AnaController()
         
         return true
     }

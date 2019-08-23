@@ -8,20 +8,34 @@
 
 import UIKit
 struct Kullanici : ProfilViewModelOlustur {
-    let kullaniciAdi : String
-    let meslek : String
-    let yasi : Int
-    let goruntuAdlari : [String]
+    var kullaniciAdi : String?
+    var meslek : String?
+    var yasi : Int?
+    //let goruntuAdlari : [String]
+    var goruntuURL1 : String
     
+    var kullaniciID : String
+    
+    init(bilgiler : [String : Any]){
+        self.kullaniciAdi = bilgiler["AdiSoyadi"] as? String ?? ""
+        self.yasi = bilgiler["Yasi"] as? Int
+        self.meslek = bilgiler["Meslek"] as? String
+        
+        self.goruntuURL1 = bilgiler["GoruntuURL"] as? String ?? ""
+        self.kullaniciID = bilgiler["KullaniciID"] as? String ?? ""
+    }
     
     func kullaniciProfilViewModelOlustur() -> KullaniciProfilViewModel {
         
-        let attrText = NSMutableAttributedString(string: kullaniciAdi, attributes: [.font : UIFont.systemFont(ofSize: 30, weight: .heavy)])
+        let attrText = NSMutableAttributedString(string: kullaniciAdi ?? "", attributes: [.font : UIFont.systemFont(ofSize: 30, weight: .heavy)])
         
-        attrText.append(NSAttributedString(string: " \(yasi)", attributes: [.font : UIFont.systemFont(ofSize: 23, weight: .regular)]))
+        let yasStr = yasi != nil ? "\(yasi!)" : "**"
         
-        attrText.append(NSAttributedString(string: "\n\(meslek)", attributes: [.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
+        attrText.append(NSAttributedString(string: " \(yasStr)", attributes: [.font : UIFont.systemFont(ofSize: 23, weight: .regular)]))
         
-        return KullaniciProfilViewModel(attrString: attrText, goruntuAdlari: goruntuAdlari, bilgiKonumu: .left)
+        let meslekStr = meslek != nil ? meslek! : "Girilmedi"
+        attrText.append(NSAttributedString(string: "\n\(meslekStr)", attributes: [.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
+        
+        return KullaniciProfilViewModel(attrString: attrText, goruntuAdlari: [goruntuURL1], bilgiKonumu: .left)
     }
 }

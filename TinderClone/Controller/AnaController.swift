@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Firebase
 class AnaController: UIViewController {
 
     let ustStackView = AnaGorunumUstStackView()
@@ -15,18 +15,19 @@ class AnaController: UIViewController {
     //MARK:- ÜST MENÜDEKİ bUTONLARI TUTAR
     let butonlarStackView = AnaGorunumAltStackView()
     
+    var kullanicilarPorfilViewModel = [KullaniciProfilViewModel]()
     
-    var kullanicilarPorfilViewModel : [KullaniciProfilViewModel] = {
-        let profiller = [
-            Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdlari: ["kisi1"]),
-            Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdlari: ["kisi2"]),
-            Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdlari: ["kisi3"]),
-            Reklam(baslik: "Steve Jobs", markaAdi: "Apple", afisGoruntuAdi: "apple"),
-            Kullanici(kullaniciAdi: "Shakira", meslek: "Şarkıcı", yasi: 40, goruntuAdlari: ["shakira1","shakira2","shakira3","shakira4"])
-        ] as [ProfilViewModelOlustur]
-       let viewModeller =  profiller.map({ $0.kullaniciProfilViewModelOlustur()  })
-        return viewModeller
-    }()
+//    var kullanicilarPorfilViewModel : [KullaniciProfilViewModel] = {
+//        let profiller = [
+//            Kullanici(kullaniciAdi: "Sinem", meslek: "Kuaför", yasi: 25, goruntuAdlari: ["kisi1"]),
+//            Kullanici(kullaniciAdi: "Murat", meslek: "DJ", yasi: 18, goruntuAdlari: ["kisi2"]),
+//            Kullanici(kullaniciAdi: "Tuba", meslek: "Aktör", yasi: 24, goruntuAdlari: ["kisi3"]),
+//            Reklam(baslik: "Steve Jobs", markaAdi: "Apple", afisGoruntuAdi: "apple"),
+//            Kullanici(kullaniciAdi: "Shakira", meslek: "Şarkıcı", yasi: 40, goruntuAdlari: ["shakira1","shakira2","shakira3","shakira4"])
+//        ] as [ProfilViewModelOlustur]
+//       let viewModeller =  profiller.map({ $0.kullaniciProfilViewModelOlustur()  })
+//        return viewModeller
+//    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,24 @@ class AnaController: UIViewController {
         
         layoutDuzenle()
         profilGorunumuAyarla()
+        kullaniciVerileriGetirFS()
+    }
+    fileprivate func kullaniciVerileriGetirFS() {
+        Firestore.firestore().collection("Kullanicilar").getDocuments { (snapshot, hata) in
+            if let hata = hata {
+                print("Kullanıcılar Getirilirken Hata Meydana Geldi : \(hata)")
+                return
+            }
+            
+            snapshot?.documents.forEach({ (dSnapshot) in
+                let kullaniciVeri = dSnapshot.data()
+                let kullanici = Kullanici(bilgiler: kullaniciVeri)
+                print(kullanici.kullaniciAdi, "  *** ", kullanici.goruntuURL1)
+                self.kullanicilarPorfilViewModel.append(kullanici.kullaniciProfilViewModelOlustur())
+            })
+            
+            self.profilGorunumuAyarla()
+        }
     }
     
     @objc func btnAyarlarPressed() {
@@ -46,6 +65,7 @@ class AnaController: UIViewController {
     
     //MARK:- LAYOUT DÜZENLEYEN FONKSİYON
     func layoutDuzenle() {
+        view.backgroundColor = .white
         let genelStackView = UIStackView(arrangedSubviews: [ustStackView, profilDiziniView,butonlarStackView])
         genelStackView.axis = .vertical
         view.addSubview(genelStackView)

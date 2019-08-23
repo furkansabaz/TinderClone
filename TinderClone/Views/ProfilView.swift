@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class ProfilView: UIView {
 
     var kullaniciViewModel : KullaniciProfilViewModel! {
@@ -15,7 +15,10 @@ class ProfilView: UIView {
         didSet {
             
             let goruntuAdi = kullaniciViewModel.goruntuAdlari.first ?? ""
-            imgProfil.image = UIImage(named: goruntuAdi)
+            
+            if let url = URL(string: goruntuAdi) {
+                imgProfil.sd_setImage(with: url)
+            }
             
             lblKullaniciBilgileri.attributedText = kullaniciViewModel.attrString
             
