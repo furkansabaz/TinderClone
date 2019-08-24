@@ -80,8 +80,11 @@ class AnaController: UIViewController {
     }
     
     @objc func btnAyarlarPressed() {
-        let kayitController = KayitController()
-        present(kayitController, animated: true, completion: nil)
+        
+        let ayarlarController = AyarlarController()
+        let navController = UINavigationController(rootViewController: ayarlarController)
+        present(navController, animated: true)
+        
     }
     
     //MARK:- LAYOUT DÜZENLEYEN FONKSİYON
