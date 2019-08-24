@@ -30,8 +30,14 @@ class AnaController: UIViewController {
         layoutDuzenle()
         kullaniciProfilleriAyarlaFireStore()
         kullaniciVerileriGetirFS()
+        
+        //denemeLogin()
     }
-    
+     
+    fileprivate func denemeLogin() {
+        Auth.auth().signIn(withEmail: "shakira@gmail.com", password: "123456", completion: nil)
+        print("Oturum Açıldı")
+    }
     var sonGetirilenKullanici : Kullanici?
     fileprivate func kullaniciVerileriGetirFS() {
         

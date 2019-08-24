@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Firebase
+import JGProgressHUD
+import SDWebImage
 
 class AyarlarController: UITableViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate{
 
@@ -41,12 +44,41 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         tableView.backgroundColor = UIColor(white: 0.92, alpha: 1)
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .interactive
+        kullaniciBilgileriniGetir()
+        
+    }
+    var gecerliKullanici : Kullanici?
+    fileprivate func kullaniciBilgileriniGetir() {
+        
+        guard let uid = Auth.auth().currentUser?.uid  else {return}
+        
+        Firestore.firestore().collection("Kullanicilar").document(uid).getDocument { (snapshot, hata) in
+            
+            if let hata = hata {
+                print("Kullanıcı Bilgileri Getirilirken Hata Meydana Geldi : \(hata)")
+                return
+            }
+            
+            guard let bilgiler = snapshot?.data() else { return }
+            self.gecerliKullanici = Kullanici(bilgiler: bilgiler)
+            
+            self.profilGoruntuleriniYukle()
+            self.tableView.reloadData()
+            
+        }
         
     }
     
     
     
-    
+    fileprivate func profilGoruntuleriniYukle(){
+        guard let goruntuURL = gecerliKullanici?.goruntuURL1, let url = URL(string: goruntuURL) else { return }
+        
+        SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (goruntu, _, _, _, _, _) in
+            
+            self.btnGoruntu1Sec.setImage(goruntu?.withRenderingMode(.alwaysOriginal), for: .normal)
+        }
+    }
     
     
    
@@ -153,10 +185,15 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         switch indexPath.section {
         case 1 :
             cell.textField.placeholder = "Adınız ve Soyadınız"
+            cell.textField.text = gecerliKullanici?.kullaniciAdi
         case 2 :
             cell.textField.placeholder = "Yaşınız"
+            if let yasi = gecerliKullanici?.yasi {
+                cell.textField.text = String(yasi)
+            }
         case 3 :
             cell.textField.placeholder = "Mesleğiniz"
+            cell.textField.text = gecerliKullanici?.meslek
         case 4 :
             cell.textField.placeholder = "Kendinizden Bahsedin"
         default :
