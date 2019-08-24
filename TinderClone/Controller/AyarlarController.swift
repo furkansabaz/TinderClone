@@ -40,8 +40,17 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         navigationOlustur()
         tableView.backgroundColor = UIColor(white: 0.92, alpha: 1)
         tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .interactive
         
     }
+    
+    
+    
+    
+    
+    
+   
+    
     
     
     @objc fileprivate func btnGoruntuSecPressed(buton : UIButton) {
@@ -64,8 +73,8 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         dismiss(animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let fotoAlan = UIView()
+    lazy var fotoAlan : UIView = {
+       let fotoAlan = UIView()
         
         
         fotoAlan.addSubview(btnGoruntu1Sec)
@@ -92,16 +101,69 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
                              leading: btnGoruntu1Sec.trailingAnchor,
                              trailing: fotoAlan.trailingAnchor,
                              padding: .init(top: 15, left: 15, bottom: 15, right: 15))
-        
         return fotoAlan
+    }()
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if section == 0 {
+            return fotoAlan
+        }
+        
+        let lblBaslik = LabelBaslik()
+        
+        
+        switch section {
+        case 1 :
+                lblBaslik.text = "Ad Soyad"
+        case 2 :
+                lblBaslik.text = "Yaş"
+        case 3 :
+                lblBaslik.text = "Meslek"
+        case 4 :
+                lblBaslik.text = "Hakkında"
+        default :
+            lblBaslik.text = "Hakkında"
+        }
+        
+        return lblBaslik
+        
     }
     
     
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 320
+        if section == 0 {
+            return 320
+        }
+        return 45
     }
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+           return 5
+       }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return section == 0 ? 0 : 1
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = AyarlarCell(style: .default, reuseIdentifier: nil)
+        
+        switch indexPath.section {
+        case 1 :
+            cell.textField.placeholder = "Adınız ve Soyadınız"
+        case 2 :
+            cell.textField.placeholder = "Yaşınız"
+        case 3 :
+            cell.textField.placeholder = "Mesleğiniz"
+        case 4 :
+            cell.textField.placeholder = "Kendinizden Bahsedin"
+        default :
+            cell.textField.placeholder = "Kendinizden Bahsedin"
+        }
+        return cell
+    }
     
     
     fileprivate func navigationOlustur() {
@@ -127,4 +189,11 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
 
 class CustomImagePickerController : UIImagePickerController {
     var btnGoruntuSec : UIButton?
+}
+
+class LabelBaslik : UILabel {
+    
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.insetBy(dx: 15, dy: 0))
+    }
 }

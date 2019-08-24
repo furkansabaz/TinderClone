@@ -21,6 +21,7 @@
 		3D47770122F340D6004E79D3 /* Kullanici.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D47770022F340D6004E79D3 /* Kullanici.swift */; };
 		3D5AE6AE22F963E800C6D557 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D5AE6AD22F963E800C6D557 /* GoogleService-Info.plist */; };
 		3D716BE62311583300B3298A /* AyarlarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D716BE52311583300B3298A /* AyarlarController.swift */; };
+		3D716BEA231180B700B3298A /* AyarlarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D716BE9231180B700B3298A /* AyarlarCell.swift */; };
 		3D7B243422F991A5000975F1 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7B243322F991A5000975F1 /* Bindable.swift */; };
 		3DCD5C6D22F7E1D5004204BA /* KayitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD5C6C22F7E1D5004204BA /* KayitController.swift */; };
 		3DCD5C6F22F7E644004204BA /* OzelTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DCD5C6E22F7E644004204BA /* OzelTextField.swift */; };
@@ -45,6 +46,7 @@
 		3D47770022F340D6004E79D3 /* Kullanici.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kullanici.swift; sourceTree = "<group>"; };
 		3D5AE6AD22F963E800C6D557 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "TinderClone/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		3D716BE52311583300B3298A /* AyarlarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyarlarController.swift; sourceTree = "<group>"; };
+		3D716BE9231180B700B3298A /* AyarlarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyarlarCell.swift; sourceTree = "<group>"; };
 		3D7B243322F991A5000975F1 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
 		3DCD5C6C22F7E1D5004204BA /* KayitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KayitController.swift; sourceTree = "<group>"; };
 		3DCD5C6E22F7E644004204BA /* OzelTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OzelTextField.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */,
 				3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */,
 				3DCD5C6E22F7E644004204BA /* OzelTextField.swift */,
+				3D716BE9231180B700B3298A /* AyarlarCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				3D7B243422F991A5000975F1 /* Bindable.swift in Sources */,
 				3DCD5C6F22F7E644004204BA /* OzelTextField.swift in Sources */,
 				3DCD5C7322F855BE004204BA /* KayitViewModel.swift in Sources */,
+				3D716BEA231180B700B3298A /* AyarlarCell.swift in Sources */,
 				3D4776DC22F1BFD2004E79D3 /* AnaController.swift in Sources */,
 				3D4776ED22F1C10E004E79D3 /* Uzantilar+UIView.swift in Sources */,
 				3D4776FB22F2E7A6004E79D3 /* ProfilView.swift in Sources */,
