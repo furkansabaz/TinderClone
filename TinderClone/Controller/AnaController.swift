@@ -41,7 +41,8 @@ class AnaController: UIViewController {
         kullaniciVerileriGetirFS()
     }
     fileprivate func kullaniciVerileriGetirFS() {
-        Firestore.firestore().collection("Kullanicilar").getDocuments { (snapshot, hata) in
+        let sorgu = Firestore.firestore().collection("Kullanicilar")
+        sorgu.getDocuments { (snapshot, hata) in
             if let hata = hata {
                 print("Kullanıcılar Getirilirken Hata Meydana Geldi : \(hata)")
                 return

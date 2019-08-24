@@ -38,14 +38,17 @@ class ProfilView: UIView {
     }
     fileprivate func ayarlaGoruntuIndexGozlemci() {
         
-        kullaniciViewModel.goruntuIndexGozlemci = { (index, goruntu) in
+        kullaniciViewModel.goruntuIndexGozlemci = { (index, goruntuURL) in
             
             self.goruntuBarStackView.arrangedSubviews.forEach({ sView in
                 sView.backgroundColor = self.seciliOlmayanRenk
             })
             
             self.goruntuBarStackView.arrangedSubviews[index].backgroundColor = .white
-            self.imgProfil.image = goruntu
+            
+            if let url = URL(string: goruntuURL ?? "") {
+                self.imgProfil.sd_setImage(with: url)
+            }
         }
         
     }
@@ -63,6 +66,17 @@ class ProfilView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
        
+        
+        duzenleLayout()
+        
+        let panG = UIPanGestureRecognizer(target: self, action: #selector(profilPanYakala))
+        addGestureRecognizer(panG)
+        
+        let tapG = UITapGestureRecognizer(target: self, action: #selector(yakalaTapGesture))
+        addGestureRecognizer(tapG)
+    }
+    
+    fileprivate func duzenleLayout() {
         layer.cornerRadius = 10
         clipsToBounds = true
         
@@ -87,13 +101,6 @@ class ProfilView: UIView {
         
         lblKullaniciBilgileri.textColor = .white
         lblKullaniciBilgileri.numberOfLines = 0
-        
-        
-        let panG = UIPanGestureRecognizer(target: self, action: #selector(profilPanYakala))
-        addGestureRecognizer(panG)
-        
-        let tapG = UITapGestureRecognizer(target: self, action: #selector(yakalaTapGesture))
-        addGestureRecognizer(tapG)
     }
     
     var goruntuIndex = 0
@@ -167,7 +174,9 @@ class ProfilView: UIView {
             
         case .ended :
             bitisPanAnimasyon(panGesture)
-            
+            superview?.subviews.forEach({ (subView) in
+                subView.layer.removeAllAnimations()
+            })
             
         default :
             break
