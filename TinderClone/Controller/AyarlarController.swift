@@ -186,14 +186,18 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         case 1 :
             cell.textField.placeholder = "Adınız ve Soyadınız"
             cell.textField.text = gecerliKullanici?.kullaniciAdi
+            cell.textField.addTarget(self, action: #selector(txtAdiDegisiklikYakala), for: .editingChanged)
         case 2 :
             cell.textField.placeholder = "Yaşınız"
+            cell.textField.keyboardType = .numberPad
             if let yasi = gecerliKullanici?.yasi {
                 cell.textField.text = String(yasi)
             }
+            cell.textField.addTarget(self, action: #selector(txtYasiDegisiklikYakala), for: .editingChanged)
         case 3 :
             cell.textField.placeholder = "Mesleğiniz"
             cell.textField.text = gecerliKullanici?.meslek
+            cell.textField.addTarget(self, action: #selector(txtMeslekDegisiklikYakala), for: .editingChanged)
         case 4 :
             cell.textField.placeholder = "Kendinizden Bahsedin"
         default :
@@ -202,7 +206,17 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         return cell
     }
     
+    @objc fileprivate func txtAdiDegisiklikYakala(textField : UITextField) {
+        self.gecerliKullanici?.kullaniciAdi = textField.text
+    }
     
+    @objc fileprivate func txtYasiDegisiklikYakala(textField : UITextField) {
+        self.gecerliKullanici?.yasi = Int(textField.text ?? "")
+    }
+    
+    @objc fileprivate func txtMeslekDegisiklikYakala(textField : UITextField) {
+        self.gecerliKullanici?.meslek = textField.text
+    }
     fileprivate func navigationOlustur() {
         navigationItem.title = "Ayarlar"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -210,10 +224,45 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "İptal", style: .plain, target: self, action: #selector(btnIptalPressed))
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Oturumu Kapat", style: .plain, target: self, action: #selector(btnOturumuKapatPressed))
+        
+        
+        navigationItem.rightBarButtonItems = [
+        UIBarButtonItem(title: "Kaydet", style: .plain, target: self, action: #selector(btnKaydetPressed)),
+        UIBarButtonItem(title: "Çıkış", style: .plain, target: self, action: #selector(btnCikisPressed))
+        ]
     }
 
-    @objc fileprivate func btnOturumuKapatPressed() {
+    @objc fileprivate func btnKaydetPressed() {
+         
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let veriler : [String : Any] = [
+            "KullaniciID" : uid,
+            "AdiSoyadi" : gecerliKullanici?.kullaniciAdi ?? "",
+            "GoruntuURL" :  gecerliKullanici?.goruntuURL1 ?? "",
+            "Yasi" : gecerliKullanici?.yasi ?? -1,
+            "Meslek" : gecerliKullanici?.meslek ?? ""
+        ]
+        
+        
+        
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Bilgileriniz Kaydediliyor"
+        hud.show(in: view)
+        
+        Firestore.firestore().collection("Kullanicilar").document(uid).setData(veriler) { (hata) in
+            hud.dismiss()
+            if let hata = hata {
+                print("Kullanıcı verileri kaydedilirken hata meydana geldi : \(hata)")
+                return
+            }
+            print("Kullanıcı Verileri Başarılı Bir Şekilde Kaydedildi")
+        }
+
+        
+        
+    }
+    @objc fileprivate func btnCikisPressed() {
         print("Oturumunuz Kapatılacaktır")
     }
     @objc fileprivate func btnIptalPressed() {
