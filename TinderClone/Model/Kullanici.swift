@@ -17,6 +17,8 @@ struct Kullanici : ProfilViewModelOlustur {
     var goruntuURL3 : String?
     
     var kullaniciID : String
+    var arananMinYas : Int?
+    var arananMaksYas : Int?
     
     init(bilgiler : [String : Any]){
         self.kullaniciAdi = bilgiler["AdiSoyadi"] as? String ?? ""
@@ -27,6 +29,9 @@ struct Kullanici : ProfilViewModelOlustur {
         self.goruntuURL2 = bilgiler["GoruntuURL2"] as? String
         self.goruntuURL3 = bilgiler["GoruntuURL3"] as? String
         self.kullaniciID = bilgiler["KullaniciID"] as? String ?? ""
+        
+        self.arananMinYas = bilgiler["ArananMinYas"] as? Int
+        self.arananMaksYas = bilgiler["ArananMaksYas"] as? Int
     }
     
     func kullaniciProfilViewModelOlustur() -> KullaniciProfilViewModel {

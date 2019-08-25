@@ -206,10 +206,12 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
                 lblBaslik.text = "Meslek"
         case 4 :
                 lblBaslik.text = "Hakkında"
+        case 5 :
+            lblBaslik.text = "Yaş Aralığı"
         default :
             lblBaslik.text = "Hakkında"
         }
-        
+        lblBaslik.font = UIFont.boldSystemFont(ofSize: 16)
         return lblBaslik
         
     }
@@ -224,15 +226,57 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-           return 5
+           return 6
        }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return section == 0 ? 0 : 1
     }
+    @objc fileprivate func minYasSliderChanged(slider : UISlider) {
+        minMaksAyarla()
+    }
+    @objc fileprivate func maksYasSliderChanged(slider : UISlider) {
+        minMaksAyarla()
+    }
     
+    fileprivate func minMaksAyarla() {
+        
+        guard let yasAralikcell = tableView.cellForRow(at: [5,0]) as? YasAralikCell else { return }
+        
+        let minDeger = Int(yasAralikcell.minSlider.value)
+        var maksDeger = Int(yasAralikcell.maksSlider.value)
+        
+        maksDeger = max(minDeger,maksDeger)
+        
+        yasAralikcell.maksSlider.value = Float(maksDeger)
+        
+        yasAralikcell.lblMin.text = "Min \(minDeger)"
+        yasAralikcell.lblMaks.text = "Maks \(maksDeger)"
+        
+        gecerliKullanici?.arananMinYas = minDeger
+        gecerliKullanici?.arananMaksYas = maksDeger
+        
+        
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 5 {
+            let yasAralikCell = YasAralikCell(style: .default, reuseIdentifier: nil)
+            
+            yasAralikCell.minSlider.addTarget(self, action: #selector(minYasSliderChanged), for: .valueChanged)
+            yasAralikCell.maksSlider.addTarget(self, action: #selector(maksYasSliderChanged), for: .valueChanged)
+            
+            yasAralikCell.lblMin.text = "Min \(gecerliKullanici?.arananMinYas ?? 18)"
+            yasAralikCell.lblMaks.text = "Maks \(gecerliKullanici?.arananMaksYas ?? 18)"
+            
+            yasAralikCell.minSlider.value = Float(gecerliKullanici?.arananMinYas ?? 18)
+            yasAralikCell.maksSlider.value = Float(gecerliKullanici?.arananMaksYas ?? 18)
+            
+            
+            return yasAralikCell
+        }
+        
+        
         let cell = AyarlarCell(style: .default, reuseIdentifier: nil)
         
         switch indexPath.section {
@@ -296,7 +340,9 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
             "GoruntuURL2" :  gecerliKullanici?.goruntuURL2 ?? "",
             "GoruntuURL3" :  gecerliKullanici?.goruntuURL3 ?? "",
             "Yasi" : gecerliKullanici?.yasi ?? -1,
-            "Meslek" : gecerliKullanici?.meslek ?? ""
+            "Meslek" : gecerliKullanici?.meslek ?? "",
+            "ArananMinYas" : gecerliKullanici?.arananMinYas ?? -1,
+            "ArananMaksYas" : gecerliKullanici?.arananMaksYas ?? -1
         ]
         
         
