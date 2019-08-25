@@ -14,6 +14,8 @@ import SDWebImage
 class AyarlarController: UITableViewController, UIImagePickerControllerDelegate , UINavigationControllerDelegate{
 
     
+    var delegate : AyarlarControllerDelegate?
+    
     
     func butonOlustur(selector : Selector) -> UIButton {
         
@@ -50,21 +52,14 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
     var gecerliKullanici : Kullanici?
     fileprivate func kullaniciBilgileriniGetir() {
         
-        guard let uid = Auth.auth().currentUser?.uid  else {return}
-        
-        Firestore.firestore().collection("Kullanicilar").document(uid).getDocument { (snapshot, hata) in
-            
+        Firestore.firestore().gecerliKullaniciyiGetir { (kullanici, hata) in
             if let hata = hata {
                 print("Kullanıcı Bilgileri Getirilirken Hata Meydana Geldi : \(hata)")
                 return
             }
-            
-            guard let bilgiler = snapshot?.data() else { return }
-            self.gecerliKullanici = Kullanici(bilgiler: bilgiler)
-            
+            self.gecerliKullanici = kullanici
             self.profilGoruntuleriniYukle()
             self.tableView.reloadData()
-            
         }
         
     }
@@ -358,6 +353,11 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
                 return
             }
             print("Kullanıcı Verileri Başarılı Bir Şekilde Kaydedildi")
+            self.dismiss(animated: true) {
+                
+                self.delegate?.ayarlarKaydedildi()
+                
+            }
         }
 
         
@@ -383,4 +383,9 @@ class LabelBaslik : UILabel {
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.insetBy(dx: 15, dy: 0))
     }
+}
+
+
+protocol AyarlarControllerDelegate {
+    func ayarlarKaydedildi()
 }

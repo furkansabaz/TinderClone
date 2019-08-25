@@ -28,11 +28,29 @@ class AnaController: UIViewController {
         altButonlarStackView.btnYenile.addTarget(self, action: #selector(btnYenilePressed), for: .touchUpInside)
         
         layoutDuzenle()
-        kullaniciProfilleriAyarlaFireStore()
-        kullaniciVerileriGetirFS()
+        //kullaniciProfilleriAyarlaFireStore()
+        //kullaniciVerileriGetirFS()
         
         //denemeLogin()
+        gecerliKullaniciyiGetir()
     }
+    
+    fileprivate var gecerliKullanici : Kullanici?
+    fileprivate func gecerliKullaniciyiGetir() {
+        profilDiziniView.subviews.forEach({ $0.removeFromSuperview()})
+ 
+        
+        Firestore.firestore().gecerliKullaniciyiGetir { (kullanici, hata) in
+            if let hata = hata {
+                print("Oturum Açan Kullanıcın Bilgileri Getirilirken Hata Meydana Geldi : \(hata)")
+                return
+            }
+            self.gecerliKullanici = kullanici
+            self.kullaniciVerileriGetirFS()
+        }
+        
+    }
+    
      
     fileprivate func denemeLogin() {
         Auth.auth().signIn(withEmail: "shakira@gmail.com", password: "123456", completion: nil)
@@ -42,14 +60,17 @@ class AnaController: UIViewController {
     fileprivate func kullaniciVerileriGetirFS() {
         
         
+        guard let arananMinYas = gecerliKullanici?.arananMinYas , let arananMaksYas = gecerliKullanici?.arananMaksYas else { return }
+        
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Profiller Getiriliyor"
         hud.show(in: view)
-        let sorgu = Firestore.firestore().collection("Kullanicilar")
-            .order(by: "KullaniciID")
-            .start(after: [sonGetirilenKullanici?.kullaniciID ?? ""])
-            .limit(to: 2)
         
+        
+        
+        let sorgu = Firestore.firestore().collection("Kullanicilar")
+            .whereField("Yasi", isGreaterThanOrEqualTo: arananMinYas)
+            .whereField("Yasi", isLessThanOrEqualTo: arananMaksYas)
         
         sorgu.getDocuments { (snapshot, hata) in
             hud.dismiss()
@@ -88,6 +109,7 @@ class AnaController: UIViewController {
     @objc func btnAyarlarPressed() {
         
         let ayarlarController = AyarlarController()
+        ayarlarController.delegate = self
         let navController = UINavigationController(rootViewController: ayarlarController)
         present(navController, animated: true)
         
@@ -125,3 +147,9 @@ class AnaController: UIViewController {
 
 }
 
+
+extension AnaController : AyarlarControllerDelegate {
+    func ayarlarKaydedildi() {
+        gecerliKullaniciyiGetir()
+    }
+}
