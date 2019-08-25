@@ -34,6 +34,17 @@ class AnaController: UIViewController {
         //denemeLogin()
         gecerliKullaniciyiGetir()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser == nil {
+            let oturumController = OturumController()
+            oturumController.delegate = self
+            let navController = UINavigationController(rootViewController: oturumController)
+            navController.modalPresentationStyle = .fullScreen
+            present(navController, animated: true)
+        }
+    }
     
     fileprivate var gecerliKullanici : Kullanici?
     fileprivate func gecerliKullaniciyiGetir() {
@@ -111,6 +122,7 @@ class AnaController: UIViewController {
         let ayarlarController = AyarlarController()
         ayarlarController.delegate = self
         let navController = UINavigationController(rootViewController: ayarlarController)
+        navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
         
     }
@@ -152,4 +164,12 @@ extension AnaController : AyarlarControllerDelegate {
     func ayarlarKaydedildi() {
         gecerliKullaniciyiGetir()
     }
+}
+
+
+extension AnaController : OturumControllerDelegate {
+    func oturumAcmaBitis() {
+        gecerliKullaniciyiGetir()
+    }
+    
 }

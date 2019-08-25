@@ -36,7 +36,7 @@ class KayitController: UIViewController {
     
     let txtEmailAdresi : OzelTextField = {
         
-        let txt =  OzelTextField(padding: 15)
+        let txt =  OzelTextField(padding: 15,yukseklik : 50)
         txt.backgroundColor = .white
         txt.placeholder = "Email Adresiniz"
         txt.keyboardType = .emailAddress
@@ -46,7 +46,7 @@ class KayitController: UIViewController {
     
     let txtAdiSoyadi : OzelTextField = {
         
-        let txt = OzelTextField(padding: 15)
+        let txt = OzelTextField(padding: 15,yukseklik : 50)
         
         txt.backgroundColor = .white
         txt.placeholder = "Ad ve Soyad"
@@ -59,7 +59,7 @@ class KayitController: UIViewController {
     
     let txtParola : OzelTextField = {
         
-        let txt = OzelTextField(padding: 15)
+        let txt = OzelTextField(padding: 15,yukseklik : 50)
         
         txt.backgroundColor = .white
         txt.placeholder = "Parolanız"
@@ -91,7 +91,18 @@ class KayitController: UIViewController {
         return btn
     }()
     
-    
+    let btnOturumAcGit : UIButton = {
+        let btn = UIButton(type: .system)
+        
+        btn.setTitle("Oturum Aç", for: .normal)
+        
+        btn.setTitleColor(.white, for: .normal)
+        
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .heavy)
+        
+        btn.addTarget(self, action: #selector(btnOturumAcGitPressed), for: .touchUpInside)
+        return btn
+    }()
     
     
     override func viewDidLoad() {
@@ -247,7 +258,7 @@ class KayitController: UIViewController {
         
     }
     fileprivate func layoutDuzenle() {
-        
+        navigationController?.isNavigationBarHidden = true
         
         view.addSubview(kayitSV)
         
@@ -258,6 +269,11 @@ class KayitController: UIViewController {
         _ = kayitSV.anchor(top: nil, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 0, left: 45, bottom: 0, right: 45))
         
         kayitSV.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        
+        
+        view.addSubview(btnOturumAcGit)
+        
+        _ =  btnOturumAcGit.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
     }
     
     
@@ -320,6 +336,11 @@ class KayitController: UIViewController {
         imgPickerController.delegate = self
         
         present(imgPickerController, animated: true, completion: nil)
+    }
+    
+    @objc fileprivate func btnOturumAcGitPressed() {
+        let oturumController = OturumController()
+        navigationController?.pushViewController(oturumController, animated: true)
     }
     
     

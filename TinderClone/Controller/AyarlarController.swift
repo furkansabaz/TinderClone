@@ -365,6 +365,8 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
     }
     @objc fileprivate func btnCikisPressed() {
         print("Oturumunuz Kapatılacaktır")
+        try? Auth.auth().signOut()
+        dismiss(animated: true)
     }
     @objc fileprivate func btnIptalPressed() {
         dismiss(animated: true)
