@@ -72,12 +72,26 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
     
     
     fileprivate func profilGoruntuleriniYukle(){
-        guard let goruntuURL = gecerliKullanici?.goruntuURL1, let url = URL(string: goruntuURL) else { return }
-        
-        SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (goruntu, _, _, _, _, _) in
-            
-            self.btnGoruntu1Sec.setImage(goruntu?.withRenderingMode(.alwaysOriginal), for: .normal)
+        if let goruntuURL = gecerliKullanici?.goruntuURL1, let url = URL(string: goruntuURL)  {
+            SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (goruntu, _, _, _, _, _) in
+                
+                self.btnGoruntu1Sec.setImage(goruntu?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
         }
+        if let goruntuURL = gecerliKullanici?.goruntuURL2, let url = URL(string: goruntuURL)  {
+            SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (goruntu, _, _, _, _, _) in
+                
+                self.btnGoruntu2Sec.setImage(goruntu?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
+        }
+        
+        if let goruntuURL = gecerliKullanici?.goruntuURL3, let url = URL(string: goruntuURL)  {
+            SDWebImageManager.shared().loadImage(with: url, options: .continueInBackground, progress: nil) { (goruntu, _, _, _, _, _) in
+                
+                self.btnGoruntu3Sec.setImage(goruntu?.withRenderingMode(.alwaysOriginal), for: .normal)
+            }
+        }
+        
     }
     
     
@@ -103,6 +117,45 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         btnGoruntuSec?.setImage(secilenGoruntu?.withRenderingMode(.alwaysOriginal), for: .normal)
         btnGoruntuSec?.imageView?.contentMode = .scaleAspectFill
         dismiss(animated: true)
+        
+        let goruntuAdi = UUID().uuidString
+        
+        let ref = Storage.storage().reference(withPath: "/Goruntuler/\(goruntuAdi)")
+        
+        guard let veri = secilenGoruntu?.jpegData(compressionQuality: 0.8) else { return }
+        
+        
+        let hud = JGProgressHUD(style: .dark)
+        hud.textLabel.text = "Görüntü Yükleniyor..."
+        hud.show(in: view)
+        
+        ref.putData(veri, metadata: nil) { (nil, hata) in
+            if let hata = hata {
+                hud.dismiss()
+                print("Görüntü Yüklenirken Hata Oluştu : \(hata)")
+                return
+            }
+            print("Görüntü Başarıyla Yüklendi")
+            
+            ref.downloadURL { (url, hata) in
+                hud.dismiss()
+                if let hata = hata {
+                    print("URL Alınamadı")
+                    return
+                }
+                print("URL Başarıyla Alındı : \(url?.absoluteString ?? "")")
+                
+                if btnGoruntuSec == self.btnGoruntu1Sec {
+                    self.gecerliKullanici?.goruntuURL1 = url?.absoluteString
+                } else if btnGoruntuSec == self.btnGoruntu2Sec {
+                    self.gecerliKullanici?.goruntuURL2 = url?.absoluteString
+                } else {
+                    self.gecerliKullanici?.goruntuURL3 = url?.absoluteString
+                }
+            }
+        }
+        
+        
     }
     
     lazy var fotoAlan : UIView = {
@@ -240,6 +293,8 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
             "KullaniciID" : uid,
             "AdiSoyadi" : gecerliKullanici?.kullaniciAdi ?? "",
             "GoruntuURL" :  gecerliKullanici?.goruntuURL1 ?? "",
+            "GoruntuURL2" :  gecerliKullanici?.goruntuURL2 ?? "",
+            "GoruntuURL3" :  gecerliKullanici?.goruntuURL3 ?? "",
             "Yasi" : gecerliKullanici?.yasi ?? -1,
             "Meslek" : gecerliKullanici?.meslek ?? ""
         ]

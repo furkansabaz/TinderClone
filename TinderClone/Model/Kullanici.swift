@@ -12,7 +12,9 @@ struct Kullanici : ProfilViewModelOlustur {
     var meslek : String?
     var yasi : Int?
     //let goruntuAdlari : [String]
-    var goruntuURL1 : String
+    var goruntuURL1 : String?
+    var goruntuURL2 : String?
+    var goruntuURL3 : String?
     
     var kullaniciID : String
     
@@ -21,7 +23,9 @@ struct Kullanici : ProfilViewModelOlustur {
         self.yasi = bilgiler["Yasi"] as? Int
         self.meslek = bilgiler["Meslek"] as? String
         
-        self.goruntuURL1 = bilgiler["GoruntuURL"] as? String ?? ""
+        self.goruntuURL1 = bilgiler["GoruntuURL"] as? String
+        self.goruntuURL2 = bilgiler["GoruntuURL2"] as? String
+        self.goruntuURL3 = bilgiler["GoruntuURL3"] as? String
         self.kullaniciID = bilgiler["KullaniciID"] as? String ?? ""
     }
     
@@ -36,6 +40,11 @@ struct Kullanici : ProfilViewModelOlustur {
         let meslekStr = meslek != nil ? meslek! : "Girilmedi"
         attrText.append(NSAttributedString(string: "\n\(meslekStr)", attributes: [.font : UIFont.systemFont(ofSize: 20, weight: .regular)]))
         
-        return KullaniciProfilViewModel(attrString: attrText, goruntuAdlari: [goruntuURL1], bilgiKonumu: .left)
+        var goruntulerURL = [String]()
+        
+        if let url = goruntuURL1 , !url.isEmpty { goruntulerURL.append(url) }
+        if let url = goruntuURL2 , !url.isEmpty { goruntulerURL.append(url) }
+        if let url = goruntuURL3 , !url.isEmpty { goruntulerURL.append(url) }
+        return KullaniciProfilViewModel(attrString: attrText, goruntuAdlari: goruntulerURL, bilgiKonumu: .left)
     }
 }
