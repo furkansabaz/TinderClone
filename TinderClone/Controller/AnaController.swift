@@ -57,7 +57,7 @@ class AnaController: UIViewController {
                 return
             }
             self.gecerliKullanici = kullanici
-            self.kullaniciVerileriGetirFS()
+            self.kullanicilariGetirFS()
         }
         
     }
@@ -68,7 +68,7 @@ class AnaController: UIViewController {
         print("Oturum Açıldı")
     }
     var sonGetirilenKullanici : Kullanici?
-    fileprivate func kullaniciVerileriGetirFS() {
+    fileprivate func kullanicilariGetirFS() {
         
         
         guard let arananMinYas = gecerliKullanici?.arananMinYas , let arananMaksYas = gecerliKullanici?.arananMaksYas else { return }
@@ -94,9 +94,10 @@ class AnaController: UIViewController {
                 let kullaniciVeri = dSnapshot.data()
                 let kullanici = Kullanici(bilgiler: kullaniciVeri)
                 
-                self.kullanicilarPorfilViewModel.append(kullanici.kullaniciProfilViewModelOlustur())
-                self.sonGetirilenKullanici = kullanici
-                self.kullanicidanProfilOlustur(kullanici: kullanici)
+                if kullanici.kullaniciID != self.gecerliKullanici?.kullaniciID {
+                    self.kullanicidanProfilOlustur(kullanici: kullanici)
+                }
+                
             })
             
             //self.kullaniciProfilleriAyarlaFireStore()
@@ -106,7 +107,7 @@ class AnaController: UIViewController {
     fileprivate func kullanicidanProfilOlustur(kullanici : Kullanici) {
         
         let pView = ProfilView(frame: .zero)
-        
+        pView.delegate = self
         pView.kullaniciViewModel = kullanici.kullaniciProfilViewModelOlustur()
         
         profilDiziniView.addSubview(pView)
@@ -114,7 +115,7 @@ class AnaController: UIViewController {
     }
     
     @objc func btnYenilePressed() {
-        kullaniciVerileriGetirFS()
+        kullanicilariGetirFS()
     }
     
     @objc func btnAyarlarPressed() {
@@ -145,6 +146,7 @@ class AnaController: UIViewController {
     
     func kullaniciProfilleriAyarlaFireStore() {
         
+        
         kullanicilarPorfilViewModel.forEach { (kullaniciVM) in
             
             let profilView  = ProfilView(frame: .zero)
@@ -170,6 +172,16 @@ extension AnaController : AyarlarControllerDelegate {
 extension AnaController : OturumControllerDelegate {
     func oturumAcmaBitis() {
         gecerliKullaniciyiGetir()
+    }
+    
+}
+
+extension AnaController : ProfilViewDelegate {
+    func detayliBilgiPressed() {
+        
+        let kullaniciDetaylariController = KullaniciDetaylariController()
+        kullaniciDetaylariController.modalPresentationStyle = .fullScreen
+        present(kullaniciDetaylariController, animated: true)
     }
     
 }

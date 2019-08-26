@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D18C5E12313C17D00586040 /* KullaniciDetaylariController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D18C5E02313C17D00586040 /* KullaniciDetaylariController.swift */; };
 		3D376E9722F5F47F00D8E709 /* KullaniciProfilViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */; };
 		3D376E9B22F6403000D8E709 /* Reklam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D376E9A22F6403000D8E709 /* Reklam.swift */; };
 		3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776D922F1BFD2004E79D3 /* AppDelegate.swift */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D18C5E02313C17D00586040 /* KullaniciDetaylariController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KullaniciDetaylariController.swift; sourceTree = "<group>"; };
 		3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KullaniciProfilViewModel.swift; sourceTree = "<group>"; };
 		3D376E9A22F6403000D8E709 /* Reklam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reklam.swift; sourceTree = "<group>"; };
 		3D4776D622F1BFD2004E79D3 /* TinderClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinderClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -76,9 +78,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D18C5DF2313C16300586040 /* Kullanici Detaylari */ = {
+			isa = PBXGroup;
+			children = (
+				3D18C5E02313C17D00586040 /* KullaniciDetaylariController.swift */,
+			);
+			path = "Kullanici Detaylari";
+			sourceTree = "<group>";
+		};
 		3D376E9222F5F3C800D8E709 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3D18C5DF2313C16300586040 /* Kullanici Detaylari */,
 				3D600826231315DA00E30B97 /* Oturum */,
 				3D4776DB22F1BFD2004E79D3 /* AnaController.swift */,
 				3DCD5C6C22F7E1D5004204BA /* KayitController.swift */,
@@ -325,6 +336,7 @@
 				3D7B243422F991A5000975F1 /* Bindable.swift in Sources */,
 				3DCD5C6F22F7E644004204BA /* OzelTextField.swift in Sources */,
 				3DCD5C7322F855BE004204BA /* KayitViewModel.swift in Sources */,
+				3D18C5E12313C17D00586040 /* KullaniciDetaylariController.swift in Sources */,
 				3D60081E2312C22D00E30B97 /* Uzanti+Firestore.swift in Sources */,
 				3D716BEA231180B700B3298A /* AyarlarCell.swift in Sources */,
 				3D4776DC22F1BFD2004E79D3 /* AnaController.swift in Sources */,

@@ -10,6 +10,8 @@ import UIKit
 import SDWebImage
 class ProfilView: UIView {
 
+    
+    var delegate : ProfilViewDelegate?
     var kullaniciViewModel : KullaniciProfilViewModel! {
         
         didSet {
@@ -76,6 +78,18 @@ class ProfilView: UIView {
         addGestureRecognizer(tapG)
     }
     
+    fileprivate let btnDetayliBilgi : UIButton = {
+        let buton = UIButton(type: .system)
+        buton.setImage(UIImage(named: "detayliBilgi")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        buton.addTarget(self, action: #selector(btnDetayliBilgiPressed), for: .touchUpInside)
+        return buton
+    }()
+    
+    @objc fileprivate func btnDetayliBilgiPressed() {
+        print("Kullanıcı Detay SAyfasına Gitmelisin")
+        delegate?.detayliBilgiPressed()
+        
+    }
     fileprivate func duzenleLayout() {
         layer.cornerRadius = 10
         clipsToBounds = true
@@ -101,6 +115,9 @@ class ProfilView: UIView {
         
         lblKullaniciBilgileri.textColor = .white
         lblKullaniciBilgileri.numberOfLines = 0
+        
+        addSubview(btnDetayliBilgi)
+        _ = btnDetayliBilgi.anchor(top: nil, bottom: bottomAnchor, leading: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 20, right: 20), boyut: .init(width: 45, height: 45))
     }
     
     var goruntuIndex = 0
@@ -242,4 +259,8 @@ class ProfilView: UIView {
     
     
 
+}
+protocol ProfilViewDelegate {
+    
+    func detayliBilgiPressed()
 }
