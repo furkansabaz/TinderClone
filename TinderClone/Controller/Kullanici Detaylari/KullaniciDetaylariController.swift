@@ -11,6 +11,14 @@ import UIKit
 class KullaniciDetaylariController: UIViewController {
 
     
+    var kullaniciViewModel : KullaniciProfilViewModel! {
+        didSet {
+            lblBilgi.attributedText = kullaniciViewModel.attrString
+            
+            guard let goruntu1URL = kullaniciViewModel.goruntuAdlari.first, let url = URL(string: goruntu1URL) else { return}
+            imgProfil.sd_setImage(with: url)
+        }
+    }
     
     lazy var scrollView : UIScrollView = {
         let sv = UIScrollView()
@@ -38,12 +46,14 @@ class KullaniciDetaylariController: UIViewController {
         return lbl
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.backgroundColor = .white
-        
-        
+    let btnDetayKapat : UIButton = {
+        let buton = UIButton(type: .system)
+        buton.setImage(UIImage(named: "profilKapat")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        buton.addTarget(self, action: #selector(tapGestureKapat), for: .touchUpInside)
+        return buton
+    }()
+    
+    fileprivate func layoutDuzenle() {
         view.addSubview(scrollView)
         scrollView.doldurSuperView()
         
@@ -54,7 +64,75 @@ class KullaniciDetaylariController: UIViewController {
         
         scrollView.addSubview(lblBilgi)
         _ = lblBilgi.anchor(top: imgProfil.bottomAnchor, bottom: nil, leading: scrollView.leadingAnchor, trailing: scrollView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapGestureKapat)))
+        
+        scrollView.addSubview(btnDetayKapat)
+        
+        _  = btnDetayKapat.anchor(top: imgProfil.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 25), boyut: .init(width: 50, height: 50))
+    }
+    
+    fileprivate func butonOlustur(image : UIImage, selector : Selector) -> UIButton {
+        let buton = UIButton(type: .system)
+        
+        buton.setImage(image.withRenderingMode(.alwaysOriginal), for: .normal)
+        buton.addTarget(self, action: selector, for: .touchUpInside)
+        buton.imageView?.contentMode = .scaleAspectFill
+        
+        return buton
+        
+    }
+    
+    lazy var btnDislike = self.butonOlustur(image: UIImage(named: "kapat")!, selector: #selector(btnDislikePressed))
+    
+    lazy var btnSuperLike = self.butonOlustur(image: UIImage(named: "superLike")!, selector: #selector(btnSuperLikePressed))
+    
+    lazy var btnLike = self.butonOlustur(image: UIImage(named: "like")!, selector: #selector(btnLikePressed))
+    
+    @objc fileprivate func btnDislikePressed() {
+        print("Dislike")
+    }
+    
+    @objc fileprivate func btnSuperLikePressed() {
+        print("SuperLike")
+    }
+    @objc fileprivate func btnLikePressed() {
+        print("Like")
+    }
+    
+    
+    fileprivate func altButonlarKonumAyarla() {
+        
+        let sv = UIStackView(arrangedSubviews: [btnLike,btnSuperLike,btnDislike])
+        sv.distribution = .fillEqually
+
+        view.addSubview(sv)
+        
+        _ = sv.anchor(top: nil, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0), boyut: .init(width: 310, height: 85))
+        
+        sv.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    }
+    
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        view.backgroundColor = .white
+        
+        
+        layoutDuzenle()
+        blurEfektOlustur()
+        altButonlarKonumAyarla()
+    }
+    
+    fileprivate func blurEfektOlustur() {
+        let blurEffect = UIBlurEffect(style: .regular)
+        
+        let effectView = UIVisualEffectView(effect: blurEffect)
+        
+        view.addSubview(effectView)
+        
+        _ = effectView.anchor(top: view.topAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
     }
     

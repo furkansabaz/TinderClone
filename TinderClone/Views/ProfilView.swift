@@ -87,7 +87,7 @@ class ProfilView: UIView {
     
     @objc fileprivate func btnDetayliBilgiPressed() {
         print("Kullanıcı Detay SAyfasına Gitmelisin")
-        delegate?.detayliBilgiPressed()
+        delegate?.detayliBilgiPressed(kullaniciVM: kullaniciViewModel)
         
     }
     fileprivate func duzenleLayout() {
@@ -262,5 +262,5 @@ class ProfilView: UIView {
 }
 protocol ProfilViewDelegate {
     
-    func detayliBilgiPressed()
+    func detayliBilgiPressed(kullaniciVM :  KullaniciProfilViewModel)
 }
