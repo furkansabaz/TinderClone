@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = AnaController()
-        
+        //window?.rootViewController = AnaController()
+        window?.rootViewController = FotoGecisController(transitionStyle: .scroll, navigationOrientation: .horizontal)
         return true
     }
 
