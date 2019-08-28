@@ -18,7 +18,29 @@ class FotoGecisController: UIPageViewController {
                 return fotoController
             })
             setViewControllers([controllers.first!], direction: .forward, animated: false, completion: nil)
+            barViewEkle()
+            
         }
+    }
+    
+    fileprivate let seciliOlmayanBarRenk = UIColor(white: 0, alpha: 0.2)
+    fileprivate let barStackView = UIStackView(arrangedSubviews: [])
+    fileprivate func barViewEkle() {
+        
+        kullaniciViewModel.goruntuAdlari.forEach { (_) in
+            let barView = UIView()
+            barView.backgroundColor = seciliOlmayanBarRenk
+            barView.layer.cornerRadius = 3
+            barStackView.addArrangedSubview(barView)
+        }
+        barStackView.arrangedSubviews.first?.backgroundColor = .white
+        barStackView.spacing = 4
+        barStackView.distribution = .fillEqually
+        
+        view.addSubview(barStackView)
+        
+        _ = barStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,padding: .init(top: 8, left: 8, bottom: 0, right: 8), boyut: .init(width: 0, height: 4))
+        
     }
     
    var controllers = [UIViewController]()
@@ -28,7 +50,7 @@ class FotoGecisController: UIPageViewController {
 
         view.backgroundColor = .white
         dataSource = self
-        
+        delegate = self
 
         
         
@@ -57,6 +79,21 @@ extension FotoGecisController : UIPageViewControllerDataSource {
     }
 }
 
+extension FotoGecisController : UIPageViewControllerDelegate {
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        
+        let gosterilenFotoController = viewControllers?.first
+        
+        if let index = controllers.firstIndex(where:  {   $0 == gosterilenFotoController }) {
+            
+            barStackView.arrangedSubviews.forEach({  $0.backgroundColor = seciliOlmayanBarRenk })
+            barStackView.arrangedSubviews[index].backgroundColor = .white
+        }
+        
+        
+    }
+}
+
 class FotoController : UIViewController {
     let imageView = UIImageView(image: #imageLiteral(resourceName: "apple"))
     
@@ -67,10 +104,7 @@ class FotoController : UIViewController {
         }
         super.init(nibName: nil, bundle: nil)
     }
-//    init(image : UIImage) {
-//        self.imageView.image = image
-//        super.init(nibName: nil, bundle: nil)
-//    }
+
     
     
     override func viewDidLoad() {
