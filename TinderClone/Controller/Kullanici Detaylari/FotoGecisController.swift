@@ -10,14 +10,18 @@ import UIKit
 
 class FotoGecisController: UIPageViewController {
     
+    var kullaniciViewModel : KullaniciProfilViewModel! {
+        didSet {
+            print(kullaniciViewModel.attrString)
+            controllers = kullaniciViewModel.goruntuAdlari.map({(goruntuURL) -> UIViewController in
+                let fotoController = FotoController(goruntuURL: goruntuURL)
+                return fotoController
+            })
+            setViewControllers([controllers.first!], direction: .forward, animated: false, completion: nil)
+        }
+    }
     
-    let controllers = [
-    FotoController(image: #imageLiteral(resourceName: "boost")),
-    FotoController(image: #imageLiteral(resourceName: "profilKapat")),
-    FotoController(image: #imageLiteral(resourceName: "kapat")),
-    FotoController(image: #imageLiteral(resourceName: "like")),
-    FotoController(image: #imageLiteral(resourceName: "superLike")),
-    ]
+   var controllers = [UIViewController]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +32,7 @@ class FotoGecisController: UIPageViewController {
 
         
         
-        setViewControllers([controllers.first!], direction: .forward, animated: false, completion: nil)
+        
     }
     
 
@@ -56,10 +60,17 @@ extension FotoGecisController : UIPageViewControllerDataSource {
 class FotoController : UIViewController {
     let imageView = UIImageView(image: #imageLiteral(resourceName: "apple"))
     
-    init(image : UIImage) {
-        self.imageView.image = image
+    
+    init(goruntuURL : String) {
+        if let url = URL(string: goruntuURL) {
+            imageView.sd_setImage(with: url)
+        }
         super.init(nibName: nil, bundle: nil)
     }
+//    init(image : UIImage) {
+//        self.imageView.image = image
+//        super.init(nibName: nil, bundle: nil)
+//    }
     
     
     override func viewDidLoad() {
@@ -67,7 +78,7 @@ class FotoController : UIViewController {
         
         view.addSubview(imageView)
         imageView.doldurSuperView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         
     }
     required init?(coder: NSCoder) {

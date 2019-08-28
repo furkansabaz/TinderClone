@@ -13,10 +13,9 @@ class KullaniciDetaylariController: UIViewController {
     
     var kullaniciViewModel : KullaniciProfilViewModel! {
         didSet {
+            fotoGecisController.kullaniciViewModel = kullaniciViewModel
             lblBilgi.attributedText = kullaniciViewModel.attrString
             
-            guard let goruntu1URL = kullaniciViewModel.goruntuAdlari.first, let url = URL(string: goruntu1URL) else { return}
-            imgProfil.sd_setImage(with: url)
         }
     }
     
@@ -30,13 +29,7 @@ class KullaniciDetaylariController: UIViewController {
     }()
     
     
-    let imgProfil : UIImageView = {
-        
-        let img = UIImageView(image: #imageLiteral(resourceName: "apple"))
-        img.contentMode = .scaleAspectFill
-        img.clipsToBounds = true
-        return img
-    }()
+    let fotoGecisController = FotoGecisController(transitionStyle: .scroll, navigationOrientation: .horizontal)
     
     let lblBilgi : UILabel = {
         let lbl = UILabel()
@@ -58,16 +51,17 @@ class KullaniciDetaylariController: UIViewController {
         scrollView.doldurSuperView()
         
         
-        scrollView.addSubview(imgProfil)
-        imgProfil.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width)
+        let fotoGecisView = fotoGecisController.view!
+        scrollView.addSubview(fotoGecisView)
+        fotoGecisView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width)
         
         
         scrollView.addSubview(lblBilgi)
-        _ = lblBilgi.anchor(top: imgProfil.bottomAnchor, bottom: nil, leading: scrollView.leadingAnchor, trailing: scrollView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
+        _ = lblBilgi.anchor(top: fotoGecisView.bottomAnchor, bottom: nil, leading: scrollView.leadingAnchor, trailing: scrollView.trailingAnchor, padding: .init(top: 16, left: 16, bottom: 0, right: 16))
         
         scrollView.addSubview(btnDetayKapat)
         
-        _  = btnDetayKapat.anchor(top: imgProfil.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 25), boyut: .init(width: 50, height: 50))
+        _  = btnDetayKapat.anchor(top: fotoGecisView.bottomAnchor, bottom: nil, leading: nil, trailing: view.trailingAnchor, padding: .init(top: -25, left: 0, bottom: 0, right: 25), boyut: .init(width: 50, height: 50))
     }
     
     fileprivate func butonOlustur(image : UIImage, selector : Selector) -> UIButton {
@@ -112,7 +106,13 @@ class KullaniciDetaylariController: UIViewController {
     }
     
     
-    
+    fileprivate let ekYukseklik : CGFloat = 90
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        let fotoGecisView = fotoGecisController.view!
+        fotoGecisView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.width + ekYukseklik)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -154,7 +154,8 @@ extension KullaniciDetaylariController : UIScrollViewDelegate{
         width = max(view.frame.width,width)
         
         
-        imgProfil.frame = CGRect(x: min(0,yFark), y: min(0,yFark), width: width, height: width)
+        let fotoGecisView = fotoGecisController.view!
+        fotoGecisView.frame = CGRect(x: min(0,yFark), y: min(0,yFark), width: width, height: width + ekYukseklik)
         
     }
 }
