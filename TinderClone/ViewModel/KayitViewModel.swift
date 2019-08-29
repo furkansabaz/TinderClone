@@ -31,9 +31,9 @@ class KayitViewModel {
         }
     }
     
-    fileprivate func veriGecerliKontrol() {
+     func veriGecerliKontrol() {
         
-        let gecerli = emailAdresi?.isEmpty == false && adiSoyadi?.isEmpty == false && parola?.isEmpty == false
+        let gecerli = emailAdresi?.isEmpty == false && adiSoyadi?.isEmpty == false && parola?.isEmpty == false && bindableImg.deger != nil
         bindableKayitVerileriGecerli.deger = gecerli
         
     }
@@ -95,7 +95,13 @@ class KayitViewModel {
         
         let kullaniciID = Auth.auth().currentUser?.uid ?? ""
         
-        let eklenecekVeri = ["AdiSoyadi" : adiSoyadi ?? "", "GoruntuURL" : goruntuURL, "KullaniciID" : kullaniciID]
+        let eklenecekVeri : [String : Any] = ["AdiSoyadi" : adiSoyadi ?? "",
+                             "GoruntuURL" : goruntuURL,
+                             "KullaniciID" : kullaniciID,
+                             "Yas" : 18,
+                             "ArananMinYas" : AyarlarController.varsayilanArananMinYas,
+                             "ArananMaksYas" : AyarlarController.varsayilanArananMaksYas
+        ]
         
         Firestore.firestore().collection("Kullanicilar").document(kullaniciID).setData(eklenecekVeri) { (hata) in
             

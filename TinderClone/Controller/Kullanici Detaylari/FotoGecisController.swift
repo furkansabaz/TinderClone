@@ -85,7 +85,6 @@ extension FotoGecisController : UIPageViewControllerDelegate {
         let gosterilenFotoController = viewControllers?.first
         
         if let index = controllers.firstIndex(where:  {   $0 == gosterilenFotoController }) {
-            
             barStackView.arrangedSubviews.forEach({  $0.backgroundColor = seciliOlmayanBarRenk })
             barStackView.arrangedSubviews[index].backgroundColor = .white
         }
@@ -113,7 +112,7 @@ class FotoController : UIViewController {
         view.addSubview(imageView)
         imageView.doldurSuperView()
         imageView.contentMode = .scaleAspectFill
-        
+        imageView.clipsToBounds =  true
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

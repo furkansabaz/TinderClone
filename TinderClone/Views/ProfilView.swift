@@ -19,7 +19,9 @@ class ProfilView: UIView {
             let goruntuAdi = kullaniciViewModel.goruntuAdlari.first ?? ""
             
             if let url = URL(string: goruntuAdi) {
-                imgProfil.sd_setImage(with: url)
+                imgProfil.sd_setImage(with: url, placeholderImage: UIImage(named: "placeHolderProfil"), options: .continueInBackground)
+            } else {
+                imgProfil.image = UIImage(named: "placeHolderProfil")
             }
             
             lblKullaniciBilgileri.attributedText = kullaniciViewModel.attrString
@@ -42,15 +44,20 @@ class ProfilView: UIView {
         
         kullaniciViewModel.goruntuIndexGozlemci = { (index, goruntuURL) in
             
+            if let url = URL(string: goruntuURL ?? "") {
+                self.imgProfil.sd_setImage(with: url, placeholderImage: UIImage(named: "placeHolderProfil"), options: .continueInBackground)
+            } else {
+                self.imgProfil.image = UIImage(named: "placeHolderProfil")
+            }
+            
+            
             self.goruntuBarStackView.arrangedSubviews.forEach({ sView in
                 sView.backgroundColor = self.seciliOlmayanRenk
             })
             
             self.goruntuBarStackView.arrangedSubviews[index].backgroundColor = .white
             
-            if let url = URL(string: goruntuURL ?? "") {
-                self.imgProfil.sd_setImage(with: url)
-            }
+            
         }
         
     }

@@ -38,9 +38,10 @@ class AnaController: UIViewController {
         super.viewDidAppear(animated)
         
         if Auth.auth().currentUser == nil {
-            let oturumController = OturumController()
-            oturumController.delegate = self
-            let navController = UINavigationController(rootViewController: oturumController)
+            let kayitController = KayitController()
+            kayitController.delegate = self
+            
+            let navController = UINavigationController(rootViewController: kayitController)
             navController.modalPresentationStyle = .fullScreen
             present(navController, animated: true)
         }
@@ -70,13 +71,17 @@ class AnaController: UIViewController {
     var sonGetirilenKullanici : Kullanici?
     fileprivate func kullanicilariGetirFS() {
         
-        
-        guard let arananMinYas = gecerliKullanici?.arananMinYas , let arananMaksYas = gecerliKullanici?.arananMaksYas else { return }
-        
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Profiller Getiriliyor"
         hud.show(in: view)
         
+//        guard let arananMinYas = gecerliKullanici?.arananMinYas , let arananMaksYas = gecerliKullanici?.arananMaksYas else {
+//            hud.dismiss()
+//            return }
+        
+        
+        let arananMinYas = gecerliKullanici?.arananMinYas ?? AyarlarController.varsayilanArananMinYas
+        let arananMaksYas = gecerliKullanici?.arananMaksYas ?? AyarlarController.varsayilanArananMaksYas
         
         
         let sorgu = Firestore.firestore().collection("Kullanicilar")

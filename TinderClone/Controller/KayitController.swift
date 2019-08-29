@@ -11,6 +11,8 @@ import Firebase
 import JGProgressHUD
 class KayitController: UIViewController {
     
+    var delegate : OturumControllerDelegate? 
+    
     let btnFotografSec : UIButton = {
         
         let btn = UIButton(type: .system)
@@ -340,6 +342,7 @@ class KayitController: UIViewController {
     
     @objc fileprivate func btnOturumAcGitPressed() {
         let oturumController = OturumController()
+        oturumController.delegate = delegate
         navigationController?.pushViewController(oturumController, animated: true)
     }
     
@@ -358,6 +361,7 @@ extension KayitController : UIImagePickerControllerDelegate, UINavigationControl
         let imgSecilen = info[.originalImage] as? UIImage
         
         kayitViewModel.bindableImg.deger = imgSecilen
+        kayitViewModel.veriGecerliKontrol()
         
         dismiss(animated: true, completion: nil)
     }

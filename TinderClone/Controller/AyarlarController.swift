@@ -254,18 +254,26 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
         
         
     }
+    
+    
+    static let varsayilanArananMinYas = 18
+    static let varsayilanArananMaksYas = 60
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 5 {
+            
             let yasAralikCell = YasAralikCell(style: .default, reuseIdentifier: nil)
             
             yasAralikCell.minSlider.addTarget(self, action: #selector(minYasSliderChanged), for: .valueChanged)
             yasAralikCell.maksSlider.addTarget(self, action: #selector(maksYasSliderChanged), for: .valueChanged)
             
-            yasAralikCell.lblMin.text = "Min \(gecerliKullanici?.arananMinYas ?? 18)"
-            yasAralikCell.lblMaks.text = "Maks \(gecerliKullanici?.arananMaksYas ?? 18)"
+            let arananMinYas = gecerliKullanici?.arananMinYas ?? AyarlarController.varsayilanArananMinYas
+            let arananMaksyas = gecerliKullanici?.arananMaksYas ?? AyarlarController.varsayilanArananMaksYas
             
-            yasAralikCell.minSlider.value = Float(gecerliKullanici?.arananMinYas ?? 18)
-            yasAralikCell.maksSlider.value = Float(gecerliKullanici?.arananMaksYas ?? 18)
+            yasAralikCell.lblMin.text = "Min \(arananMinYas)"
+            yasAralikCell.lblMaks.text = "Maks \(arananMaksyas)"
+            
+            yasAralikCell.minSlider.value = Float(arananMinYas)
+            yasAralikCell.maksSlider.value = Float(arananMaksyas)
             
             
             return yasAralikCell
@@ -336,8 +344,8 @@ class AyarlarController: UITableViewController, UIImagePickerControllerDelegate 
             "GoruntuURL3" :  gecerliKullanici?.goruntuURL3 ?? "",
             "Yasi" : gecerliKullanici?.yasi ?? -1,
             "Meslek" : gecerliKullanici?.meslek ?? "",
-            "ArananMinYas" : gecerliKullanici?.arananMinYas ?? -1,
-            "ArananMaksYas" : gecerliKullanici?.arananMaksYas ?? -1
+            "ArananMinYas" : gecerliKullanici?.arananMinYas ?? AyarlarController.varsayilanArananMinYas,
+            "ArananMaksYas" : gecerliKullanici?.arananMaksYas ?? AyarlarController.varsayilanArananMaksYas
         ]
         
         
