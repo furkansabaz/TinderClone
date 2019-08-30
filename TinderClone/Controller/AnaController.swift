@@ -27,6 +27,7 @@ class AnaController: UIViewController {
         ustStackView.btnAyarlar.addTarget(self, action: #selector(btnAyarlarPressed), for: .touchUpInside)
         altButonlarStackView.btnYenile.addTarget(self, action: #selector(btnYenilePressed), for: .touchUpInside)
         altButonlarStackView.btnBegen.addTarget(self, action: #selector(btnBegenPressed), for: .touchUpInside)
+        altButonlarStackView.btnKapat.addTarget(self, action: #selector(btnKapatPressed), for: .touchUpInside)
         layoutDuzenle()
         
         gecerliKullaniciyiGetir()
@@ -68,6 +69,8 @@ class AnaController: UIViewController {
     var sonGetirilenKullanici : Kullanici?
     fileprivate func kullanicilariGetirFS() {
         
+        
+        
         let hud = JGProgressHUD(style: .dark)
         hud.textLabel.text = "Profiller Getiriliyor"
         hud.show(in: view)
@@ -84,7 +87,7 @@ class AnaController: UIViewController {
         let sorgu = Firestore.firestore().collection("Kullanicilar")
             .whereField("Yasi", isGreaterThanOrEqualTo: arananMinYas)
             .whereField("Yasi", isLessThanOrEqualTo: arananMaksYas)
-        
+        gorunenEnUstProfilView = nil
         sorgu.getDocuments { (snapshot, hata) in
             hud.dismiss()
             if let hata = hata {
@@ -126,7 +129,10 @@ class AnaController: UIViewController {
     }
     
     @objc func btnYenilePressed() {
-        kullanicilariGetirFS()
+        
+        if gorunenEnUstProfilView == nil {
+            kullanicilariGetirFS()
+        }
     }
     
     @objc func btnAyarlarPressed() {
@@ -139,30 +145,40 @@ class AnaController: UIViewController {
         
     }
     
+    @objc fileprivate func btnKapatPressed() {
+        profilGecisAnimasyonu(translation: -800, angle: -16)
+        
+    }
+    
     var gorunenEnUstProfilView : ProfilView?
     //MARK:- KULLANICI BİR PROFİLİ BEĞENİRSE ÇALIŞIR
     @objc fileprivate func btnBegenPressed() {
         
+        profilGecisAnimasyonu(translation: 800, angle: 16)
+    }
+    
+    fileprivate func profilGecisAnimasyonu(translation : CGFloat, angle : CGFloat) {
+        let basicAnimation = CABasicAnimation(keyPath: "position.x")
+        basicAnimation.toValue = translation
+        basicAnimation.duration = 1
+        basicAnimation.fillMode = .forwards
+        basicAnimation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+        basicAnimation.isRemovedOnCompletion = false
         
+        let dondurmeAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        dondurmeAnimation.toValue = CGFloat.pi * angle / 180
+        dondurmeAnimation.duration = 1
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
-                   
-                   self.gorunenEnUstProfilView?.frame = CGRect(x: 600, y: 0, width: self.gorunenEnUstProfilView!.frame.width, height: self.gorunenEnUstProfilView!.frame.height)
-            
-            let aci = CGFloat.pi * 20 / 180
-            self.gorunenEnUstProfilView?.transform = CGAffineTransform(rotationAngle: aci)
-                   
-                   
-               }) { (_) in
-                    self.gorunenEnUstProfilView?.removeFromSuperview()
-                   
-                   self.gorunenEnUstProfilView = self.gorunenEnUstProfilView?.sonrakiProfilView
-               }
+        let ustPView = gorunenEnUstProfilView
+        gorunenEnUstProfilView = ustPView?.sonrakiProfilView
         
+        CATransaction.setCompletionBlock {
+            ustPView?.removeFromSuperview()
+        }
         
-        
-        
-       
+        ustPView?.layer.add(basicAnimation, forKey: "animasyon")
+        ustPView?.layer.add(dondurmeAnimation, forKey: "dondurme")
+        CATransaction.commit()
     }
     
     //MARK:- LAYOUT DÜZENLEYEN FONKSİYON
