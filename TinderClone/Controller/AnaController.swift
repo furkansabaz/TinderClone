@@ -114,7 +114,6 @@ class AnaController: UIViewController {
         let pView = ProfilView(frame: .zero)
         pView.delegate = self
         pView.kullaniciViewModel = kullanici.kullaniciProfilViewModelOlustur()
-        
         profilDiziniView.addSubview(pView)
         pView.doldurSuperView()
     }

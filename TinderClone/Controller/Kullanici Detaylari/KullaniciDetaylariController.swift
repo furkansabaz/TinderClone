@@ -29,7 +29,7 @@ class KullaniciDetaylariController: UIViewController {
     }()
     
     
-    let fotoGecisController = FotoGecisController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    let fotoGecisController = FotoGecisController()
     
     let lblBilgi : UILabel = {
         let lbl = UILabel()
@@ -123,7 +123,9 @@ class KullaniciDetaylariController: UIViewController {
         layoutDuzenle()
         blurEfektOlustur()
         altButonlarKonumAyarla()
+       
     }
+    
     
     fileprivate func blurEfektOlustur() {
         let blurEffect = UIBlurEffect(style: .regular)

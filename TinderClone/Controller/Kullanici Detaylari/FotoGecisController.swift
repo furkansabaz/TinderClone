@@ -52,9 +52,57 @@ class FotoGecisController: UIPageViewController {
         dataSource = self
         delegate = self
 
+        if kullaniciViewModelMi {
+            fotoGecisIptal()
+        }
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapGestureFoto)))
         
         
+    }
+    
+    @objc fileprivate func tapGestureFoto(gesture : UITapGestureRecognizer) {
         
+        let gorunenController = viewControllers!.first!
+        
+        if let index = controllers.firstIndex(of: gorunenController) {
+            
+            barStackView.arrangedSubviews.forEach( {  $0.backgroundColor = seciliOlmayanBarRenk  })
+            
+            if gesture.location(in: self.view).x > view.frame.width / 2 {
+                let sonrakiIndex = min(controllers.count-1,index+1)
+                let sonrakiController = controllers[sonrakiIndex]
+                setViewControllers([sonrakiController], direction: .forward, animated: false)
+                barStackView.arrangedSubviews[sonrakiIndex].backgroundColor = .white
+            } else {
+                //Önceki fotoğrafa geçmelisin
+                let oncekiIndex = max(0,index-1)
+                let oncekiController = controllers[oncekiIndex]
+                setViewControllers([oncekiController], direction: .forward, animated: false)
+                barStackView.arrangedSubviews[oncekiIndex].backgroundColor = .white
+            }
+            
+        }
+        
+    }
+    
+    fileprivate func fotoGecisIptal() {
+        
+        view.subviews.forEach { (v) in
+            if let v = v as? UIScrollView {
+                v.isScrollEnabled = false
+            }
+        }
+    }
+    
+    fileprivate let kullaniciViewModelMi : Bool
+    
+    init(kullaniciViewModelMi : Bool = false) {
+        self.kullaniciViewModelMi = kullaniciViewModelMi
+        super.init(transitionStyle: .scroll, navigationOrientation: .horizontal)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
 

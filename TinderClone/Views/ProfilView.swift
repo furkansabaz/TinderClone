@@ -16,13 +16,9 @@ class ProfilView: UIView {
         
         didSet {
             
-            let goruntuAdi = kullaniciViewModel.goruntuAdlari.first ?? ""
             
-            if let url = URL(string: goruntuAdi) {
-                imgProfil.sd_setImage(with: url, placeholderImage: UIImage(named: "placeHolderProfil"), options: .continueInBackground)
-            } else {
-                imgProfil.image = UIImage(named: "placeHolderProfil")
-            }
+            fotoGecisController.kullaniciViewModel = kullaniciViewModel
+            
             
             lblKullaniciBilgileri.attributedText = kullaniciViewModel.attrString
             
@@ -44,11 +40,7 @@ class ProfilView: UIView {
         
         kullaniciViewModel.goruntuIndexGozlemci = { (index, goruntuURL) in
             
-            if let url = URL(string: goruntuURL ?? "") {
-                self.imgProfil.sd_setImage(with: url, placeholderImage: UIImage(named: "placeHolderProfil"), options: .continueInBackground)
-            } else {
-                self.imgProfil.image = UIImage(named: "placeHolderProfil")
-            }
+            
             
             
             self.goruntuBarStackView.arrangedSubviews.forEach({ sView in
@@ -63,7 +55,8 @@ class ProfilView: UIView {
     }
     
    
-    fileprivate let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
+    //fileprivate let imgProfil = UIImageView(image:#imageLiteral(resourceName: "kisi1") )
+    fileprivate let fotoGecisController = FotoGecisController(kullaniciViewModelMi: true)
     fileprivate let gradientLayer = CAGradientLayer()
     let lblKullaniciBilgileri = UILabel()
     fileprivate let sinirDegeri : CGFloat = 120
@@ -102,12 +95,11 @@ class ProfilView: UIView {
         clipsToBounds = true
         
         
-        imgProfil.contentMode = .scaleAspectFill
+        let fotoGecisView = fotoGecisController.view!
+        addSubview(fotoGecisView)
+        fotoGecisView.doldurSuperView()
         
-        addSubview(imgProfil)
-        imgProfil.doldurSuperView()
         
-        olusturBarStackView()
         olusturGradientLayer()
         
         addSubview(lblKullaniciBilgileri)
