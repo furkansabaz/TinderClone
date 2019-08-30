@@ -145,15 +145,61 @@ class AnaController: UIViewController {
         
     }
     
-    @objc fileprivate func btnKapatPressed() {
+    @objc  func btnKapatPressed() {
+        gecisleriKaydetFirestore(begeniDurumu: -1)
         profilGecisAnimasyonu(translation: -800, angle: -16)
         
     }
     
+    
+    fileprivate func gecisleriKaydetFirestore(begeniDurumu : Int) {
+        
+        guard let kullaniciID = Auth.auth().currentUser?.uid else {return}
+        
+        guard let profilID = gorunenEnUstProfilView?.kullaniciViewModel.kullaniciID else {return}
+        
+        let eklenecekVeri = [profilID : begeniDurumu]
+        
+        
+        Firestore.firestore().collection("Gecisler").document(kullaniciID).getDocument { (snapshot, hata) in
+            
+            if let hata = hata {
+                print("Geçiş Verisi Alınamadı : \(hata.localizedDescription)")
+                return
+            }
+            
+            if snapshot?.exists == true {
+                // veri zaten vardır güncelleyebiliriz
+                Firestore.firestore().collection("Gecisler").document(kullaniciID).updateData(eklenecekVeri) { (hata) in
+                    if let hata = hata {
+                        print("Geçiş Verisi Güncellemesi Başarısız : \(hata.localizedDescription)")
+                        return
+                    }
+                    print("Profili Beğenin Güncellendi")
+                }
+            } else {
+                //böyle bir veri yok. Veriyi eklemelisin
+                Firestore.firestore().collection("Gecisler").document(kullaniciID).setData(eklenecekVeri) { (hata) in
+                    
+                    if let hata = hata {
+                        print("Geçiş Verisi Kaydı Başarısız : \(hata.localizedDescription)")
+                        return
+                    }
+                    print("Profili Beğenin Kaydedildi")
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+    }
     var gorunenEnUstProfilView : ProfilView?
     //MARK:- KULLANICI BİR PROFİLİ BEĞENİRSE ÇALIŞIR
-    @objc fileprivate func btnBegenPressed() {
-        
+    @objc  func btnBegenPressed() {
+        gecisleriKaydetFirestore(begeniDurumu: 1)
         profilGecisAnimasyonu(translation: 800, angle: 16)
     }
     

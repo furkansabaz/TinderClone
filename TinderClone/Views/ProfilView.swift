@@ -207,34 +207,53 @@ class ProfilView: UIView {
         
         let profilKaybet : Bool =  abs(panGesture.translation(in: nil).x) > sinirDegeri
         
-        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+        if profilKaybet {
+            guard let anaController = self.delegate as? AnaController else { return }
             
-            if profilKaybet {
-
-                
-                self.frame = CGRect(x: 600*translationYonu, y: 0, width: self.frame.width, height: self.frame.height)
-                
-                
-//                let ekranDisiTransform = self.transform.translatedBy(x: 900, y: 0)
-//                self.transform = ekranDisiTransform
-                
-                
+            if translationYonu == 1 {
+                anaController.btnBegenPressed()
             } else {
+                anaController.btnKapatPressed()
+            }
+        } else {
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
                 self.transform = .identity
-            }
-            
-            
-           
-        }) { (_) in
-            print("Animasyon Bitti. Kart Geri Gelsin")
-            self.transform = .identity
-            
-            if profilKaybet {
-                self.removeFromSuperview()
-                self.delegate?.profiliSiradanCikar(profil: self)
-            }
-            //self.frame = CGRect(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
+            })
         }
+        
+        
+        
+        
+        
+        
+//        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+//
+//            if profilKaybet {
+//
+//
+//                self.frame = CGRect(x: 600*translationYonu, y: 0, width: self.frame.width, height: self.frame.height)
+//
+//
+////                let ekranDisiTransform = self.transform.translatedBy(x: 900, y: 0)
+////                self.transform = ekranDisiTransform
+//
+//
+//            } else {
+//                self.transform = .identity
+//            }
+//
+//
+//
+//        }) { (_) in
+//            print("Animasyon Bitti. Kart Geri Gelsin")
+//            self.transform = .identity
+//
+//            if profilKaybet {
+//                self.removeFromSuperview()
+//                self.delegate?.profiliSiradanCikar(profil: self)
+//            }
+//            //self.frame = CGRect(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
+//        }
         
         
         
