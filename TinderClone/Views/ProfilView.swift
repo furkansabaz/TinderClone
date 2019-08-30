@@ -10,6 +10,7 @@ import UIKit
 import SDWebImage
 class ProfilView: UIView {
 
+    var sonrakiProfilView : ProfilView?
     
     var delegate : ProfilViewDelegate?
     var kullaniciViewModel : KullaniciProfilViewModel! {
@@ -230,6 +231,7 @@ class ProfilView: UIView {
             
             if profilKaybet {
                 self.removeFromSuperview()
+                self.delegate?.profiliSiradanCikar(profil: self)
             }
             //self.frame = CGRect(x: 0, y: 0, width: self.superview!.frame.width, height: self.superview!.frame.height)
         }
@@ -260,6 +262,6 @@ class ProfilView: UIView {
 
 }
 protocol ProfilViewDelegate {
-    
+    func profiliSiradanCikar(profil : ProfilView)
     func detayliBilgiPressed(kullaniciVM :  KullaniciProfilViewModel)
 }

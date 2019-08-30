@@ -26,12 +26,9 @@ class AnaController: UIViewController {
         
         ustStackView.btnAyarlar.addTarget(self, action: #selector(btnAyarlarPressed), for: .touchUpInside)
         altButonlarStackView.btnYenile.addTarget(self, action: #selector(btnYenilePressed), for: .touchUpInside)
-        
+        altButonlarStackView.btnBegen.addTarget(self, action: #selector(btnBegenPressed), for: .touchUpInside)
         layoutDuzenle()
-        //kullaniciProfilleriAyarlaFireStore()
-        //kullaniciVerileriGetirFS()
         
-        //denemeLogin()
         gecerliKullaniciyiGetir()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -95,12 +92,20 @@ class AnaController: UIViewController {
                 return
             }
             
+            var oncekiProfilView : ProfilView?
             snapshot?.documents.forEach({ (dSnapshot) in
                 let kullaniciVeri = dSnapshot.data()
                 let kullanici = Kullanici(bilgiler: kullaniciVeri)
                 
                 if kullanici.kullaniciID != self.gecerliKullanici?.kullaniciID {
-                    self.kullanicidanProfilOlustur(kullanici: kullanici)
+                    let pView = self.kullanicidanProfilOlustur(kullanici: kullanici)
+                    
+                    if self.gorunenEnUstProfilView == nil {
+                        self.gorunenEnUstProfilView = pView
+                    }
+                    
+                    oncekiProfilView?.sonrakiProfilView = pView
+                    oncekiProfilView = pView
                 }
                 
             })
@@ -109,13 +114,15 @@ class AnaController: UIViewController {
         }
     }
     
-    fileprivate func kullanicidanProfilOlustur(kullanici : Kullanici) {
+    fileprivate func kullanicidanProfilOlustur(kullanici : Kullanici) -> ProfilView {
         
         let pView = ProfilView(frame: .zero)
         pView.delegate = self
         pView.kullaniciViewModel = kullanici.kullaniciProfilViewModelOlustur()
         profilDiziniView.addSubview(pView)
+        profilDiziniView.sendSubviewToBack(pView)
         pView.doldurSuperView()
+        return pView
     }
     
     @objc func btnYenilePressed() {
@@ -130,6 +137,32 @@ class AnaController: UIViewController {
         navController.modalPresentationStyle = .fullScreen
         present(navController, animated: true)
         
+    }
+    
+    var gorunenEnUstProfilView : ProfilView?
+    //MARK:- KULLANICI BİR PROFİLİ BEĞENİRSE ÇALIŞIR
+    @objc fileprivate func btnBegenPressed() {
+        
+        
+        
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.1, options: .curveEaseOut, animations: {
+                   
+                   self.gorunenEnUstProfilView?.frame = CGRect(x: 600, y: 0, width: self.gorunenEnUstProfilView!.frame.width, height: self.gorunenEnUstProfilView!.frame.height)
+            
+            let aci = CGFloat.pi * 20 / 180
+            self.gorunenEnUstProfilView?.transform = CGAffineTransform(rotationAngle: aci)
+                   
+                   
+               }) { (_) in
+                    self.gorunenEnUstProfilView?.removeFromSuperview()
+                   
+                   self.gorunenEnUstProfilView = self.gorunenEnUstProfilView?.sonrakiProfilView
+               }
+        
+        
+        
+        
+       
     }
     
     //MARK:- LAYOUT DÜZENLEYEN FONKSİYON
@@ -181,6 +214,12 @@ extension AnaController : OturumControllerDelegate {
 }
 
 extension AnaController : ProfilViewDelegate {
+    
+    func profiliSiradanCikar(profil: ProfilView) {
+        
+        self.gorunenEnUstProfilView?.removeFromSuperview()
+        self.gorunenEnUstProfilView = self.gorunenEnUstProfilView?.sonrakiProfilView
+    }
     func detayliBilgiPressed(kullaniciVM: KullaniciProfilViewModel) {
         let kullaniciDetaylariController = KullaniciDetaylariController()
         kullaniciDetaylariController.modalPresentationStyle = .fullScreen
