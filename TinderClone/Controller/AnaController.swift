@@ -127,9 +127,11 @@ class AnaController: UIViewController {
                 
                 let gecerliKullaniciMi = kullanici.kullaniciID == Auth.auth().currentUser?.uid
                 
-                let gecisVerisiVarMi = self.gecisVerileri[kullanici.kullaniciID] != nil
+                //let gecisVerisiVarMi = self.gecisVerileri[kullanici.kullaniciID] != nil
                 
+                let gecisVerisiVarMi = false
                 print("Geçiş Verisi Var Mı  : \(gecisVerisiVarMi)      -    Geçerli Kullanıcı Mı : \(gecerliKullaniciMi)")
+                
                 
                 
                 if !gecerliKullaniciMi && !gecisVerisiVarMi{
@@ -162,9 +164,8 @@ class AnaController: UIViewController {
     
     @objc func btnYenilePressed() {
         
-        if gorunenEnUstProfilView == nil {
-            gecerliKullaniciyiGetir()
-        }
+        profilDiziniView.subviews.forEach({ $0.removeFromSuperview()})
+        gecerliKullaniciyiGetir()
     }
     
     @objc func btnAyarlarPressed() {
@@ -249,14 +250,18 @@ class AnaController: UIViewController {
             let eslesmeVarMi = veri[kullaniciID] as? Int == 1
             if eslesmeVarMi {
                 print("Eşleşme Var")
-                let hud = JGProgressHUD(style: .dark)
-                hud.textLabel.text = "Eşleştiniz"
-                hud.show(in: self.view)
-                
-                hud.dismiss(afterDelay: 2)
+                self.getirEslesmeView(profilID: profilID)
             }
         }
         
+    }
+    
+    
+    fileprivate func getirEslesmeView(profilID : String) {
+        
+        let eslesmeView = EslesmeView()
+        view.addSubview(eslesmeView)
+        eslesmeView.doldurSuperView()
     }
     var gorunenEnUstProfilView : ProfilView?
     //MARK:- KULLANICI BİR PROFİLİ BEĞENİRSE ÇALIŞIR
