@@ -9,6 +9,35 @@
 import UIKit
 
 class EslesmeView : UIView {
+    fileprivate let btnGezinmeyiSurdur : UIButton = {
+        let btn =  GezinmeyiSurdurButonu()
+        btn.setTitle("Gezinmeyi Sürdür", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        return btn
+    }()
+    
+    fileprivate let btnMesajGonder : UIButton = {
+        let btn = MesajGonderButonu()
+        btn.setTitle("MESAJ GÖNDER", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
+        btn.backgroundColor = .blue
+        return btn
+    }()
+    fileprivate let imgEslesme : UIImageView = {
+        let img = UIImageView(image: #imageLiteral(resourceName: "eslesme"))
+        img.contentMode = .scaleAspectFill
+        return img
+    }()
+    
+    fileprivate let lblAciklama : UILabel = {
+        let lbl = UILabel()
+        lbl.text = "Sen ve A karşılıklı\nolarak birbirinizi beğendiniz"
+        lbl.numberOfLines = 0
+        lbl.textAlignment = .center
+        lbl.textColor = .white
+        lbl.font = UIFont.systemFont(ofSize: 21)
+        return lbl
+    }()
     
     fileprivate let imgGecerliKullanici : UIImageView = {
        let img = UIImageView(image: #imageLiteral(resourceName: "kisi4"))
@@ -36,6 +65,10 @@ class EslesmeView : UIView {
         
         addSubview(imgGecerliKullanici)
         addSubview(imgKarsiProfil)
+        addSubview(imgEslesme)
+        addSubview(lblAciklama)
+        addSubview(btnMesajGonder)
+        addSubview(btnGezinmeyiSurdur)
         let goruntuBoyut : CGFloat = 135
         _ = imgGecerliKullanici.anchor(top: nil, bottom: nil, leading: nil, trailing: centerXAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 15), boyut: .init(width: goruntuBoyut, height: goruntuBoyut))
         
@@ -47,6 +80,15 @@ class EslesmeView : UIView {
         imgKarsiProfil.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         imgKarsiProfil.layer.cornerRadius = goruntuBoyut / 2
         
+        _ = imgEslesme.anchor(top: nil, bottom: lblAciklama.topAnchor, leading: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 15, right: 0), boyut: .init(width: 290, height: 80))
+        
+        imgEslesme.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        _ = lblAciklama.anchor(top: nil, bottom: imgGecerliKullanici.topAnchor, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 35, right: 0), boyut: .init(width: 0, height: 60))
+        
+        _ = btnMesajGonder.anchor(top: imgGecerliKullanici.bottomAnchor, bottom: nil, leading: leadingAnchor, trailing: trailingAnchor, padding: .init(top: 30, left: 45, bottom: 0, right: 45), boyut: .init(width: 0, height: 60))
+        
+        _ = btnGezinmeyiSurdur.anchor(top: btnMesajGonder.bottomAnchor, bottom: nil, leading: btnMesajGonder.leadingAnchor, trailing: btnMesajGonder.trailingAnchor, padding: .init(top: 15, left: 0, bottom: 0, right: 0), boyut: .init(width: 0, height: 60))
         
     }
     let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
