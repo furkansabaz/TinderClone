@@ -56,16 +56,43 @@ class AnaController: UIViewController {
                 return
             }
             self.gecerliKullanici = kullanici
-            self.kullanicilariGetirFS()
+            self.gecisleriGetir()
         }
         
     }
     
      
-    fileprivate func denemeLogin() {
-        Auth.auth().signIn(withEmail: "shakira@gmail.com", password: "123456", completion: nil)
-        print("Oturum Açıldı")
+    var gecisVerileri = [String : Int]()
+    fileprivate func gecisleriGetir() {
+        
+        guard let kullaniciID = Auth.auth().currentUser?.uid else { return }
+        
+        Firestore.firestore().collection("Gecisler").document(kullaniciID).getDocument { (snapshot, hata) in
+            
+            if let hata = hata {
+                print("Oturum Açmış Kullanıcının Geçiş Verileri Getirilirken Hata Oluştu : \(hata.localizedDescription)")
+                return
+            }
+            
+            print("Geçiş Verisi : ", snapshot?.data() ?? "")
+            
+            guard let gecisVerisi = snapshot?.data() as? [String : Int] else {
+                self.gecisVerileri.removeAll()
+                self.kullanicilariGetirFS()
+                return
+                
+            }
+            self.gecisVerileri = gecisVerisi
+            self.kullanicilariGetirFS()
+            
+        }
+        
     }
+    
+    
+    
+    
+    
     var sonGetirilenKullanici : Kullanici?
     fileprivate func kullanicilariGetirFS() {
         
@@ -75,9 +102,7 @@ class AnaController: UIViewController {
         hud.textLabel.text = "Profiller Getiriliyor"
         hud.show(in: view)
         
-//        guard let arananMinYas = gecerliKullanici?.arananMinYas , let arananMaksYas = gecerliKullanici?.arananMaksYas else {
-//            hud.dismiss()
-//            return }
+
         
         
         let arananMinYas = gecerliKullanici?.arananMinYas ?? AyarlarController.varsayilanArananMinYas
@@ -100,7 +125,14 @@ class AnaController: UIViewController {
                 let kullaniciVeri = dSnapshot.data()
                 let kullanici = Kullanici(bilgiler: kullaniciVeri)
                 
-                if kullanici.kullaniciID != self.gecerliKullanici?.kullaniciID {
+                let gecerliKullaniciMi = kullanici.kullaniciID == Auth.auth().currentUser?.uid
+                
+                let gecisVerisiVarMi = self.gecisVerileri[kullanici.kullaniciID] != nil
+                
+                print("Geçiş Verisi Var Mı  : \(gecisVerisiVarMi)      -    Geçerli Kullanıcı Mı : \(gecerliKullaniciMi)")
+                
+                
+                if !gecerliKullaniciMi && !gecisVerisiVarMi{
                     let pView = self.kullanicidanProfilOlustur(kullanici: kullanici)
                     
                     if self.gorunenEnUstProfilView == nil {
@@ -131,7 +163,7 @@ class AnaController: UIViewController {
     @objc func btnYenilePressed() {
         
         if gorunenEnUstProfilView == nil {
-            kullanicilariGetirFS()
+            gecerliKullaniciyiGetir()
         }
     }
     
@@ -176,6 +208,10 @@ class AnaController: UIViewController {
                         return
                     }
                     print("Profili Beğenin Güncellendi")
+                    if begeniDurumu == 1 {
+                        self.eslesmeKontrol(profilID: profilID)
+                    }
+                    
                 }
             } else {
                 //böyle bir veri yok. Veriyi eklemelisin
@@ -186,14 +222,40 @@ class AnaController: UIViewController {
                         return
                     }
                     print("Profili Beğenin Kaydedildi")
+                    if begeniDurumu == 1 {
+                        self.eslesmeKontrol(profilID: profilID)
+                    }
+                    
                 }
             }
         }
         
+    }
+    
+    fileprivate func eslesmeKontrol(profilID : String) {
+        print("Eşleşme Kontrol Ediliyor")
         
-        
-        
-        
+        Firestore.firestore().collection("Gecisler").document(profilID).getDocument { (snapshot, hata) in
+            
+            if let hata = hata {
+                print("Beğenilen Profilin Beğeni Bilgileri Getirilemedi : \(hata.localizedDescription)")
+                return
+            }
+            
+            guard let veri = snapshot?.data() else { return }
+            print(veri)
+            
+            guard let kullaniciID = Auth.auth().currentUser?.uid else { return }
+            let eslesmeVarMi = veri[kullaniciID] as? Int == 1
+            if eslesmeVarMi {
+                print("Eşleşme Var")
+                let hud = JGProgressHUD(style: .dark)
+                hud.textLabel.text = "Eşleştiniz"
+                hud.show(in: self.view)
+                
+                hud.dismiss(afterDelay: 2)
+            }
+        }
         
     }
     var gorunenEnUstProfilView : ProfilView?
