@@ -59,6 +59,52 @@ class EslesmeView : UIView {
         super.init(frame: frame)
         blurEfektEkle()
         duzenleLayout()
+        animasyonlariOlustur()
+    }
+    
+    
+    fileprivate func animasyonlariOlustur() {
+        
+        
+        let aci = 25 * CGFloat.pi / 180
+        
+        imgGecerliKullanici.transform = CGAffineTransform(rotationAngle: -aci).concatenating(CGAffineTransform(translationX: 220, y: 0))
+        
+        imgKarsiProfil.transform = CGAffineTransform(rotationAngle: aci).concatenating(CGAffineTransform(translationX: -220, y: 0))
+        
+        
+        btnMesajGonder.transform = CGAffineTransform(translationX: -450, y: 0)
+        btnGezinmeyiSurdur.transform = CGAffineTransform(translationX: 450, y: 0)
+        
+        
+        UIView.animateKeyframes(withDuration: 1.3, delay: 0, options: .calculationModeCubic, animations: {
+            
+            //Animasyon 1 - Nesnelerin Orijinal Konumlarına Dönmesi
+            
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
+                
+                self.imgGecerliKullanici.transform = CGAffineTransform(rotationAngle: -aci)
+                self.imgKarsiProfil.transform = CGAffineTransform(rotationAngle: aci)
+            }
+            
+            //Animasyon 2 - Döndürme İşlemi
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.4) {
+                self.imgGecerliKullanici.transform = .identity
+                self.imgKarsiProfil.transform = .identity
+                
+            }
+            
+        }) { (_) in
+            
+        }
+        
+        UIView.animate(withDuration: 0.9, delay: 0.8, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.3, options: .curveEaseOut, animations: {
+            self.btnMesajGonder.transform = .identity
+            self.btnGezinmeyiSurdur.transform = .identity
+        })
+        
+        
     }
     
     fileprivate func duzenleLayout() {
