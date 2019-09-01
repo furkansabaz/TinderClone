@@ -260,6 +260,8 @@ class AnaController: UIViewController {
     fileprivate func getirEslesmeView(profilID : String) {
         
         let eslesmeView = EslesmeView()
+        eslesmeView.profilID = profilID
+        eslesmeView.gecerliKullanici = gecerliKullanici
         view.addSubview(eslesmeView)
         eslesmeView.doldurSuperView()
     }

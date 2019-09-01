@@ -7,8 +7,38 @@
 //
 
 import UIKit
-
+import Firebase
 class EslesmeView : UIView {
+    var gecerliKullanici : Kullanici!
+    var profilID : String! {
+        didSet {
+         
+            
+            let sorgu = Firestore.firestore().collection("Kullanicilar")
+            sorgu.document(profilID).getDocument { (snapshot, hata) in
+                if let hata = hata {
+                    print("Eşleşmesi Yapılan Profilin Bilgileri Getirilemedi : \(hata.localizedDescription)")
+                    return
+                }
+                
+                guard let profilVerisi = snapshot?.data() else { return }
+                let kullanici = Kullanici(bilgiler: profilVerisi)
+                
+                guard let url = URL(string: kullanici.goruntuURL1 ?? "") else { return }
+                
+                self.imgKarsiProfil.sd_setImage(with: url)
+                
+                guard let gecerliKullaniciGoruntuURL = URL(string : self.gecerliKullanici.goruntuURL1 ?? "") else { return }
+                
+                self.imgGecerliKullanici.sd_setImage(with: gecerliKullaniciGoruntuURL) { (_, _, _, _) in
+                    self.animasyonlariOlustur()
+                }
+            
+            }
+            
+            
+        }
+    }
     fileprivate let btnGezinmeyiSurdur : UIButton = {
         let btn =  GezinmeyiSurdurButonu()
         btn.setTitle("Gezinmeyi Sürdür", for: .normal)
@@ -53,18 +83,19 @@ class EslesmeView : UIView {
         img.clipsToBounds = true
         img.layer.borderColor = UIColor.white.cgColor
         img.layer.borderWidth = 2
+        img.alpha = 0
         return img
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         blurEfektEkle()
         duzenleLayout()
-        animasyonlariOlustur()
+        
     }
     
     
     fileprivate func animasyonlariOlustur() {
-        
+        views.forEach({ $0.alpha = 1 })
         
         let aci = 25 * CGFloat.pi / 180
         
@@ -107,13 +138,21 @@ class EslesmeView : UIView {
         
     }
     
+    lazy var views = [
+    imgEslesme,
+    lblAciklama,
+    imgGecerliKullanici,
+    imgKarsiProfil,
+    btnMesajGonder,
+    btnGezinmeyiSurdur
+    ]
+    
     fileprivate func duzenleLayout() {
         
-        addSubview(imgGecerliKullanici)
-        addSubview(imgKarsiProfil)
-        addSubview(imgEslesme)
-        addSubview(lblAciklama)
-        addSubview(btnMesajGonder)
+        views.forEach({ (v) in
+            addSubview(v)
+            v.alpha = 0
+        })
         addSubview(btnGezinmeyiSurdur)
         let goruntuBoyut : CGFloat = 135
         _ = imgGecerliKullanici.anchor(top: nil, bottom: nil, leading: nil, trailing: centerXAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 15), boyut: .init(width: goruntuBoyut, height: goruntuBoyut))
