@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = AnaController()
+        window?.rootViewController = UINavigationController(rootViewController: AnaController())
         
         return true
     }

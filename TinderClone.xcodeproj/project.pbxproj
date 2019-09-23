@@ -26,6 +26,20 @@
 		3D60081E2312C22D00E30B97 /* Uzanti+Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60081D2312C22D00E30B97 /* Uzanti+Firestore.swift */; };
 		3D600828231315EA00E30B97 /* OturumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D600827231315EA00E30B97 /* OturumViewModel.swift */; };
 		3D60082A2313180F00E30B97 /* OturumController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6008292313180F00E30B97 /* OturumController.swift */; };
+		3D6BA02A2338CB090089C63D /* ImageViewAspectFit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA0292338CB090089C63D /* ImageViewAspectFit.swift */; };
+		3D6BA02C2338CB900089C63D /* ImageViewAspectFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA02B2338CB900089C63D /* ImageViewAspectFill.swift */; };
+		3D6BA02E2338CBF40089C63D /* TextFieldIntend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA02D2338CBF40089C63D /* TextFieldIntend.swift */; };
+		3D6BA0302338CD260089C63D /* Uzanti+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA02F2338CD260089C63D /* Uzanti+UIButton.swift */; };
+		3D6BA0322338CEA70089C63D /* Uzanti+UILabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA0312338CEA70089C63D /* Uzanti+UILabel.swift */; };
+		3D6BA0342338CF620089C63D /* Uzanti+UIStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA0332338CF620089C63D /* Uzanti+UIStackView.swift */; };
+		3D6BA0362338D0D00089C63D /* Uzanti+UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA0352338D0D00089C63D /* Uzanti+UITextField.swift */; };
+		3D6BA0382338D10E0089C63D /* Uzanti+UITextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA0372338D10E0089C63D /* Uzanti+UITextView.swift */; };
+		3D6BA03A2338D4800089C63D /* Uzanti+UIView+Stack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA0392338D4800089C63D /* Uzanti+UIView+Stack.swift */; };
+		3D6BA03C2338D7D90089C63D /* DaireselImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA03B2338D7D90089C63D /* DaireselImageView.swift */; };
+		3D6BA03E2338D9440089C63D /* ListeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA03D2338D9440089C63D /* ListeCell.swift */; };
+		3D6BA0402338DB490089C63D /* ListeHeaderFooterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA03F2338DB490089C63D /* ListeHeaderFooterController.swift */; };
+		3D6BA0422338DEDF0089C63D /* ListeHeaderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA0412338DEDF0089C63D /* ListeHeaderController.swift */; };
+		3D6BA0442338DF350089C63D /* ListeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D6BA0432338DF350089C63D /* ListeController.swift */; };
 		3D716BE62311583300B3298A /* AyarlarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D716BE52311583300B3298A /* AyarlarController.swift */; };
 		3D716BEA231180B700B3298A /* AyarlarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D716BE9231180B700B3298A /* AyarlarCell.swift */; };
 		3D7B243422F991A5000975F1 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7B243322F991A5000975F1 /* Bindable.swift */; };
@@ -60,6 +74,20 @@
 		3D60081D2312C22D00E30B97 /* Uzanti+Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzanti+Firestore.swift"; sourceTree = "<group>"; };
 		3D600827231315EA00E30B97 /* OturumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OturumViewModel.swift; sourceTree = "<group>"; };
 		3D6008292313180F00E30B97 /* OturumController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OturumController.swift; sourceTree = "<group>"; };
+		3D6BA0292338CB090089C63D /* ImageViewAspectFit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewAspectFit.swift; sourceTree = "<group>"; };
+		3D6BA02B2338CB900089C63D /* ImageViewAspectFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewAspectFill.swift; sourceTree = "<group>"; };
+		3D6BA02D2338CBF40089C63D /* TextFieldIntend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldIntend.swift; sourceTree = "<group>"; };
+		3D6BA02F2338CD260089C63D /* Uzanti+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzanti+UIButton.swift"; sourceTree = "<group>"; };
+		3D6BA0312338CEA70089C63D /* Uzanti+UILabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzanti+UILabel.swift"; sourceTree = "<group>"; };
+		3D6BA0332338CF620089C63D /* Uzanti+UIStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzanti+UIStackView.swift"; sourceTree = "<group>"; };
+		3D6BA0352338D0D00089C63D /* Uzanti+UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzanti+UITextField.swift"; sourceTree = "<group>"; };
+		3D6BA0372338D10E0089C63D /* Uzanti+UITextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzanti+UITextView.swift"; sourceTree = "<group>"; };
+		3D6BA0392338D4800089C63D /* Uzanti+UIView+Stack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzanti+UIView+Stack.swift"; sourceTree = "<group>"; };
+		3D6BA03B2338D7D90089C63D /* DaireselImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaireselImageView.swift; sourceTree = "<group>"; };
+		3D6BA03D2338D9440089C63D /* ListeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeCell.swift; sourceTree = "<group>"; };
+		3D6BA03F2338DB490089C63D /* ListeHeaderFooterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeHeaderFooterController.swift; sourceTree = "<group>"; };
+		3D6BA0412338DEDF0089C63D /* ListeHeaderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeHeaderController.swift; sourceTree = "<group>"; };
+		3D6BA0432338DF350089C63D /* ListeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListeController.swift; sourceTree = "<group>"; };
 		3D716BE52311583300B3298A /* AyarlarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyarlarController.swift; sourceTree = "<group>"; };
 		3D716BE9231180B700B3298A /* AyarlarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyarlarCell.swift; sourceTree = "<group>"; };
 		3D7B243322F991A5000975F1 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
@@ -104,6 +132,9 @@
 				3DCD5C6C22F7E1D5004204BA /* KayitController.swift */,
 				3D7B243322F991A5000975F1 /* Bindable.swift */,
 				3D716BE52311583300B3298A /* AyarlarController.swift */,
+				3D6BA03F2338DB490089C63D /* ListeHeaderFooterController.swift */,
+				3D6BA0412338DEDF0089C63D /* ListeHeaderController.swift */,
+				3D6BA0432338DF350089C63D /* ListeController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -158,6 +189,15 @@
 			children = (
 				3D4776EC22F1C10E004E79D3 /* Uzantilar+UIView.swift */,
 				3D60081D2312C22D00E30B97 /* Uzanti+Firestore.swift */,
+				3D6BA0292338CB090089C63D /* ImageViewAspectFit.swift */,
+				3D6BA02B2338CB900089C63D /* ImageViewAspectFill.swift */,
+				3D6BA02D2338CBF40089C63D /* TextFieldIntend.swift */,
+				3D6BA02F2338CD260089C63D /* Uzanti+UIButton.swift */,
+				3D6BA0312338CEA70089C63D /* Uzanti+UILabel.swift */,
+				3D6BA0332338CF620089C63D /* Uzanti+UIStackView.swift */,
+				3D6BA0352338D0D00089C63D /* Uzanti+UITextField.swift */,
+				3D6BA0372338D10E0089C63D /* Uzanti+UITextView.swift */,
+				3D6BA0392338D4800089C63D /* Uzanti+UIView+Stack.swift */,
 			);
 			path = Uzantilar;
 			sourceTree = "<group>";
@@ -174,6 +214,8 @@
 				3D9B2F65231AA345000FA9D6 /* EslesmeView.swift */,
 				3DCAF5BA231AE4A400DFA225 /* MesajGonderButonu.swift */,
 				3DCAF5BC231AE7C400DFA225 /* GezinmeyiSurdurButonu.swift */,
+				3D6BA03B2338D7D90089C63D /* DaireselImageView.swift */,
+				3D6BA03D2338D9440089C63D /* ListeCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -344,30 +386,44 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D6BA03A2338D4800089C63D /* Uzanti+UIView+Stack.swift in Sources */,
 				3D600828231315EA00E30B97 /* OturumViewModel.swift in Sources */,
 				3D7B243422F991A5000975F1 /* Bindable.swift in Sources */,
 				3D18C5E72314E75500586040 /* FotoGecisController.swift in Sources */,
 				3DCD5C6F22F7E644004204BA /* OzelTextField.swift in Sources */,
+				3D6BA02A2338CB090089C63D /* ImageViewAspectFit.swift in Sources */,
+				3D6BA0322338CEA70089C63D /* Uzanti+UILabel.swift in Sources */,
+				3D6BA0442338DF350089C63D /* ListeController.swift in Sources */,
+				3D6BA0342338CF620089C63D /* Uzanti+UIStackView.swift in Sources */,
+				3D6BA0362338D0D00089C63D /* Uzanti+UITextField.swift in Sources */,
 				3DCD5C7322F855BE004204BA /* KayitViewModel.swift in Sources */,
 				3D9B2F66231AA345000FA9D6 /* EslesmeView.swift in Sources */,
+				3D6BA0422338DEDF0089C63D /* ListeHeaderController.swift in Sources */,
+				3D6BA03E2338D9440089C63D /* ListeCell.swift in Sources */,
 				3D18C5E12313C17D00586040 /* KullaniciDetaylariController.swift in Sources */,
+				3D6BA0302338CD260089C63D /* Uzanti+UIButton.swift in Sources */,
 				3D60081E2312C22D00E30B97 /* Uzanti+Firestore.swift in Sources */,
 				3D716BEA231180B700B3298A /* AyarlarCell.swift in Sources */,
 				3D4776DC22F1BFD2004E79D3 /* AnaController.swift in Sources */,
 				3D60082A2313180F00E30B97 /* OturumController.swift in Sources */,
 				3D4776ED22F1C10E004E79D3 /* Uzantilar+UIView.swift in Sources */,
+				3D6BA02E2338CBF40089C63D /* TextFieldIntend.swift in Sources */,
 				3D4776FB22F2E7A6004E79D3 /* ProfilView.swift in Sources */,
 				3D47770122F340D6004E79D3 /* Kullanici.swift in Sources */,
 				3D4776F722F2BF32004E79D3 /* AnaGorunumUstStackView.swift in Sources */,
 				3D376E9722F5F47F00D8E709 /* KullaniciProfilViewModel.swift in Sources */,
+				3D6BA03C2338D7D90089C63D /* DaireselImageView.swift in Sources */,
+				3D6BA0382338D10E0089C63D /* Uzanti+UITextView.swift in Sources */,
 				3DCD5C6D22F7E1D5004204BA /* KayitController.swift in Sources */,
 				3DCAF5BD231AE7C400DFA225 /* GezinmeyiSurdurButonu.swift in Sources */,
 				3DCAF5BB231AE4A400DFA225 /* MesajGonderButonu.swift in Sources */,
 				3D716BE62311583300B3298A /* AyarlarController.swift in Sources */,
+				3D6BA02C2338CB900089C63D /* ImageViewAspectFill.swift in Sources */,
 				3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */,
 				3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */,
 				3D376E9B22F6403000D8E709 /* Reklam.swift in Sources */,
 				3D60081A23128F2200E30B97 /* YasAralikCell.swift in Sources */,
+				3D6BA0402338DB490089C63D /* ListeHeaderFooterController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

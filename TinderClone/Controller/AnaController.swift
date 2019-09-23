@@ -22,8 +22,8 @@ class AnaController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        navigationController?.navigationBar.isHidden = true
+        ustStackView.btnMesaj.addTarget(self, action: #selector(btnMesajlarPressed), for: .touchUpInside)
         ustStackView.btnAyarlar.addTarget(self, action: #selector(btnAyarlarPressed), for: .touchUpInside)
         altButonlarStackView.btnYenile.addTarget(self, action: #selector(btnYenilePressed), for: .touchUpInside)
         altButonlarStackView.btnBegen.addTarget(self, action: #selector(btnBegenPressed), for: .touchUpInside)
@@ -31,6 +31,14 @@ class AnaController: UIViewController {
         layoutDuzenle()
         
         gecerliKullaniciyiGetir()
+    }
+    
+    @objc fileprivate func btnMesajlarPressed() {
+        
+        let viewController = UIViewController()
+        viewController.view.backgroundColor = .blue
+        navigationController?.pushViewController(viewController, animated: true)
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -304,7 +312,7 @@ class AnaController: UIViewController {
         view.addSubview(genelStackView)
         
         
-        _ = genelStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+         genelStackView.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
         genelStackView.isLayoutMarginsRelativeArrangement = true
         genelStackView.layoutMargins = .init(top: 0, left: 10, bottom: 0, right: 10)

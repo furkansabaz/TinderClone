@@ -33,6 +33,7 @@ class EslesmeView : UIView {
                 self.imgGecerliKullanici.sd_setImage(with: gecerliKullaniciGoruntuURL) { (_, _, _, _) in
                     self.animasyonlariOlustur()
                 }
+                self.lblAciklama.text = "Sen ve \(kullanici.kullaniciAdi ?? "Bilinmiyor") karşılıklı\nolarak birbirinizi beğendiniz"
             
             }
             

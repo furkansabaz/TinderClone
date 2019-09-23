@@ -26,7 +26,7 @@ extension UIColor {
 
 
 extension UIView {
-    
+    @discardableResult
     func anchor(top : NSLayoutYAxisAnchor?,
                 bottom : NSLayoutYAxisAnchor?,
                 leading : NSLayoutXAxisAnchor?,
@@ -110,6 +110,66 @@ extension UIView {
         
     }
     
+    func merkezX(_ anchor : NSLayoutXAxisAnchor) {
+        translatesAutoresizingMaskIntoConstraints = false
+        centerXAnchor.constraint(equalTo: anchor).isActive = true
+    }
     
+    func merkezY(_ anchor : NSLayoutYAxisAnchor){
+        translatesAutoresizingMaskIntoConstraints = false
+        centerYAnchor.constraint(equalTo: anchor).isActive = true
+    }
+    
+    func merkezXSuperView() {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let superViewCenterXAnchor = superview?.centerXAnchor {
+            centerXAnchor.constraint(equalTo: superViewCenterXAnchor).isActive = true
+        }
+    }
+    
+    func merkezYSuperView() {
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        if let superViewCenterYAnchor = superview?.centerYAnchor {
+            centerYAnchor.constraint(equalTo: superViewCenterYAnchor).isActive = true
+        }
+    }
+    
+    @discardableResult
+    func constraintYukseklik(_ yukseklik : CGFloat) -> AnchorConstraints {
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        var const = AnchorConstraints()
+        
+        const.height = heightAnchor.constraint(equalToConstant: yukseklik)
+        const.height?.isActive = true
+        return const
+    }
+    
+    @discardableResult
+    func constraintGenislik(_ genislik : CGFloat) -> AnchorConstraints {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        var const = AnchorConstraints()
+        const.width = widthAnchor.constraint(equalToConstant: genislik)
+        const.width?.isActive = true
+        return const
+    }
+    
+    func golgeEkle(opacity : Float = 0 , yaricap : CGFloat = 0, offset : CGSize = .zero, renk : UIColor = .black) {
+        layer.shadowOpacity = opacity
+        layer.shadowRadius = yaricap
+        layer.shadowOffset = offset
+        layer.shadowColor = renk.cgColor
+        
+    }
+    
+    convenience init(arkaPlanRenk :  UIColor = .clear) {
+        
+        self.init(frame: .zero)
+        self.backgroundColor = arkaPlanRenk
+    }
     
 }
