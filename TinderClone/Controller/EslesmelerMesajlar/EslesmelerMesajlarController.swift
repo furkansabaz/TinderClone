@@ -8,17 +8,32 @@
 
 import Foundation
 import UIKit
+import Firebase
+
+struct Eslesme {
+    let kullaniciAdi : String
+    let profilGoruntuUrl : String
+    
+    init(veri : [String : Any]) {
+        self.kullaniciAdi = veri["KullaniciAdi"] as? String ?? ""
+        self.profilGoruntuUrl = veri["ProfilGoruntuUrl"] as? String ?? ""
+        
+    }
+}
 
 
-class EslesmeCell : ListeCell<UIColor> {
+class EslesmeCell : ListeCell<Eslesme> {
     
     let imgProfil =  UIImageView(image: UIImage(named: "kisi4"),contentMode: .scaleAspectFill)
     let lblKullaniciAdi = UILabel(text: "Sefa123", font: .systemFont(ofSize: 15, weight: .bold), textColor: .darkGray, textAlignment: .center, numberOfLines: 2)
-    override var veri: UIColor! {
+    
+    override var veri: Eslesme! {
         didSet {
-            backgroundColor = veri
+            lblKullaniciAdi.text = veri.kullaniciAdi
+            imgProfil.sd_setImage(with: URL(string: veri.profilGoruntuUrl))
         }
     }
+    
     
     override func viewleriOlustur() {
         super.viewleriOlustur()
@@ -32,7 +47,7 @@ class EslesmeCell : ListeCell<UIColor> {
 
 
 
-class EslesmelerMesajlarController : ListeController<EslesmeCell,UIColor>, UICollectionViewDelegateFlowLayout {
+class EslesmelerMesajlarController : ListeController<EslesmeCell,Eslesme>, UICollectionViewDelegateFlowLayout {
     
     
     let navBar = EslesmelerNavBar()
@@ -45,7 +60,10 @@ class EslesmelerMesajlarController : ListeController<EslesmeCell,UIColor>, UICol
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        veriler = [.yellow, .green, .orange, .purple]
+        
+        eslesmeleriGetir()
+         
+        
         
         navBar.btnGeri.addTarget(self, action: #selector(btnGeriPressed), for: .touchUpInside)
         collectionView.backgroundColor = .white
@@ -54,6 +72,37 @@ class EslesmelerMesajlarController : ListeController<EslesmeCell,UIColor>, UICol
         navBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, boyut: .init(width: 0, height: 150))
         
         collectionView.contentInset.top = 150
+        
+    }
+    
+    fileprivate func eslesmeleriGetir() {
+        
+        guard let gecerliKullaniciId  = Auth.auth().currentUser?.uid else { return }
+        
+        Firestore.firestore().collection("Eslesmeler_Mesajlar").document(gecerliKullaniciId).collection("Eslesmeler").getDocuments { (snapshot, hata) in
+            
+            if let hata = hata {
+                print("Eşleşme verileri Getirilemedi : ",hata)
+            }
+            
+            print("Kullanıcının Eşleşme Verileri Getirildi : ")
+            
+            
+            var eslesmeler = [Eslesme]()
+            
+            
+            snapshot?.documents.forEach({ (documentSnapshot) in
+                let veri = documentSnapshot.data()
+                eslesmeler.append(.init(veri: veri))
+            })
+            self.veriler = eslesmeler
+            self.collectionView.reloadData()
+        }
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 16, left: 0, bottom: 16, right: 0)
     }
     
     @objc fileprivate func btnGeriPressed() {
