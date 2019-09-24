@@ -32,7 +32,11 @@ open class ListeCell<T> : UICollectionViewCell {
     public override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        //Listecontrollerde oluşturulan her bir ListeCell (EslesmeCell)  oluşturulduğunda viewleriOlustur metodu çağrılacak
+        viewleriOlustur()
     }
+    
+    open func viewleriOlustur() {}
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

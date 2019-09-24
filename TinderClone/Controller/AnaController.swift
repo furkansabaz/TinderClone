@@ -35,7 +35,7 @@ class AnaController: UIViewController {
     
     @objc fileprivate func btnMesajlarPressed() {
         
-        let viewController =  EslesmelerMesajlarController(collectionViewLayout: UICollectionViewFlowLayout())
+        let viewController =  EslesmelerMesajlarController()
         viewController.view.backgroundColor = .blue
         navigationController?.pushViewController(viewController, animated: true)
         

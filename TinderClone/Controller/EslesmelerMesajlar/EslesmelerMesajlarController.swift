@@ -9,42 +9,55 @@
 import Foundation
 import UIKit
 
-class EslesmelerMesajlarController : UICollectionViewController {
-    
-    let navBar : UIView = {
 
-        let nb = UIView(arkaPlanRenk: .white)
-        
-        let imgIkon = UIImageView(image: UIImage(named: "mesaj")?.withRenderingMode(.alwaysTemplate), contentMode: .scaleAspectFit)
-        imgIkon.tintColor = #colorLiteral(red: 0.9987122416, green: 0.3161283731, blue: 0.372920841, alpha: 1)
-        
-        
-        let lblMesajlar = UILabel(text: "Mesajlar", font: .boldSystemFont(ofSize : 21), textColor: #colorLiteral(red: 0.9987122416, green: 0.3161283731, blue: 0.372920841, alpha: 1), textAlignment: .center)
-        
-        let lblFeed = UILabel(text: "Feed", font: .boldSystemFont(ofSize: 21), textColor: .gray, textAlignment: .center)
-        
-        
-       
-        
-        
-        nb.stackViewOlustur(imgIkon.yukseklikAyarla(45),
-            nb.yatayStackViewOlustur(lblMesajlar,lblFeed,distribution: .fillEqually)).padTop(10)
-        
-        
-        nb.golgeEkle(opacity: 0.15, yaricap: 10, offset: .init(width: 0, height: 10), renk: .init(white: 0, alpha: 0.3))
-        return nb
-        
-    }()
+class EslesmeCell : ListeCell<UIColor> {
     
+    let imgProfil =  UIImageView(image: UIImage(named: "kisi4"),contentMode: .scaleAspectFill)
+    let lblKullaniciAdi = UILabel(text: "Sefa123", font: .systemFont(ofSize: 15, weight: .bold), textColor: .darkGray, textAlignment: .center, numberOfLines: 2)
+    override var veri: UIColor! {
+        didSet {
+            backgroundColor = veri
+        }
+    }
+    
+    override func viewleriOlustur() {
+        super.viewleriOlustur()
+        
+        imgProfil.clipsToBounds = true
+        imgProfil.boyutlandir(.init(width: 80, height: 80))
+        imgProfil.layer.cornerRadius = 40
+        stackViewOlustur(stackViewOlustur(imgProfil,alignment: .center),lblKullaniciAdi)
+    }
+}
+
+
+
+class EslesmelerMesajlarController : ListeController<EslesmeCell,UIColor>, UICollectionViewDelegateFlowLayout {
+    
+    
+    let navBar = EslesmelerNavBar()
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        return .init(width: 125, height: 145)
+    }
     
     
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        veriler = [.yellow, .green, .orange, .purple]
+        
+        navBar.btnGeri.addTarget(self, action: #selector(btnGeriPressed), for: .touchUpInside)
         collectionView.backgroundColor = .white
         view.addSubview(navBar)
         
-        navBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, boyut: .init(width: 0, height: 160))
+        navBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, boyut: .init(width: 0, height: 150))
+        
+        collectionView.contentInset.top = 150
     }
     
+    @objc fileprivate func btnGeriPressed() {
+        navigationController?.popViewController(animated: true)
+    }
     
 }

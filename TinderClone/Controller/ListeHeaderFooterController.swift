@@ -41,9 +41,10 @@ open class ListeHeaderFooterController <T : ListeCell<U> , U, H : UICollectionRe
         collectionView.backgroundColor = .white
         collectionView.register(T.self, forCellWithReuseIdentifier: cellId)
         
-        collectionView.register(H.self, forCellWithReuseIdentifier: UICollectionView.elementKindSectionHeader)
-    
-        collectionView.register(F.self, forCellWithReuseIdentifier: UICollectionView.elementKindSectionFooter)
+        
+        collectionView.register(H.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ekViewId)
+         collectionView.register(F.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: ekViewId)
+        
     }
     
     override open func collectionView(_ collectionView : UICollectionView, cellForItemAt indexPath : IndexPath) -> UICollectionViewCell {

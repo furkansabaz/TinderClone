@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3D18C5E12313C17D00586040 /* KullaniciDetaylariController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D18C5E02313C17D00586040 /* KullaniciDetaylariController.swift */; };
 		3D18C5E72314E75500586040 /* FotoGecisController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D18C5E62314E75500586040 /* FotoGecisController.swift */; };
+		3D1DB8F3233A05D10082CB29 /* EslesmelerNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D1DB8F2233A05D10082CB29 /* EslesmelerNavBar.swift */; };
 		3D376E9722F5F47F00D8E709 /* KullaniciProfilViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */; };
 		3D376E9B22F6403000D8E709 /* Reklam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D376E9A22F6403000D8E709 /* Reklam.swift */; };
 		3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776D922F1BFD2004E79D3 /* AppDelegate.swift */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		3D18C5E02313C17D00586040 /* KullaniciDetaylariController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KullaniciDetaylariController.swift; sourceTree = "<group>"; };
 		3D18C5E62314E75500586040 /* FotoGecisController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FotoGecisController.swift; sourceTree = "<group>"; };
+		3D1DB8F2233A05D10082CB29 /* EslesmelerNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EslesmelerNavBar.swift; sourceTree = "<group>"; };
 		3D376E9622F5F47F00D8E709 /* KullaniciProfilViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KullaniciProfilViewModel.swift; sourceTree = "<group>"; };
 		3D376E9A22F6403000D8E709 /* Reklam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reklam.swift; sourceTree = "<group>"; };
 		3D4776D622F1BFD2004E79D3 /* TinderClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinderClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -219,6 +221,7 @@
 				3DCAF5BC231AE7C400DFA225 /* GezinmeyiSurdurButonu.swift */,
 				3D6BA03B2338D7D90089C63D /* DaireselImageView.swift */,
 				3D6BA03D2338D9440089C63D /* ListeCell.swift */,
+				3D1DB8F2233A05D10082CB29 /* EslesmelerNavBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -433,6 +436,7 @@
 				3D6BA02C2338CB900089C63D /* ImageViewAspectFill.swift in Sources */,
 				3D4776F322F1F562004E79D3 /* AnaGorunumAltStackView.swift in Sources */,
 				3D4776DA22F1BFD2004E79D3 /* AppDelegate.swift in Sources */,
+				3D1DB8F3233A05D10082CB29 /* EslesmelerNavBar.swift in Sources */,
 				3D376E9B22F6403000D8E709 /* Reklam.swift in Sources */,
 				3D60081A23128F2200E30B97 /* YasAralikCell.swift in Sources */,
 				3D6BA0402338DB490089C63D /* ListeHeaderFooterController.swift in Sources */,
