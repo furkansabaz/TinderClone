@@ -21,6 +21,7 @@
 		3D4776F722F2BF32004E79D3 /* AnaGorunumUstStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */; };
 		3D4776FB22F2E7A6004E79D3 /* ProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */; };
 		3D47770122F340D6004E79D3 /* Kullanici.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D47770022F340D6004E79D3 /* Kullanici.swift */; };
+		3D550E602339333600AB63FB /* EslesmelerMesajlarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D550E5F2339333600AB63FB /* EslesmelerMesajlarController.swift */; };
 		3D5AE6AE22F963E800C6D557 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D5AE6AD22F963E800C6D557 /* GoogleService-Info.plist */; };
 		3D60081A23128F2200E30B97 /* YasAralikCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60081923128F2200E30B97 /* YasAralikCell.swift */; };
 		3D60081E2312C22D00E30B97 /* Uzanti+Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D60081D2312C22D00E30B97 /* Uzanti+Firestore.swift */; };
@@ -69,6 +70,7 @@
 		3D4776F622F2BF32004E79D3 /* AnaGorunumUstStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnaGorunumUstStackView.swift; sourceTree = "<group>"; };
 		3D4776FA22F2E7A6004E79D3 /* ProfilView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilView.swift; sourceTree = "<group>"; };
 		3D47770022F340D6004E79D3 /* Kullanici.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kullanici.swift; sourceTree = "<group>"; };
+		3D550E5F2339333600AB63FB /* EslesmelerMesajlarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EslesmelerMesajlarController.swift; sourceTree = "<group>"; };
 		3D5AE6AD22F963E800C6D557 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "TinderClone/GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
 		3D60081923128F2200E30B97 /* YasAralikCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YasAralikCell.swift; sourceTree = "<group>"; };
 		3D60081D2312C22D00E30B97 /* Uzanti+Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Uzanti+Firestore.swift"; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		3D376E9222F5F3C800D8E709 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				3D550E5E2339331600AB63FB /* EslesmelerMesajlar */,
 				3D18C5DF2313C16300586040 /* Kullanici Detaylari */,
 				3D600826231315DA00E30B97 /* Oturum */,
 				3D4776DB22F1BFD2004E79D3 /* AnaController.swift */,
@@ -227,6 +230,14 @@
 				3D376E9A22F6403000D8E709 /* Reklam.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		3D550E5E2339331600AB63FB /* EslesmelerMesajlar */ = {
+			isa = PBXGroup;
+			children = (
+				3D550E5F2339333600AB63FB /* EslesmelerMesajlarController.swift */,
+			);
+			path = EslesmelerMesajlar;
 			sourceTree = "<group>";
 		};
 		3D600826231315DA00E30B97 /* Oturum */ = {
@@ -402,6 +413,7 @@
 				3D6BA03E2338D9440089C63D /* ListeCell.swift in Sources */,
 				3D18C5E12313C17D00586040 /* KullaniciDetaylariController.swift in Sources */,
 				3D6BA0302338CD260089C63D /* Uzanti+UIButton.swift in Sources */,
+				3D550E602339333600AB63FB /* EslesmelerMesajlarController.swift in Sources */,
 				3D60081E2312C22D00E30B97 /* Uzanti+Firestore.swift in Sources */,
 				3D716BEA231180B700B3298A /* AyarlarCell.swift in Sources */,
 				3D4776DC22F1BFD2004E79D3 /* AnaController.swift in Sources */,

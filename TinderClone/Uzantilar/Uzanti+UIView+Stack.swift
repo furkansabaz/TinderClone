@@ -23,12 +23,12 @@ extension UIView {
     }
     
     @discardableResult
-    fileprivate func stackViewOlustur(_ views : UIView..., spacing : CGFloat = 0, alignment : UIStackView.Alignment = .fill, distribution : UIStackView.Distribution = .fill) -> UIStackView {
+    open func stackViewOlustur(_ views : UIView..., spacing : CGFloat = 0, alignment : UIStackView.Alignment = .fill, distribution : UIStackView.Distribution = .fill) -> UIStackView {
         return _stackViewOlustur(.vertical, views: views, spacing: spacing, alignment: alignment, distribution: distribution)
     }
     
     @discardableResult
-    fileprivate func yatayStackViewOlustur(_ views : UIView..., spacing : CGFloat = 0, alignment : UIStackView.Alignment = .fill, distribution : UIStackView.Distribution = .fill) -> UIStackView {
+    open func yatayStackViewOlustur(_ views : UIView..., spacing : CGFloat = 0, alignment : UIStackView.Alignment = .fill, distribution : UIStackView.Distribution = .fill) -> UIStackView {
         return _stackViewOlustur(.horizontal, views: views, spacing: spacing, alignment: alignment, distribution: distribution)
     }
     
