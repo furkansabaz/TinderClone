@@ -110,3 +110,15 @@ class EslesmelerMesajlarController : ListeController<EslesmeCell,Eslesme>, UICol
     }
     
 }
+
+
+extension EslesmelerMesajlarController {
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let eslesme = veriler[indexPath.item]
+        let mesajKayitController = MesajKayitController(eslesme: eslesme)
+        navigationController?.pushViewController(mesajKayitController, animated: true)
+    }
+    
+}
