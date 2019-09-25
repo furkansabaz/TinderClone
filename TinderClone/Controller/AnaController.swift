@@ -119,7 +119,7 @@ class AnaController: UIViewController {
         
         let sorgu = Firestore.firestore().collection("Kullanicilar")
             .whereField("Yasi", isGreaterThanOrEqualTo: arananMinYas)
-            .whereField("Yasi", isLessThanOrEqualTo: arananMaksYas)
+            .whereField("Yasi", isLessThanOrEqualTo: arananMaksYas).limit(to: 7)
         gorunenEnUstProfilView = nil
         sorgu.getDocuments { (snapshot, hata) in
             hud.dismiss()
@@ -132,6 +132,8 @@ class AnaController: UIViewController {
             snapshot?.documents.forEach({ (dSnapshot) in
                 let kullaniciVeri = dSnapshot.data()
                 let kullanici = Kullanici(bilgiler: kullaniciVeri)
+                
+                self.kullanicilar[kullanici.kullaniciID ?? ""] = kullanici
                 
                 let gecerliKullaniciMi = kullanici.kullaniciID == Auth.auth().currentUser?.uid
                 
@@ -259,6 +261,37 @@ class AnaController: UIViewController {
             if eslesmeVarMi {
                 print("Eşleşme Var")
                 self.getirEslesmeView(profilID: profilID)
+                
+                //eşleşme varsa eşleşme verileri Firestore'a kaydet
+                //oturumu açan kullanıcı için eşleşme verisinin eklenmesi
+                guard let eslesilenKullanici = self.kullanicilar[profilID] else {return}
+                
+                let eklenecekVeri = ["KullaniciAdi" : eslesilenKullanici.kullaniciAdi ?? "",
+                                     "ProfilGoruntuUrl" : eslesilenKullanici.goruntuURL1 ?? "",
+                                     "KullaniciID" : profilID,
+                "Timestamp" : Timestamp(date: Date())] as [String : Any]
+                
+                Firestore.firestore().collection("Eslesmeler_Mesajlar").document(kullaniciID).collection("Eslesmeler").document(profilID).setData(eklenecekVeri) { (hata) in
+                    if let hata = hata {
+                        print("Eşleşme Verileri Kaydedilirken Hata Oluştu : ",hata)
+                    }
+                }
+                
+                
+                //Eşleşilen kullanıcı için eşleşme verisinin eklenmesi
+                guard let gecerliKullanici = self.gecerliKullanici else { return }
+                print("Geçerli Kullanıcı")
+                let eklenecekVeri2 = ["KullaniciAdi" : gecerliKullanici.kullaniciAdi ?? "",
+                                      "ProfilGoruntuUrl" : gecerliKullanici.goruntuURL1 ?? "",
+                                      "KullaniciID" : gecerliKullanici.kullaniciID,
+                                      "Timestamp" : Timestamp(date: Date())] as [String : Any]
+                
+                Firestore.firestore().collection("Eslesmeler_Mesajlar").document(profilID).collection("Eslesmeler").document(kullaniciID).setData(eklenecekVeri2) { (hata) in
+                    
+                    if let hata = hata {
+                        print("Eşleşilen Kullanıcının Eşleşme Verisi Kaydedilemedi : ",hata)
+                    }
+                }
             }
         }
         
@@ -273,6 +306,8 @@ class AnaController: UIViewController {
         view.addSubview(eslesmeView)
         eslesmeView.doldurSuperView()
     }
+    
+    var kullanicilar = [String : Kullanici]()
     var gorunenEnUstProfilView : ProfilView?
     //MARK:- KULLANICI BİR PROFİLİ BEĞENİRSE ÇALIŞIR
     @objc  func btnBegenPressed() {
