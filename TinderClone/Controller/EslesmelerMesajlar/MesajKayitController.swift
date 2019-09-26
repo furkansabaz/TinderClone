@@ -84,11 +84,76 @@ class MesajKayitController : ListeController<MesajCell,Mesaj>{
         super.init()
     }
     
+    class KlavyeView : UIView {
+        
+        let txtMesaj = UITextView()
+         let btnGonder = UIButton(baslik: "Gönder", baslikRenk: .black, baslikFont: .boldSystemFont(ofSize: 17))
+        let lblPlaceholder = UILabel(text: "Mesajınızı Girin...", font: .systemFont(ofSize: 16), textColor: .lightGray)
+        
+        override var intrinsicContentSize: CGSize {
+            return .zero
+        }
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            backgroundColor = .white
+                   golgeEkle(opacity: 0.1, yaricap: 8, offset: .init(width: 0, height: -9), renk: .lightGray)
+                   autoresizingMask = .flexibleHeight
+                   
+                   txtMesaj.text = ""
+                   txtMesaj.isScrollEnabled = false
+                   txtMesaj.font = .systemFont(ofSize: 17)
+                   
+            NotificationCenter.default.addObserver(self, selector: #selector(txtMesajDegisiklik), name: UITextView.textDidChangeNotification, object: nil)
+                  
+                   btnGonder.boyutlandir(.init(width: 65, height: 65))
+                   
+
+                   yatayStackViewOlustur(txtMesaj,
+                                                  btnGonder.boyutlandir(.init(width: 65, height: 65)),
+                                                  alignment: .center).withMarging(.init(top: 0, left: 15, bottom: 0, right: 15))
+            
+            
+            addSubview(lblPlaceholder)
+            lblPlaceholder.anchor(top: nil, bottom: nil, leading: leadingAnchor, trailing: btnGonder.leadingAnchor)
+            lblPlaceholder.centerYAnchor.constraint(equalTo: btnGonder.centerYAnchor).isActive = true
+        }
+        deinit {
+            NotificationCenter.default.removeObserver(self)
+            
+        }
+        
+        @objc fileprivate func txtMesajDegisiklik() {
+//            if txtMesaj.text.count == 0 {
+//                lblPlaceholder.isHidden = false
+//            } else {
+//                lblPlaceholder.isHidden = true
+//            }
+            lblPlaceholder.isHidden = txtMesaj.text.count != 0
+        }
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
     
+    lazy var maviView : UIView = {
+        return KlavyeView(frame: .init(x: 0, y: 0, width: view.frame.width, height: 50))
+    }()
+    
+    
+    override var inputAccessoryView: UIView? {
+        get {
+            return maviView
+        }
+    }
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        collectionView.keyboardDismissMode = .interactive
         navBar.btnGeri.addTarget(self, action: #selector(btnGeriPressed), for: .touchUpInside)
         
         veriler = [
@@ -98,19 +163,24 @@ class MesajKayitController : ListeController<MesajCell,Mesaj>{
             .init(text: "Udemy Kursundan Herkese Selamlar", benimMesajim: true)
         ]
         
+       
+        gorunumuOlustur()
+    }
+    
+    
+    fileprivate func gorunumuOlustur() {
         view.addSubview(navBar)
-        navBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,boyut: .init(width: 0, height: navBarYukseklik))
-        
-        //collectionview hücrelerini belirtilen boşluktan itibaren oluşturmaya başlar.
-        collectionView.contentInset.top = navBarYukseklik
-        
-        
-        let statusBar = UIView(arkaPlanRenk: .white)
-        view.addSubview(statusBar)
-        statusBar.anchor(top: view.topAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
-        
-        collectionView.verticalScrollIndicatorInsets.top = navBarYukseklik
-        
+               navBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor,boyut: .init(width: 0, height: navBarYukseklik))
+               
+               //collectionview hücrelerini belirtilen boşluktan itibaren oluşturmaya başlar.
+               collectionView.contentInset.top = navBarYukseklik
+               
+               
+               let statusBar = UIView(arkaPlanRenk: .white)
+               view.addSubview(statusBar)
+               statusBar.anchor(top: view.topAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
+               
+               collectionView.verticalScrollIndicatorInsets.top = navBarYukseklik
     }
     
     
