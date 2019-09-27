@@ -119,7 +119,7 @@ class AnaController: UIViewController {
         
         let sorgu = Firestore.firestore().collection("Kullanicilar")
             .whereField("Yasi", isGreaterThanOrEqualTo: arananMinYas)
-            .whereField("Yasi", isLessThanOrEqualTo: arananMaksYas).limit(to: 7)
+            .whereField("Yasi", isLessThanOrEqualTo: arananMaksYas).limit(to: 20)
         gorunenEnUstProfilView = nil
         sorgu.getDocuments { (snapshot, hata) in
             hud.dismiss()

@@ -8,11 +8,9 @@
 
 import Foundation
 import UIKit
+import Firebase
 
-struct Mesaj {
-    let text : String
-    let benimMesajim : Bool
-}
+
 
 class MesajCell : ListeCell<Mesaj> {
     
@@ -31,7 +29,7 @@ class MesajCell : ListeCell<Mesaj> {
     override var veri: Mesaj! {
         didSet {
             
-            txtMesaj.text = veri.text
+            txtMesaj.text = veri.mesaj
             
             if veri.benimMesajim {
                 mesajConstraint.trailing?.isActive = true
@@ -136,14 +134,50 @@ class MesajKayitController : ListeController<MesajCell,Mesaj>{
         }
     }
     
-    lazy var maviView : UIView = {
-        return KlavyeView(frame: .init(x: 0, y: 0, width: view.frame.width, height: 50))
+    lazy var mesajGirisView : KlavyeView = {
+        let mesajGirisView =  KlavyeView(frame: .init(x: 0, y: 0, width: view.frame.width, height: 50))
+        
+        mesajGirisView.btnGonder.addTarget(self, action: #selector(btnGonderPressed), for: .touchUpInside)
+        return mesajGirisView
     }()
-    
+    @objc fileprivate func btnGonderPressed() {
+        print(mesajGirisView.txtMesaj.text ?? "Veri Yok")
+        
+        guard let gecerliKullaniciID = Auth.auth().currentUser?.uid else { return }
+        
+        let collection = Firestore.firestore().collection("Eslesmeler_Mesajlar").document(gecerliKullaniciID).collection(eslesme.kullaniciID)
+        let eklenecekVeri = ["Mesaj" : mesajGirisView.txtMesaj.text ?? "",
+                             "GondericiID" : gecerliKullaniciID,
+                             "AliciID" : eslesme.kullaniciID,
+        "Timestamp" : Timestamp(date: Date())] as [String : Any]
+        
+        collection.addDocument(data: eklenecekVeri) { (hata) in
+            if let hata = hata {
+                print("Mesaj Gönderilirken Hata Oluştu : ",hata)
+                return
+            }
+            print("Mesaj Başarıyla Firestore'a Kaydedildi")
+            self.mesajGirisView.txtMesaj.text = nil
+            self.mesajGirisView.lblPlaceholder.isHidden = false
+        }
+        
+        
+        let collection2 = Firestore.firestore().collection("Eslesmeler_Mesajlar").document(eslesme.kullaniciID).collection(gecerliKullaniciID)
+        
+        collection2.addDocument(data: eklenecekVeri) { (hata) in
+            if let hata = hata {
+                print("Mesajlar Kaydedilirken Hata Meydana Geldi : ",hata)
+                return
+            }
+            print("Mesajlar Başarıyla Kaydedildi")
+            self.mesajGirisView.txtMesaj.text = nil
+            self.mesajGirisView.lblPlaceholder.isHidden = false
+        }
+    }
     
     override var inputAccessoryView: UIView? {
         get {
-            return maviView
+            return mesajGirisView
         }
     }
     
@@ -153,18 +187,47 @@ class MesajKayitController : ListeController<MesajCell,Mesaj>{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(klavyeGosteriminiAyarla), name: UIResponder.keyboardDidShowNotification, object: nil)
         collectionView.keyboardDismissMode = .interactive
         navBar.btnGeri.addTarget(self, action: #selector(btnGeriPressed), for: .touchUpInside)
         
-        veriler = [
-            .init(text: "Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar.Udemy Kursundan Herkese Selamlar", benimMesajim: false ),
-            .init(text: "Nasılsın", benimMesajim: true),
-            .init(text: "Udemy Kursundan Herkese Selamlar", benimMesajim: false),
-            .init(text: "Udemy Kursundan Herkese Selamlar", benimMesajim: true)
-        ]
+        mesajlariGetir()
         
        
         gorunumuOlustur()
+    }
+    @objc fileprivate func klavyeGosteriminiAyarla() {
+        self.collectionView.scrollToItem(at: [0,veriler.count-1], at: .bottom, animated: true)
+    }
+    
+    fileprivate func mesajlariGetir() {
+        print("Mesajlar Getiriliyor")
+        
+        
+        guard let gecerliKullaniciID = Auth.auth().currentUser?.uid else { return }
+        let sorgu = Firestore.firestore().collection("Eslesmeler_Mesajlar").document(gecerliKullaniciID).collection(eslesme.kullaniciID).order(by: "Timestamp")
+        
+        sorgu.addSnapshotListener { (snapshot, hata) in
+            if let hata = hata {
+                print("Mesajlar Getirilemedi : ",hata)
+                return
+            }
+            
+            snapshot?.documentChanges.forEach({ (degisiklik) in
+                
+                if degisiklik.type == .added {
+                    //değişikliğe uğramış kaydın verisini aldık
+                    let mesajVerisi = degisiklik.document.data()
+                    self.veriler.append(.init(mesajVerisi: mesajVerisi))
+                }
+                
+            })
+            //veriler dizisine tüm elemanlar kaydedildikten sonra bunu çağırmalıyız
+            self.collectionView.reloadData()
+            self.collectionView.scrollToItem(at: [0,self.veriler.count-1], at: .bottom, animated: true)
+        }
+        
+        
     }
     
     

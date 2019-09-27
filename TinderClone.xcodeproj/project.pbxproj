@@ -45,6 +45,7 @@
 		3D716BE62311583300B3298A /* AyarlarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D716BE52311583300B3298A /* AyarlarController.swift */; };
 		3D716BEA231180B700B3298A /* AyarlarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D716BE9231180B700B3298A /* AyarlarCell.swift */; };
 		3D7B243422F991A5000975F1 /* Bindable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D7B243322F991A5000975F1 /* Bindable.swift */; };
+		3D93C48B233D3A2200693E3C /* Mesaj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D93C48A233D3A2200693E3C /* Mesaj.swift */; };
 		3D9B2F66231AA345000FA9D6 /* EslesmeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9B2F65231AA345000FA9D6 /* EslesmeView.swift */; };
 		3DB7CD6D233B69DB00CFAD00 /* MesajKayitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB7CD6C233B69DB00CFAD00 /* MesajKayitController.swift */; };
 		3DB7CD70233B72DB00CFAD00 /* MesajNavBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB7CD6F233B72DB00CFAD00 /* MesajNavBar.swift */; };
@@ -97,6 +98,7 @@
 		3D716BE52311583300B3298A /* AyarlarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyarlarController.swift; sourceTree = "<group>"; };
 		3D716BE9231180B700B3298A /* AyarlarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AyarlarCell.swift; sourceTree = "<group>"; };
 		3D7B243322F991A5000975F1 /* Bindable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bindable.swift; sourceTree = "<group>"; };
+		3D93C48A233D3A2200693E3C /* Mesaj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesaj.swift; sourceTree = "<group>"; };
 		3D9B2F65231AA345000FA9D6 /* EslesmeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EslesmeView.swift; sourceTree = "<group>"; };
 		3DB7CD6C233B69DB00CFAD00 /* MesajKayitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesajKayitController.swift; sourceTree = "<group>"; };
 		3DB7CD6F233B72DB00CFAD00 /* MesajNavBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesajNavBar.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 			children = (
 				3D47770022F340D6004E79D3 /* Kullanici.swift */,
 				3D376E9A22F6403000D8E709 /* Reklam.swift */,
+				3D93C48A233D3A2200693E3C /* Mesaj.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				3D18C5E72314E75500586040 /* FotoGecisController.swift in Sources */,
 				3DB7CD70233B72DB00CFAD00 /* MesajNavBar.swift in Sources */,
 				3DCD5C6F22F7E644004204BA /* OzelTextField.swift in Sources */,
+				3D93C48B233D3A2200693E3C /* Mesaj.swift in Sources */,
 				3D6BA02A2338CB090089C63D /* ImageViewAspectFit.swift in Sources */,
 				3D6BA0322338CEA70089C63D /* Uzanti+UILabel.swift in Sources */,
 				3DB7CD6D233B69DB00CFAD00 /* MesajKayitController.swift in Sources */,

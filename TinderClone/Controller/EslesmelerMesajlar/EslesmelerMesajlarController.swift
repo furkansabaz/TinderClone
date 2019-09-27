@@ -13,11 +13,11 @@ import Firebase
 struct Eslesme {
     let kullaniciAdi : String
     let profilGoruntuUrl : String
-    
+    let kullaniciID: String
     init(veri : [String : Any]) {
         self.kullaniciAdi = veri["KullaniciAdi"] as? String ?? ""
         self.profilGoruntuUrl = veri["ProfilGoruntuUrl"] as? String ?? ""
-        
+        self.kullaniciID = veri["KullaniciID"] as? String ?? ""
     }
 }
 
