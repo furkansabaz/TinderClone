@@ -10,92 +10,50 @@ import Foundation
 import UIKit
 import Firebase
 
-// EslesmelerYatayController 'da temel amacımız eşleştiğimiz  profillerin listelenmesi
-class EslesmelerYatayController : ListeController<EslesmeCell,Eslesme>, UICollectionViewDelegateFlowLayout {
+
+class SonMesajCell : ListeCell<UIColor> {
     
+    let imgProfilGoruntu = UIImageView(image: #imageLiteral(resourceName: "kisi4"), contentMode: .scaleAspectFill)
     
-    ///Hiyerarşide olan root controller'ın referansını tutalım
-    var rootEslesmelerMesajlarController : EslesmelerMesajlarController?
+    let lblKullaniciAdi = UILabel(text: "Selim", font: .boldSystemFont(ofSize: 19))
     
+    let lblSonMesaj = UILabel(text: "Bugün hava çok güzel. Dışarı çıkıp bir şeyler yiyelim mi?", font: .systemFont(ofSize: 16), textColor: .gray,numberOfLines: 2)
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let eslesme = veriler[indexPath.row]
+    override func viewleriOlustur() {
+        super.viewleriOlustur()
         
-        rootEslesmelerMesajlarController?.headerEslesmeSecimi(eslesme: eslesme)
+        
+        let goruntuBoyut : CGFloat = 100
+        imgProfilGoruntu.layer.cornerRadius = goruntuBoyut / 2
+        
+        
+        yatayStackViewOlustur(imgProfilGoruntu.boyutlandir(.init(width: goruntuBoyut, height: goruntuBoyut)),
+                              stackViewOlustur(lblKullaniciAdi,lblSonMesaj,spacing: 4),spacing: 20,alignment: .center)
+            .padLeft(20).padRight(20)
+        
+        ayracEkle(leadingAnchor: lblKullaniciAdi.leadingAnchor)
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 0, left: 5, bottom: 0, right: 15)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: 120, height: view.frame.height)
-    }
-    
-    fileprivate func eslesmeleriGetir() {
-        
-        guard let gecerliKullaniciId  = Auth.auth().currentUser?.uid else { return }
-        
-        Firestore.firestore().collection("Eslesmeler_Mesajlar").document(gecerliKullaniciId).collection("Eslesmeler").getDocuments { (snapshot, hata) in
-            
-            if let hata = hata {
-                print("Eşleşme verileri Getirilemedi : ",hata)
-            }
-            
-            print("Kullanıcının Eşleşme Verileri Getirildi : ")
-            
-            
-            var eslesmeler = [Eslesme]()
-            
-            
-            snapshot?.documents.forEach({ (documentSnapshot) in
-                let veri = documentSnapshot.data()
-                eslesmeler.append(.init(veri: veri))
-            })
-            self.veriler = eslesmeler
-            self.collectionView.reloadData()
+    override var veri: UIColor! {
+        didSet {
+            //backgroundColor = veri
         }
-    }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-        if let layout = collectionViewLayout as? UICollectionViewFlowLayout {
-            layout.scrollDirection  = .horizontal
-        }
-        eslesmeleriGetir() /// ListeController'a çekilen eşleşmeler görüntülenir
-    }
-}
-
-
-
-class EslesmeHeader  : UICollectionReusableView {
-    let lblYeniEslesmeler = UILabel(text: "Yeni Eşleşmeler", font: .boldSystemFont(ofSize: 19), textColor: #colorLiteral(red: 0.9987122416, green: 0.3161283731, blue: 0.372920841, alpha: 1))
-    let eslesmelerYatayController = EslesmelerYatayController()
-    let lblMesajlar = UILabel(text: "Mesajlar", font: .boldSystemFont(ofSize: 19), textColor: #colorLiteral(red: 0.9987122416, green: 0.3161283731, blue: 0.372920841, alpha: 1))
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-       
-        
-        stackViewOlustur(stackViewOlustur(lblYeniEslesmeler).padLeft(22),
-                         eslesmelerYatayController.view,
-                         stackViewOlustur(lblMesajlar).padLeft(22),
-                         spacing: 22).withMarging(.init(top: 22, left: 0, bottom: 22, right: 0))
-        
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }
 
 
-class EslesmelerMesajlarController : ListeHeaderController<EslesmeCell,Eslesme,EslesmeHeader>, UICollectionViewDelegateFlowLayout {
+
+
+
+
+class EslesmelerMesajlarController : ListeHeaderController<SonMesajCell,UIColor,EslesmeHeader>, UICollectionViewDelegateFlowLayout {
     
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
     
     override func headerAyarla(_ header :  EslesmeHeader) {
         //EslesmelerYatayController içerisindeki referans olarak EslesmelerMesajlarController atandı
@@ -114,9 +72,11 @@ class EslesmelerMesajlarController : ListeHeaderController<EslesmeCell,Eslesme,E
     
     
     let navBar = EslesmelerNavBar()
+    
+    // hücrenin boyutunu ayarlar
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return .init(width: 125, height: 145)
+        return .init(width: view.frame.width, height: 145)
     }
     
     
@@ -127,10 +87,20 @@ class EslesmelerMesajlarController : ListeHeaderController<EslesmeCell,Eslesme,E
         super.viewDidLoad()
         
         
-        eslesmeleriGetir()
+        veriler = [.systemPink,
+                   .brown,
+                   .red,
+                   .blue]
+        
+        
          
+        gorunumuOlustur()
         
         
+        
+    }
+    
+    fileprivate func gorunumuOlustur() {
         navBar.btnGeri.addTarget(self, action: #selector(btnGeriPressed), for: .touchUpInside)
         collectionView.backgroundColor = .white
         view.addSubview(navBar)
@@ -138,37 +108,18 @@ class EslesmelerMesajlarController : ListeHeaderController<EslesmeCell,Eslesme,E
         navBar.anchor(top: view.safeAreaLayoutGuide.topAnchor, bottom: nil, leading: view.leadingAnchor, trailing: view.trailingAnchor, boyut: .init(width: 0, height: 150))
         
         collectionView.contentInset.top = 150
+        collectionView.verticalScrollIndicatorInsets.top = 150
         
-    }
-    
-    fileprivate func eslesmeleriGetir() {
         
-        guard let gecerliKullaniciId  = Auth.auth().currentUser?.uid else { return }
+        let statusBarOrtu = UIView(arkaPlanRenk: .white)
+        view.addSubview(statusBarOrtu)
+        statusBarOrtu.anchor(top: view.topAnchor, bottom: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, trailing: view.trailingAnchor)
         
-        Firestore.firestore().collection("Eslesmeler_Mesajlar").document(gecerliKullaniciId).collection("Eslesmeler").getDocuments { (snapshot, hata) in
-            
-            if let hata = hata {
-                print("Eşleşme verileri Getirilemedi : ",hata)
-            }
-            
-            print("Kullanıcının Eşleşme Verileri Getirildi : ")
-            
-            
-            var eslesmeler = [Eslesme]()
-            
-            
-            snapshot?.documents.forEach({ (documentSnapshot) in
-                let veri = documentSnapshot.data()
-                eslesmeler.append(.init(veri: veri))
-            })
-            self.veriler = eslesmeler
-            self.collectionView.reloadData()
-        }
     }
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 16, left: 0, bottom: 16, right: 0)
+        return .init(top: 0, left: 0, bottom: 16, right: 0)
     }
     
     @objc fileprivate func btnGeriPressed() {
@@ -178,13 +129,3 @@ class EslesmelerMesajlarController : ListeHeaderController<EslesmeCell,Eslesme,E
 }
 
 
-extension EslesmelerMesajlarController {
-    
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        let eslesme = veriler[indexPath.item]
-        let mesajKayitController = MesajKayitController(eslesme: eslesme)
-        navigationController?.pushViewController(mesajKayitController, animated: true)
-    }
-    
-}

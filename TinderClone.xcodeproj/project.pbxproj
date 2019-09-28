@@ -48,6 +48,8 @@
 		3D91A005233EA656008A671D /* MesajCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D91A004233EA656008A671D /* MesajCell.swift */; };
 		3D91A007233EA67A008A671D /* Eslesme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D91A006233EA67A008A671D /* Eslesme.swift */; };
 		3D91A009233EA69A008A671D /* EslesmeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D91A008233EA69A008A671D /* EslesmeCell.swift */; };
+		3D91A011233F6F0C008A671D /* EslesmelerYatayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D91A010233F6F0C008A671D /* EslesmelerYatayController.swift */; };
+		3D91A013233F6F33008A671D /* EslesmeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D91A012233F6F33008A671D /* EslesmeHeader.swift */; };
 		3D93C48B233D3A2200693E3C /* Mesaj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D93C48A233D3A2200693E3C /* Mesaj.swift */; };
 		3D9B2F66231AA345000FA9D6 /* EslesmeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9B2F65231AA345000FA9D6 /* EslesmeView.swift */; };
 		3DB7CD6D233B69DB00CFAD00 /* MesajKayitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DB7CD6C233B69DB00CFAD00 /* MesajKayitController.swift */; };
@@ -104,6 +106,8 @@
 		3D91A004233EA656008A671D /* MesajCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesajCell.swift; sourceTree = "<group>"; };
 		3D91A006233EA67A008A671D /* Eslesme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eslesme.swift; sourceTree = "<group>"; };
 		3D91A008233EA69A008A671D /* EslesmeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EslesmeCell.swift; sourceTree = "<group>"; };
+		3D91A010233F6F0C008A671D /* EslesmelerYatayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EslesmelerYatayController.swift; sourceTree = "<group>"; };
+		3D91A012233F6F33008A671D /* EslesmeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EslesmeHeader.swift; sourceTree = "<group>"; };
 		3D93C48A233D3A2200693E3C /* Mesaj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mesaj.swift; sourceTree = "<group>"; };
 		3D9B2F65231AA345000FA9D6 /* EslesmeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EslesmeView.swift; sourceTree = "<group>"; };
 		3DB7CD6C233B69DB00CFAD00 /* MesajKayitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesajKayitController.swift; sourceTree = "<group>"; };
@@ -255,6 +259,7 @@
 			children = (
 				3D550E5F2339333600AB63FB /* EslesmelerMesajlarController.swift */,
 				3DB7CD6C233B69DB00CFAD00 /* MesajKayitController.swift */,
+				3D91A010233F6F0C008A671D /* EslesmelerYatayController.swift */,
 			);
 			path = EslesmelerMesajlar;
 			sourceTree = "<group>";
@@ -274,6 +279,7 @@
 				3DB7CD6F233B72DB00CFAD00 /* MesajNavBar.swift */,
 				3D91A004233EA656008A671D /* MesajCell.swift */,
 				3D91A008233EA69A008A671D /* EslesmeCell.swift */,
+				3D91A012233F6F33008A671D /* EslesmeHeader.swift */,
 			);
 			path = EslesmelerMesajlar;
 			sourceTree = "<group>";
@@ -440,6 +446,7 @@
 				3D6BA0342338CF620089C63D /* Uzanti+UIStackView.swift in Sources */,
 				3D6BA0362338D0D00089C63D /* Uzanti+UITextField.swift in Sources */,
 				3DCD5C7322F855BE004204BA /* KayitViewModel.swift in Sources */,
+				3D91A011233F6F0C008A671D /* EslesmelerYatayController.swift in Sources */,
 				3D9B2F66231AA345000FA9D6 /* EslesmeView.swift in Sources */,
 				3D6BA0422338DEDF0089C63D /* ListeHeaderController.swift in Sources */,
 				3D6BA03E2338D9440089C63D /* ListeCell.swift in Sources */,
@@ -462,6 +469,7 @@
 				3D6BA0382338D10E0089C63D /* Uzanti+UITextView.swift in Sources */,
 				3DCD5C6D22F7E1D5004204BA /* KayitController.swift in Sources */,
 				3DCAF5BD231AE7C400DFA225 /* GezinmeyiSurdurButonu.swift in Sources */,
+				3D91A013233F6F33008A671D /* EslesmeHeader.swift in Sources */,
 				3DCAF5BB231AE4A400DFA225 /* MesajGonderButonu.swift in Sources */,
 				3D716BE62311583300B3298A /* AyarlarController.swift in Sources */,
 				3D6BA02C2338CB900089C63D /* ImageViewAspectFill.swift in Sources */,
