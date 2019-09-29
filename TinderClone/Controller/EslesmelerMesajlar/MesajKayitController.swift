@@ -87,7 +87,52 @@ class MesajKayitController : ListeController<MesajCell,Mesaj>{
     }()
     @objc fileprivate func btnGonderPressed() {
         print(mesajGirisView.txtMesaj.text ?? "Veri Yok")
+        mesajlariKaydetFS()
+        sonMesajOlarakKaydetFS()
+    }
+    
+    
+    fileprivate func sonMesajOlarakKaydetFS() {
         
+        guard let gecerliKullaniciID = Auth.auth().currentUser?.uid else { return }
+        //oturumu açmış olan kullanıcı için eklenecek son mesaj verisi
+        let sonMesajVerisi = [
+            "Mesaj" : mesajGirisView.txtMesaj.text ?? "",
+            "KullaniciAdi" : eslesme.kullaniciAdi,
+            "KullaniciID" : eslesme.kullaniciID,
+            "GoruntuURL" : eslesme.profilGoruntuUrl] as [String : Any]
+        
+        
+        Firestore.firestore().collection("Eslesmeler_Mesajlar").document(gecerliKullaniciID).collection("Son_Mesajlar").document(eslesme.kullaniciID).setData(sonMesajVerisi) { (hata) in
+            
+            if let hata = hata {
+                print("Hata! Gönderilen mesaj, son mesaj olarak eklenemedi : ",hata)
+                return
+            }
+            print("Gönderilen mesaj, son mesaj olarak kaydedildi")
+        }
+        
+        //son mesaj verisini mesajlaştığımız karşıdaki kişi için de eklenmesi
+        
+        guard let gecerliKullanici = self.gecerliKullanici else { return }
+        let karsiSonMesajVerisi = [
+            "Mesaj" : mesajGirisView.txtMesaj.text ?? "",
+            "KullaniciID" : gecerliKullanici.kullaniciID ?? "",
+            "KullaniciAdi" : gecerliKullanici.kullaniciAdi ?? "",
+            "GoruntuURL" : gecerliKullanici.goruntuURL1 ?? ""
+        ]
+        
+        Firestore.firestore().collection("Eslesmeler_Mesajlar").document(eslesme.kullaniciID).collection("Son_Mesajlar").document(gecerliKullaniciID).setData(karsiSonMesajVerisi) { (hata) in
+            
+            if let hata = hata {
+                print("HATA! Gönderilen mesaj karşıdaki kullanıcı için \"SON MESAJ\" olarak kaydedilemedi : ",hata)
+                return
+            }
+            print("Gönderilen mesaj karşıdaki kullanıcı için \"SON MESAJ\" olarak kaydedildi")
+        }
+        
+    }
+    fileprivate func mesajlariKaydetFS() {
         guard let gecerliKullaniciID = Auth.auth().currentUser?.uid else { return }
         
         let collection = Firestore.firestore().collection("Eslesmeler_Mesajlar").document(gecerliKullaniciID).collection(eslesme.kullaniciID)
@@ -130,8 +175,26 @@ class MesajKayitController : ListeController<MesajCell,Mesaj>{
         return true
     }
     
+    var gecerliKullanici : Kullanici?
+    
+    fileprivate func gecerliKullaniciyiGetir() {
+        
+        let gecerliKullaniciId = Auth.auth().currentUser?.uid ?? ""
+        
+        Firestore.firestore().collection("Kullanicilar").document(gecerliKullaniciId).getDocument { (snapshot, hata) in
+            if let hata = hata {
+                print("Geçerli kullanıcının bilgileri getirilemedi : ",hata)
+                return
+            }
+            
+            let kullaniciVerisi = snapshot?.data() ?? [:]
+            self.gecerliKullanici = Kullanici(bilgiler: kullaniciVerisi)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        gecerliKullaniciyiGetir()
         NotificationCenter.default.addObserver(self, selector: #selector(klavyeGosteriminiAyarla), name: UIResponder.keyboardDidShowNotification, object: nil)
         collectionView.keyboardDismissMode = .interactive
         navBar.btnGeri.addTarget(self, action: #selector(btnGeriPressed), for: .touchUpInside)

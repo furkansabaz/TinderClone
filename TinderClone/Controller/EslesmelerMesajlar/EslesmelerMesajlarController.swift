@@ -101,11 +101,36 @@ class EslesmelerMesajlarController : ListeHeaderController<SonMesajCell,SonMesaj
                     let sonMesaj  =  SonMesaj(veri: eklenenSonMesaj)
                     self.sonMesajlarSozluk[sonMesaj.kullaniciID] = sonMesaj // eğer güncellenirse yeni veri eklenmeyecek. var olan veri güncellenecek
                 }
+                
+                //bu kayıt silindeyse
+                if degisiklik.type == .removed {
+                    let mesajVerisi = degisiklik.document.data()
+                    
+                    let silinecekMesaj = SonMesaj(veri: mesajVerisi)
+                    self.sonMesajlarSozluk.removeValue(forKey: silinecekMesaj.kullaniciID)
+                }
             })
             self.verileriSifirla()
         }
     }
     
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        
+        let sonMesaj = self.veriler[indexPath.row]
+        
+        let eslesmeVerisi = ["KullaniciID" : sonMesaj.kullaniciID,
+                             "KullaniciAdi" : sonMesaj.kullaniciAdi,
+                             "ProfilGoruntuUrl" : sonMesaj.goruntuURL
+        ]
+        let eslesme = Eslesme(veri: eslesmeVerisi)
+        
+        let mesajController = MesajKayitController(eslesme: eslesme)
+        
+        navigationController?.pushViewController(mesajController, animated: true)
+        
+    }
     fileprivate func verileriSifirla() {
         
         let sonMesajlarDizi = Array(sonMesajlarSozluk.values)
